@@ -29,6 +29,26 @@ void insert(list_t *list, int data){
     pthread_mutex_unlock(&list->lock);
 }
 
+void insert_unique(list_t *list, int data){
+
+    /*in this case we don't to always add the task id*/
+    pthread_mutex_lock(&list->lock); 
+        node_t *n = list->head;
+        while (n){
+        if (n->data == data) {
+            return;
+        }
+        n = n->next;
+        }
+
+        /*don't assign memory until we are sure to use it*/
+        node_t *thread_node_t = (node_t *)malloc(sizeof(node_t));
+        thread_node_t->data = data;
+        thread_node_t->next = list->head;
+        list->head = thread_node_t;
+    pthread_mutex_unlock(&list->lock);
+}
+
 node_t *find(list_t *list, int data){
     pthread_mutex_lock(&list->lock);
         node_t *n = list->head;
@@ -45,24 +65,28 @@ node_t *find(list_t *list, int data){
 
 
 /********************************** Global Variables *****************************************/
-int thread_running = STOPPED;
-int test_threads = DEFAULT_THREADS;              /*=to some input, set this one when it is first run*/
-int current_threads;                             /*this values is to be built up to*/
-list_t list;          /*global linked list*/
+int thread_status[100] = {STOPPED};
+int test_threads = DEFAULT_THREADS;  /*=to some input, set this one when it is first run*/
+int current_threads;                 /*this values is to be built up to*/
+list_t list;                         /*global linked list*/
 
 unsigned int test_duration = DEFAULT_DURATION;
 unsigned int test_wait_duration = DEFAULT_WAIT;
+unsigned int test_spec = DEFAULT_SPEC;
+//unsigned int test_scenario[SCENARIO_SIZE] = {};
 
 typedef struct {
     volatile int *stop;
     pthread_t thread;
     int id;
     ull operation_executed;
+    //ull inserts_executed;
+    //ull lookups_executed;
+    //int current operation;
 } task_t __attribute__ ((aligned (64)));
 
 
 pthread_attr_t attr;
-// pthread_mutex_t lock;
 
 /********************************* Main Functions *******************************************/
 void *myThreadFun(void *vargp)
@@ -70,24 +94,48 @@ void *myThreadFun(void *vargp)
     /*get the thread id*/
     task_t *task = (task_t *) vargp;
 
+    int counter = 1;
+    int entry = task->id;
+
     /*loop continuously*/
-    while(thread_running){
+    while(thread_status[task->id]){
       /*add to the linked list*/
-    
-        insert(&list, task->id);
-        task->operation_executed++;
+        switch (test_spec/*[task->id]*/)
+        {
+        case INSERT:
+            insert(&list, entry);
+            task->operation_executed++;
+            break;
+        case INSERT_UNIQUE:
+            insert_unique(&list, entry);
+            task->operation_executed++;
+            break;
+        // case LOOKUP:
+        //     find(&list, entry);
+        //     task->operation_executed++;
+        //     break;
+        default:
+            break;
+        }
+        counter++;
+        entry = (task->id + (10 * counter));
     }
 }
   
 
 int main(int argc, char **argv)
 {
+    int int_test_scenario = 0;
+    int thread_alternate = FALSE;
+
     struct option long_options[] = 
     {
       // These options don't set a flag
-      {"duration",                  required_argument, NULL, 'a'},
-      {"threads",                   required_argument, NULL, 'b'},
-      {"wait",                      required_argument, NULL, 'c'},
+    //  {"duration",                  required_argument, NULL, 'd'},
+      {"threads",                   required_argument, NULL, 't'},
+    //  {"wait",                      required_argument, NULL, 'w'},
+      {"spec",                      required_argument, NULL, 'p'},
+      {"scenario",                  required_argument, NULL, 's'},  /*scenario 1: they all run the same, scenario 2: they all start at intervals, scenario 3: they alternate scenario, 5, 6, 7: mix of the last three*/  
       {NULL, 0, NULL, 0}
     };
 
@@ -97,7 +145,7 @@ int main(int argc, char **argv)
     while(1) 
     {
       i = 0;
-      c = getopt_long(argc, argv, "a:b:c:", long_options, &i);
+      c = getopt_long(argc, argv, "t:p:s:", long_options, &i);
 
       if(c == -1)
 	    break;
@@ -108,20 +156,25 @@ int main(int argc, char **argv)
       switch(c) {
 	    case 0:
             break;
-        case 'a':
-            test_duration = atoi(optarg);
-	        break;
-	    case 'b':
+        // case 'd':
+        //     test_duration = atoi(optarg);
+	    //     break;
+	    case 't':
 	        test_threads = atoi(optarg);
 	        break;
-    	case 'c':
-	        test_wait_duration = atoi(optarg);
+    	// case 'w':
+	    //     test_wait_duration = atoi(optarg);
+	    //     break;
+    	case 'p':
+	        test_spec = atoi(optarg);
+	        break;
+        case 's':
+	        int_test_scenario = atoi(optarg);
 	        break;
         default:
 	    exit(1);
         }
     }
-
 
     int stop __attribute__((aligned (64))) = 0;
     ull total_executions = 0;
@@ -132,27 +185,55 @@ int main(int argc, char **argv)
             tasks[k].operation_executed = 0;
     }
 
+    //thread_time[test_threads][TIMES] = {};
+
     int rc;
     int j;
-    thread_running = RUNNING;
+
+    switch (int_test_scenario)
+    {
+    case 1:
+        test_duration = scenario_one[2];
+        thread_alternate = scenario_one[1];
+        test_wait_duration = scenario_one[0];
+        break;
+    case 2:
+        test_duration = scenario_two[2];
+        thread_alternate = scenario_two[1];
+        test_wait_duration = scenario_two[0];
+        break;
+    case 3:
+        test_duration = scenario_three[2];
+        thread_alternate = scenario_three[1];
+        test_wait_duration = scenario_three[0];
+        break;
+    default:
+        test_duration = scenario_one[2];
+        thread_alternate = scenario_one[1];
+        test_wait_duration = scenario_one[0];
+        break;
+    }
+
+    //thread_running = RUNNING;
     int new_test_duration = 1;
+
 
     if(test_threads > 1){
         if (test_wait_duration > (test_duration / (test_threads - 1))){
             printf("Error:unable to use wait duration\n");
             exit(-1);
         }
-    
         new_test_duration = test_duration - (test_wait_duration * (test_threads - 1));
     }
 
     List_Init(&list);
 
-   pthread_attr_init(&attr);
-   pthread_attr_setstacksize (&attr, (size_t)STACKSIZE);
+    pthread_attr_init(&attr);
+    pthread_attr_setstacksize (&attr, (size_t)STACKSIZE);
 
     for (j = 0; j < test_threads; j++){
-        //printf("Creating a thread\n");
+
+        thread_status[j] = RUNNING;
         rc = pthread_create(&tasks[j].thread, &attr, myThreadFun, &tasks[j]);
         if (rc) {
             printf("Error:unable to create thread, %d\n", rc);
@@ -161,12 +242,26 @@ int main(int argc, char **argv)
         current_threads++;
         if(j != test_threads){
             sleep(test_wait_duration);
+            if(thread_alternate == TRUE){
+                thread_status[j] = SLEEP;
+            }
         }
     }
 
-    sleep(new_test_duration);
+    if(thread_alternate == TRUE){
+        for (j = 0; j < test_threads; j++){
+            thread_status[j] = RUNNING;
+            sleep(test_wait_duration);
+            thread_status[j] = SLEEP;
+        }
+    } else {
+        sleep(new_test_duration); 
+    }
+
     stop = 1;
-    thread_running = STOPPED;
+    for (j = 0; j < test_threads; j++){
+        thread_status[j] = STOPPED;
+    }
 
     //float variances[100];
     double thread_data[100][3];
@@ -174,9 +269,6 @@ int main(int argc, char **argv)
     /*add in code here for find variance*/
     for (int p = 0; p < test_threads; p++){
         pthread_join(tasks[p].thread, NULL);
-        //find_indices(&list, p);
-        //find_average(&index_list, thread_data[p]);
-        //variances[p] = find_variance(&index_list);
         total_executions = total_executions + tasks[p].operation_executed;
     }
 
@@ -211,4 +303,6 @@ int main(int argc, char **argv)
 /*The total number of insertions*/
 
 /*The number of insertions of each thread*/
+
+/*Can we come up with a measure of fairness?? - Jain's Index of fairness is simply the number of entries fair*/
 
