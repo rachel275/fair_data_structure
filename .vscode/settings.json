@@ -1,6 +1,8 @@
 {
     "files.associations": {
-        "linked_list.h": "c"
+        "linked_list.h": "c",
+        "rdtsc.h": "c",
+        "lock.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
