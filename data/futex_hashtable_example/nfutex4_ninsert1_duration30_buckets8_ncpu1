@@ -1,0 +1,5 @@
+futex id: 03 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      4.533 / tot_time(ms):     49.998 / no_operations: 56560 
+futex id: 01 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      5.557 / tot_time(ms):     46.369 / no_operations: 56324 
+futex id: 00 / worst_case_bucket_id: 7 / worst_case_lock_hold(ms):      3.104 / tot_time(ms):     42.384 / no_operations: 56372 
+futex id: 02 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      1.794 / tot_time(ms):     36.573 / no_operations: 56674 
+insert id: 00 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):     11.013 / tot_time(ms):   3834.917 / no_operations: 133797865 

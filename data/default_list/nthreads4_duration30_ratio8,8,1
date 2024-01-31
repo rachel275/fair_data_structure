@@ -1,0 +1,6 @@
+malicious id: 00 / number of operations: 104221 / number of entries: 104221 / tot_time(ms):   2314.495 / max_time(ms):     10.812 /
+ genuine id: 00 / number of operations: 18377 / number of entries: 8637 / tot_time(ms):   2532.394 / max_time(ms):      9.471 /
+ genuine id: 03 / number of operations: 18615 / number of entries: 8753 / tot_time(ms):   2508.379 / max_time(ms):      8.929 /
+ genuine id: 02 / number of operations: 18462 / number of entries: 8683 / tot_time(ms):   2532.061 / max_time(ms):      8.616 /
+ genuine id: 01 / number of operations: 18445 / number of entries: 8674 / tot_time(ms):   2499.011 / max_time(ms):      7.411 /
+ 

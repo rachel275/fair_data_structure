@@ -1,0 +1,8 @@
+bucket_id: 00 / worst_case_lock_hold(ms):      4.767 / tot_time(ms):    118.930 / no_entries: 0 / no_operations: 835538 
+bucket_id: 01 / worst_case_lock_hold(ms):      6.268 / tot_time(ms):   2807.590 / no_entries: 76680196 / no_operations: 77519210 
+bucket_id: 02 / worst_case_lock_hold(ms):      3.884 / tot_time(ms):    118.883 / no_entries: 0 / no_operations: 835824 
+bucket_id: 03 / worst_case_lock_hold(ms):      3.858 / tot_time(ms):    112.099 / no_entries: 0 / no_operations: 837858 
+bucket_id: 04 / worst_case_lock_hold(ms):      1.045 / tot_time(ms):    117.768 / no_entries: 0 / no_operations: 838996 
+bucket_id: 05 / worst_case_lock_hold(ms):     16.413 / tot_time(ms):    130.746 / no_entries: 0 / no_operations: 834682 
+bucket_id: 06 / worst_case_lock_hold(ms):      2.080 / tot_time(ms):    113.648 / no_entries: 0 / no_operations: 837838 
+bucket_id: 07 / worst_case_lock_hold(ms):      0.458 / tot_time(ms):    107.756 / no_entries: 0 / no_operations: 838824 

@@ -1,0 +1,4 @@
+bucket_id: 00 / worst_case_lock_hold(ms):      1.158 / tot_time(ms):     81.688 / no_entries: 0 / no_operations: 440936 
+bucket_id: 01 / worst_case_lock_hold(ms):      9.922 / tot_time(ms):   4263.510 / no_entries: 112974692 / no_operations: 113415680 
+bucket_id: 02 / worst_case_lock_hold(ms):      4.393 / tot_time(ms):     85.210 / no_entries: 0 / no_operations: 441000 
+bucket_id: 03 / worst_case_lock_hold(ms):      3.594 / tot_time(ms):     79.797 / no_entries: 0 / no_operations: 441636 

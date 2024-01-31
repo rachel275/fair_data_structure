@@ -1,0 +1,18 @@
+genuine id: 11 / number of operations: 8296 / number of entries: 3904 / tot_time(ms):    311.881 / max_time(ms):      8.457 /
+ genuine id: 15 / number of operations: 8347 / number of entries: 3928 / tot_time(ms):    280.665 / max_time(ms):      6.082 /
+ genuine id: 10 / number of operations: 8024 / number of entries: 3776 / tot_time(ms):    313.768 / max_time(ms):      7.878 /
+ genuine id: 03 / number of operations: 8245 / number of entries: 3880 / tot_time(ms):    280.767 / max_time(ms):      6.867 /
+ malicious id: 00 / number of operations: 61309 / number of entries: 61309 / tot_time(ms):   1946.650 / max_time(ms):     16.026 /
+ genuine id: 06 / number of operations: 8330 / number of entries: 3920 / tot_time(ms):    311.810 / max_time(ms):      8.068 /
+ genuine id: 12 / number of operations: 8347 / number of entries: 3928 / tot_time(ms):    292.324 / max_time(ms):      7.126 /
+ genuine id: 02 / number of operations: 8245 / number of entries: 3880 / tot_time(ms):    298.960 / max_time(ms):      9.076 /
+ genuine id: 13 / number of operations: 8415 / number of entries: 3960 / tot_time(ms):    282.606 / max_time(ms):      9.597 /
+ genuine id: 04 / number of operations: 8194 / number of entries: 3856 / tot_time(ms):    297.884 / max_time(ms):      6.440 /
+ genuine id: 00 / number of operations: 8126 / number of entries: 3824 / tot_time(ms):    289.555 / max_time(ms):      9.734 /
+ genuine id: 05 / number of operations: 8398 / number of entries: 3952 / tot_time(ms):    317.963 / max_time(ms):     10.827 /
+ genuine id: 01 / number of operations: 8466 / number of entries: 3984 / tot_time(ms):    288.545 / max_time(ms):      7.284 /
+ genuine id: 09 / number of operations: 8398 / number of entries: 3952 / tot_time(ms):    302.457 / max_time(ms):      6.958 /
+ genuine id: 08 / number of operations: 8449 / number of entries: 3976 / tot_time(ms):    310.348 / max_time(ms):      9.620 /
+ genuine id: 07 / number of operations: 8330 / number of entries: 3920 / tot_time(ms):    312.754 / max_time(ms):     11.965 /
+ genuine id: 14 / number of operations: 8279 / number of entries: 3896 / tot_time(ms):    289.157 / max_time(ms):      8.985 /
+ 

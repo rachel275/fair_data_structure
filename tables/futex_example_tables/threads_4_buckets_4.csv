@@ -1,0 +1,6 @@
+Type of thread,Thread Id,Worst Case Bucket,Worst Case Time,Total Time,Number of Operations
+futex,0,1,4.813,62.755,57876
+futex,1,1,1.759,60.003,58134
+futex,2,1,1.878,56.343,58092
+futex,3,1,0.589,51.0,58432
+insert,0,1,9.864,3627.802,122017879

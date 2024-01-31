@@ -1,0 +1,17 @@
+futex id: 03 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      0.753 / tot_time(ms):     35.321 / no_operations: 101242 
+futex id: 02 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      0.575 / tot_time(ms):     33.159 / no_operations: 101594 
+futex id: 10 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      1.877 / tot_time(ms):     36.744 / no_operations: 101272 
+futex id: 00 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      4.461 / tot_time(ms):     38.228 / no_operations: 100724 
+futex id: 07 / worst_case_bucket_id: 3 / worst_case_lock_hold(ms):      2.506 / tot_time(ms):     39.902 / no_operations: 100650 
+futex id: 06 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):     28.742 / tot_time(ms):     79.619 / no_operations: 99826 
+futex id: 13 / worst_case_bucket_id: 4 / worst_case_lock_hold(ms):      1.723 / tot_time(ms):     36.582 / no_operations: 102090 
+futex id: 11 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      2.153 / tot_time(ms):     37.713 / no_operations: 101214 
+futex id: 08 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      3.109 / tot_time(ms):     47.196 / no_operations: 100994 
+insert id: 00 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):     16.549 / tot_time(ms):   4164.968 / no_operations: 119933444 
+futex id: 01 / worst_case_bucket_id: 7 / worst_case_lock_hold(ms):      9.346 / tot_time(ms):     46.505 / no_operations: 101036 
+futex id: 05 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      0.900 / tot_time(ms):     36.680 / no_operations: 101028 
+futex id: 12 / worst_case_bucket_id: 6 / worst_case_lock_hold(ms):      8.870 / tot_time(ms):     53.294 / no_operations: 101260 
+futex id: 04 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      0.385 / tot_time(ms):     35.359 / no_operations: 100280 
+futex id: 09 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      3.449 / tot_time(ms):     41.242 / no_operations: 100592 
+futex id: 15 / worst_case_bucket_id: 1 / worst_case_lock_hold(ms):      3.310 / tot_time(ms):     37.723 / no_operations: 101626 
+futex id: 14 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      3.394 / tot_time(ms):     41.031 / no_operations: 101204 

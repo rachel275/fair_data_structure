@@ -1,0 +1,6 @@
+Type of thread,Thread Id,Number of Operations,Number of Entries,Worst Case Time,Total Time
+genuine,0,25090,1930,8.425,592.442
+genuine,1,24895,1915,4.637,562.035
+genuine,2,24921,1917,2.009,587.52
+genuine,3,23959,1843,4.817,598.939
+malicious,0,331824,331824,8.778,5831.632

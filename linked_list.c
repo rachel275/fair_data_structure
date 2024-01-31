@@ -2,67 +2,6 @@
 #include "linked_list.h"
 #include <math.h>
 
-/*********************************** Code for the Linked List *************************************/
-typedef struct _node_t {
-    int data;
-    struct _node_t *next;
-} node_t;
-
-typedef struct _list_t {
-    node_t *head;
-    pthread_mutex_t lock;
-} list_t;
-
-void List_Init(list_t *list){
-    list->head = NULL;
-    pthread_mutex_init(&list->lock, NULL);
-}
-
-void insert(list_t *list, int data){
-    /*add the thread id as the data of the node_t*/
-    node_t *thread_node_t = (node_t *)malloc(sizeof(node_t));
-    thread_node_t->data = data;
-
-    pthread_mutex_lock(&list->lock);        
-        thread_node_t->next = list->head;
-        list->head = thread_node_t;
-    pthread_mutex_unlock(&list->lock);
-}
-
-void insert_unique(list_t *list, int data){
-
-    /*in this case we don't to always add the task id*/
-    pthread_mutex_lock(&list->lock); 
-        node_t *n = list->head;
-        while (n){
-        if (n->data == data) {
-            return;
-        }
-        n = n->next;
-        }
-
-        /*don't assign memory until we are sure to use it*/
-        node_t *thread_node_t = (node_t *)malloc(sizeof(node_t));
-        thread_node_t->data = data;
-        thread_node_t->next = list->head;
-        list->head = thread_node_t;
-    pthread_mutex_unlock(&list->lock);
-}
-
-node_t *find(list_t *list, int data){
-    pthread_mutex_lock(&list->lock);
-        node_t *n = list->head;
-        while (n){
-        if (n->data == data) {
-            //unlock();
-            return n;
-        }
-        n = n->next;
-        }
-    pthread_mutex_unlock(&list->lock);
-    return NULL;
-}
-
 
 /********************************** Global Variables *****************************************/
 int thread_status[100] = {STOPPED};
@@ -73,54 +12,85 @@ list_t list;                         /*global linked list*/
 unsigned int test_duration = DEFAULT_DURATION;
 unsigned int test_wait_duration = DEFAULT_WAIT;
 unsigned int test_spec = DEFAULT_SPEC;
+unsigned int test_ninserts;
+unsigned int test_ratio; 
 //unsigned int test_scenario[SCENARIO_SIZE] = {};
 
 typedef struct {
     volatile int *stop;
     pthread_t thread;
+    int priority;
     int id;
-    ull operation_executed;
-    //ull inserts_executed;
-    //ull lookups_executed;
-    //int current operation;
+    list_stat_t stat;
 } task_t __attribute__ ((aligned (64)));
 
 
 pthread_attr_t attr;
 
 /********************************* Main Functions *******************************************/
-void *myThreadFun(void *vargp)
+void *threadfunc(void *vargp)
 {
-    /*get the thread id*/
+    // /*get the thread id*/
     task_t *task = (task_t *) vargp;
 
-    int counter = 1;
+    int counter = -1;
     int entry = task->id;
 
-    /*loop continuously*/
+    // /*loop continuously*/
     while(thread_status[task->id]){
       /*add to the linked list*/
+      for (int i = 0; i < test_ratio; i++){
+
+            counter++;
+            entry = (task->id + (10 * counter));
+
+            switch (test_spec/*[task->id]*/)
+            {
+            case INSERT:
+                insert(&list, entry, &task->stat);
+                break;
+            case INSERT_UNIQUE:
+                insert_unique(&list, entry, &task->stat);
+                break;
+            default:
+                break;
+            }
+        
+      }
+
+        delete(&list, entry, &task->stat);
+    }
+}
+
+void *insertfunc(void *vargp)
+{
+    // /*get the thread id*/
+    task_t *task = (task_t *) vargp;
+
+    int counter = -1;
+    int entry = task->id;
+
+    // /*loop continuously*/
+    while(thread_status[task->id]){
+      /*add to the linked list*/
+
+        counter++;
+        entry = (task->id + (10 * counter));
+
         switch (test_spec/*[task->id]*/)
         {
         case INSERT:
-            insert(&list, entry);
-            task->operation_executed++;
+            insert(&list, entry, &task->stat);
             break;
         case INSERT_UNIQUE:
-            insert_unique(&list, entry);
-            task->operation_executed++;
+            insert_unique(&list, entry, &task->stat);
             break;
-        // case LOOKUP:
-        //     find(&list, entry);
-        //     task->operation_executed++;
-        //     break;
         default:
             break;
         }
-        counter++;
-        entry = (task->id + (10 * counter));
     }
 }
+  
   
 
 int main(int argc, char **argv)
@@ -131,11 +101,13 @@ int main(int argc, char **argv)
     struct option long_options[] = 
     {
       // These options don't set a flag
-    //  {"duration",                  required_argument, NULL, 'd'},
-      {"threads",                   required_argument, NULL, 't'},
-    //  {"wait",                      required_argument, NULL, 'w'},
-      {"spec",                      required_argument, NULL, 'p'},
-      {"scenario",                  required_argument, NULL, 's'},  /*scenario 1: they all run the same, scenario 2: they all start at intervals, scenario 3: they alternate scenario, 5, 6, 7: mix of the last three*/  
+      {"nregular",                   required_argument, NULL, 't'},
+      {"ninsert",                    required_argument, NULL, 'i'},
+      {"duration",                   required_argument, NULL, 'd'},
+      {"ratio",                      required_argument, NULL, 'r'}
+    //   {"wait",                      required_argument, NULL, 'w'},
+    //   {"spec",                      required_argument, NULL, 'p'},
+    //   {"scenario",                  required_argument, NULL, 's'},   
       {NULL, 0, NULL, 0}
     };
 
@@ -145,7 +117,7 @@ int main(int argc, char **argv)
     while(1) 
     {
       i = 0;
-      c = getopt_long(argc, argv, "t:p:s:", long_options, &i);
+      c = getopt_long(argc, argv, "d:t:i:r:", long_options, &i);
 
       if(c == -1)
 	    break;
@@ -156,21 +128,27 @@ int main(int argc, char **argv)
       switch(c) {
 	    case 0:
             break;
-        // case 'd':
-        //     test_duration = atoi(optarg);
-	    //     break;
+        case 'd':
+            test_duration = atoi(optarg);
+	        break;
 	    case 't':
 	        test_threads = atoi(optarg);
+	        break;
+        case 'i':
+            test_ninserts = atoi(optarg);
+	        break;
+	    case 'r':
+	        test_ratio = atoi(optarg);
 	        break;
     	// case 'w':
 	    //     test_wait_duration = atoi(optarg);
 	    //     break;
-    	case 'p':
-	        test_spec = atoi(optarg);
-	        break;
-        case 's':
-	        int_test_scenario = atoi(optarg);
-	        break;
+    	// case 'p':
+	    //     test_spec = atoi(optarg);
+	    //     break;
+        // case 's':
+	    //     int_test_scenario = atoi(optarg);
+	    //     break;
         default:
 	    exit(1);
         }
@@ -178,52 +156,19 @@ int main(int argc, char **argv)
 
     int stop __attribute__((aligned (64))) = 0;
     ull total_executions = 0;
-    task_t *tasks = malloc(sizeof(task_t) * test_threads);
-    for (int k = 0; k < test_threads; k++) {
-            tasks[k].stop = &stop;
-            tasks[k].id = k;
-            tasks[k].operation_executed = 0;
-    }
-
-    //thread_time[test_threads][TIMES] = {};
+    task_t *tasks = malloc(sizeof(task_t) * (test_threads + test_ninserts));
 
     int rc;
     int j;
-
-    switch (int_test_scenario)
-    {
-    case 1:
-        test_duration = scenario_one[2];
-        thread_alternate = scenario_one[1];
-        test_wait_duration = scenario_one[0];
-        break;
-    case 2:
-        test_duration = scenario_two[2];
-        thread_alternate = scenario_two[1];
-        test_wait_duration = scenario_two[0];
-        break;
-    case 3:
-        test_duration = scenario_three[2];
-        thread_alternate = scenario_three[1];
-        test_wait_duration = scenario_three[0];
-        break;
-    default:
-        test_duration = scenario_one[2];
-        thread_alternate = scenario_one[1];
-        test_wait_duration = scenario_one[0];
-        break;
-    }
-
-    //thread_running = RUNNING;
-    int new_test_duration = 1;
+    int new_test_duration;
 
 
-    if(test_threads > 1){
-        if (test_wait_duration > (test_duration / (test_threads - 1))){
+    if((test_threads + test_ninserts) > 1){
+        if (test_wait_duration > (test_duration / ((test_threads + test_ninserts) - 1))){
             printf("Error:unable to use wait duration\n");
             exit(-1);
         }
-        new_test_duration = test_duration - (test_wait_duration * (test_threads - 1));
+        new_test_duration = test_duration - (test_wait_duration * ((test_threads + test_ninserts) - 1));
     }
 
     List_Init(&list);
@@ -231,10 +176,10 @@ int main(int argc, char **argv)
     pthread_attr_init(&attr);
     pthread_attr_setstacksize (&attr, (size_t)STACKSIZE);
 
-    for (j = 0; j < test_threads; j++){
+    for (j = 0; j < (test_threads); j++){
 
         thread_status[j] = RUNNING;
-        rc = pthread_create(&tasks[j].thread, &attr, myThreadFun, &tasks[j]);
+        rc = pthread_create(&tasks[j].thread, &attr, threadfunc, &tasks[j]);
         if (rc) {
             printf("Error:unable to create thread, %d\n", rc);
             exit(-1);
@@ -244,6 +189,23 @@ int main(int argc, char **argv)
             sleep(test_wait_duration);
             if(thread_alternate == TRUE){
                 thread_status[j] = SLEEP;
+            }
+        }
+    }
+
+    for (int k = 0; k < test_ninserts; k++){
+
+        thread_status[j] = RUNNING;        
+        rc = pthread_create(&tasks[j+k].thread, &attr, insertfunc, &tasks[j+k]);
+        if (rc){
+            printf("Error:unable to create thread, %d\n", rc);
+            exit(-1);
+        }
+        current_threads++;
+        if(k != (test_ninserts)){
+            sleep(test_wait_duration);
+            if(thread_alternate == TRUE){
+                thread_status[j+k] = SLEEP;
             }
         }
     }
@@ -305,4 +267,7 @@ int main(int argc, char **argv)
 /*The number of insertions of each thread*/
 
 /*Can we come up with a measure of fairness?? - Jain's Index of fairness is simply the number of entries fair*/
+
+/*want to add entries by the scenarios we have been doing - then we want to look them up on the basis of if each thread accesses it's own. if it 
+shares some, or if it shares all...*/
 
