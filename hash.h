@@ -158,7 +158,6 @@ int hash_insert (hash_table *hp, unsigned int k, void *v, hash_table_stat *stat,
     stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
     if (stat->stats->wc_cs_time > stat->wc_cs_time){
         stat->wc_cs_time = stat->stats->wc_cs_time;
-        stat.
     }
     return insert;
 }

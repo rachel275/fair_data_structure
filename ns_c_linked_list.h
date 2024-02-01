@@ -89,11 +89,9 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
         /*fix it to the end of the list*/
         n = th_node;
 
-        /*add the element to the front of the list*/
-        lock_acquire(&list->mutexes);
-        start = rdtscp();       
-            thread_node->next = th_node->next;
-            th_node->next = thread_node;
+        /*add the element to the front of the list*/       
+        thread_node->next = th_node->next;
+        th_node->next = thread_node;
         end = rdtscp();
         lock_release(&list->mutexes);
     }
