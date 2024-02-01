@@ -210,7 +210,7 @@ void *insert_worker(void *arg) {
     char buffer[1024] = { 0 };
     get_schedstat(buffer);
 
-    //print_summary("insert", task, buffer);
+    print_summary("insert", task, buffer);
     return NULL;
 }
 
@@ -250,7 +250,7 @@ void *futex_worker(void *arg) {
     char buffer[1024] = { 0 };
     get_schedstat(buffer);
 
-    //print_summary("futex", task, buffer);
+    print_summary("futex", task, buffer);
     return NULL;
 
 }
@@ -357,36 +357,36 @@ int main(int argc, char *argv[]) {
 	pthread_join(mal_tasks[i].thread, NULL);
     }
 
-    hash_table_stat final = {0};
+    // hash_table_stat final = {0};
 
-    for (int i = 0; i < nfutex; i++){ /*for each thread id - each of which has a stat bucket for each stat*/
-        for(int j = 0; j < nbuckets; j++){ /*for each bucket*/
-            final.b_stats[j].bucket_id = j;
-            final.b_stats[j].n_ops += futex_tasks[i].stat.b_stats[j].n_ops;
-            final.b_stats[j].op_entries+= futex_tasks[i].stat.b_stats[j].op_entries;
-            final.b_stats[j].tot_cs_time += futex_tasks[i].stat.b_stats[j].tot_cs_time;
-            if (final.b_stats[j].wc_cs_time < futex_tasks[i].stat.b_stats[j].wc_cs_time){
-                final.b_stats[j].wc_cs_time = futex_tasks[i].stat.b_stats[j].wc_cs_time;
-            }
-        }
-    }
+    // for (int i = 0; i < nfutex; i++){ /*for each thread id - each of which has a stat bucket for each stat*/
+    //     for(int j = 0; j < nbuckets; j++){ /*for each bucket*/
+    //         final.b_stats[j].bucket_id = j;
+    //         final.b_stats[j].n_ops += futex_tasks[i].stat.b_stats[j].n_ops;
+    //         final.b_stats[j].op_entries+= futex_tasks[i].stat.b_stats[j].op_entries;
+    //         final.b_stats[j].tot_cs_time += futex_tasks[i].stat.b_stats[j].tot_cs_time;
+    //         if (final.b_stats[j].wc_cs_time < futex_tasks[i].stat.b_stats[j].wc_cs_time){
+    //             final.b_stats[j].wc_cs_time = futex_tasks[i].stat.b_stats[j].wc_cs_time;
+    //         }
+    //     }
+    // }
 
 
-    for (int i = 0; i < nmalicous; i++){
-        for(int j = 0; j < nbuckets; j++){
-            final.b_stats[j].bucket_id = j;
-            final.b_stats[j].n_ops += mal_tasks[i].stat.b_stats[j].n_ops;
-            final.b_stats[j].op_entries += mal_tasks[i].stat.b_stats[j].op_entries;
-            //printf("op_entries = %lld", mal_tasks[i].stat.b_stats[j].op_entries);
-            final.b_stats[j].tot_cs_time += mal_tasks[i].stat.b_stats[j].tot_cs_time;
-            if (final.b_stats[j].wc_cs_time < mal_tasks[i].stat.b_stats[j].wc_cs_time){
-                final.b_stats[j].wc_cs_time = mal_tasks[i].stat.b_stats[j].wc_cs_time;
-            }
-        }
-    }
+    // for (int i = 0; i < nmalicous; i++){
+    //     for(int j = 0; j < nbuckets; j++){
+    //         final.b_stats[j].bucket_id = j;
+    //         final.b_stats[j].n_ops += mal_tasks[i].stat.b_stats[j].n_ops;
+    //         final.b_stats[j].op_entries += mal_tasks[i].stat.b_stats[j].op_entries;
+    //         //printf("op_entries = %lld", mal_tasks[i].stat.b_stats[j].op_entries);
+    //         final.b_stats[j].tot_cs_time += mal_tasks[i].stat.b_stats[j].tot_cs_time;
+    //         if (final.b_stats[j].wc_cs_time < mal_tasks[i].stat.b_stats[j].wc_cs_time){
+    //             final.b_stats[j].wc_cs_time = mal_tasks[i].stat.b_stats[j].wc_cs_time;
+    //         }
+    //     }
+    // }
 
-    for (int i = 0; i < nbuckets; i++){
-        print_summary_buckets(&final.b_stats[i]);
-    }
+    // for (int i = 0; i < nbuckets; i++){
+    //     print_summary_buckets(&final.b_stats[i]);
+    // }
     return 0;
 }

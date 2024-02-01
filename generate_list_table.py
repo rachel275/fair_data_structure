@@ -55,7 +55,7 @@ def find_outliers_num(dataset, avg, sd):
     return outlierCount
 
 def write_to_table(threads, type, iratio, fratio, dratio):
-    f = open("./tables/" + type + "_list_tables/threads_" + str(threads) + "_ratio_" + str(iratio) + "," + str(fratio) + "," + str(dratio) + ".csv", 'a+', newline="")
+    f = open("./tables/" + type + "_list_tables/threads_" + str(threads) + "_ratio_" + str(iratio) + "," + str(fratio) + "," + str(dratio) + "_DICE.csv", 'a+', newline="")
     writer = csv.writer(f)
     header = ["Type of thread", "Thread Id","Number of Operations", "Number of Entries", "Worst Case Time", "Total Time"]
     writer.writerow(header)
@@ -109,6 +109,9 @@ for dir in os.listdir(rootdir):
             for filename in os.listdir("./data/" + dir):
                 with open(os.path.join("./data/" + dir, filename), 'r') as file:
                     data = []
+                    if (filename.endswith("_DICE") == False):
+                        file.close()
+                        continue
                     # information = file.readline()
                     # #find this information from the file name
                     nthreads = filename.split('_')[0].split("nthreads")[-1]#find_info(information, 1).lstrip().rstrip()

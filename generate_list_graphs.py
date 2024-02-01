@@ -7,44 +7,47 @@ import sys
 
 
 
-path = "./tables/default_list_tables/"  #FILL THIS IN HERE
+path = "./tables/ns_c_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
-            nthreads = int(filename.split('_')[1]) #find_info(information, 1).lstrip().rstrip()
-            ratios = filename.split('_')[3].split('.')
-            i = -1
-            reader = csv.reader(file)
-            no_threads = []
-            thread_type = []
-            genuine_id = []
-            insert_id = []
-            wc_time = []
-            i_wc_time = []
-            tot_time = []
-            i_tot_time = []
-            n_ops = []
-            i_n_ops = []
-            n_entries = []
-            i_n_entries = []
-            for row in reader:
-                if i == -1:
-                    i = 1
+        if (filename.endswith("_DICE.csv") == False):
+            file.close()
+            continue
+        nthreads = int(filename.split('_')[1]) #find_info(information, 1).lstrip().rstrip()
+        ratios = filename.split('_')[3].split('.')
+        i = -1
+        reader = csv.reader(file)
+        no_threads = []
+        thread_type = []
+        genuine_id = []
+        insert_id = []
+        wc_time = []
+        i_wc_time = []
+        tot_time = []
+        i_tot_time = []
+        n_ops = []
+        i_n_ops = []
+        n_entries = []
+        i_n_entries = []
+        for row in reader:
+            if i == -1:
+                i = 1
+            else:
+                #need to ignore the first line!
+                thread_type.append(row[int(0)])
+                if (row[int(0)] == "malicious"):
+                    insert_id.append(int(row[int(1)]))
+                    i_wc_time.append(float(row[int(4)]))
+                    i_tot_time.append(float(row[int(5)]))
+                    i_n_ops.append(int(row[int(2)]))  
+                    i_n_entries.append(int(row[int(3)]))  
                 else:
-                    #need to ignore the first line!
-                    thread_type.append(row[int(0)])
-                    if (row[int(0)] == "malicious"):
-                        insert_id.append(int(row[int(1)]))
-                        i_wc_time.append(float(row[int(4)]))
-                        i_tot_time.append(float(row[int(5)]))
-                        i_n_ops.append(int(row[int(2)]))  
-                        i_n_entries.append(int(row[int(3)]))  
-                    else:
-                        genuine_id.append(int(row[int(1)]))
-                        wc_time.append(float(row[int(4)]))
-                        tot_time.append(float(row[int(5)]))
-                        n_ops.append(int(row[int(2)]))
-                        n_entries.append(int(row[int(3)]))  
+                    genuine_id.append(int(row[int(1)]))
+                    wc_time.append(float(row[int(4)]))
+                    tot_time.append(float(row[int(5)]))
+                    n_ops.append(int(row[int(2)]))
+                    n_entries.append(int(row[int(3)]))  
 
     #plot threads against their 
     #plt.plot(futex_id, wc_time, color='b', linestyle='None', marker='o')
@@ -67,7 +70,7 @@ for filename in os.listdir(path):
 
     plt.plot(genuine_id, wc_time)
     n = len(filename)
-    plt.title("Worst case critical section per thread") 
-    figName = "./graphs/default_list_graphs/threads" + str(nthreads)  + "ratios_" + str(ratios)  + "_worst_case_time.png"
+    plt.title("Worst case critical section per thread (DICE)") 
+    figName = "./graphs/ns_c_list_graphs/threads" + str(nthreads)  + "ratios_" + str(ratios)  + "_worst_case_time_DICE.png"
     plt.savefig(figName)          
     plt.close()

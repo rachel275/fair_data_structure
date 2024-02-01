@@ -1,0 +1,6 @@
+genuine id: 00 / number of operations: 8487 / number of entries: 2821 / tot_time(ms):  12321.296 / max_time(ms):      4.444 /
+ genuine id: 03 / number of operations: 8391 / number of entries: 2788 / tot_time(ms):  12307.974 / max_time(ms):      4.371 /
+ genuine id: 01 / number of operations: 8646 / number of entries: 2875 / tot_time(ms):  10961.534 / max_time(ms):      4.372 /
+ genuine id: 02 / number of operations: 8595 / number of entries: 2860 / tot_time(ms):  12349.617 / max_time(ms):      4.413 /
+ malicious id: 00 / number of operations: 302757 / number of entries: 302757 / tot_time(ms):     11.592 / max_time(ms):      0.018 /
+ 
