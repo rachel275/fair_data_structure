@@ -184,12 +184,9 @@ int main(int argc, char **argv)
     task_t *test_tasks = malloc(sizeof(task_t) * (test_threads));
     task_t *mal_tasks = malloc(sizeof(task_t) * (test_ninserts));
 
-
     int rc;
-    int new_test_duration = test_duration;
 
     List_Init(&list);
-
 
     pthread_attr_init(&attr);
     pthread_attr_setstacksize (&attr, (size_t)STACKSIZE);
@@ -205,7 +202,6 @@ int main(int argc, char **argv)
     }
 
     for (int j = 0; j < test_threads; j++){
-
         rc = pthread_create(&test_tasks[j].thread, &attr, threadfunc, &test_tasks[j]);
         if (rc) {
             printf("Error:unable to create thread, %d\n", rc);
@@ -214,7 +210,6 @@ int main(int argc, char **argv)
     }
 
     for (int k = 0; k < test_ninserts; k++){
-     
         rc = pthread_create(&mal_tasks[k].thread, &attr, insertfunc, &mal_tasks[k]);
         if (rc){
             printf("Error:unable to create thread, %d\n", rc);
@@ -222,9 +217,9 @@ int main(int argc, char **argv)
         }
     }
 
-    sleep(new_test_duration); 
-    stop = 1;
+    sleep(test_duration); 
 
+    stop = 1;
     for (int p = 0; p < (test_threads); p++){
         pthread_join(test_tasks[p].thread, NULL);
 
@@ -236,25 +231,3 @@ int main(int argc, char **argv)
 
     return 0;
 }
-
-
-
-/*Scenarios: What do we want to measure?*/
-/*Start with two threads: 
-    start by adding values to the linked list. - How do you keep track of who has added what to a list - they could add their task id? Look at the fairness of the list after x, y, and z*/
-/*Then look at them accessing their items: how long does it take, which can make the most accesses, is there a clear winner and how does that relate to the adding values and the linked list*/
-
-/*How does running one thread for x time before adding another one affect the unfairness?*/
-
-/*run for x amount of time, with x number of threads*/
-
-/*Want the number of insertions each thread makes, and then an occurence map of some sort, i.e. where are they placed.*/
-
-/*The total number of insertions*/
-
-/*The number of insertions of each thread*/
-
-/*Can we come up with a measure of fairness?? - Jain's Index of fairness is simply the number of entries fair*/
-
-/*want to add entries by the scenarios we have been doing - then we want to look them up on the basis of if each thread accesses it's own. if it 
-shares some, or if it shares all...*/

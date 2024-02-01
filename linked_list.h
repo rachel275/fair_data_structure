@@ -48,11 +48,12 @@ void List_Init(list_t *list){
 void list_insert(list_t *list, int k, void *data, list_stat_t* stat, int pid){
     unsigned long long start, end;//, wait, release;
     unsigned int duration;
-    start = rdtscp();
+
     /*add the thread id as the data of the Node*/
     Node *threadNode = (Node *)malloc(sizeof(Node));
     threadNode->value = data;
     threadNode->key = k;
+
     lock_acquire(&list->mutexes);
     start = rdtscp();
         threadNode->next = list->head;
@@ -73,14 +74,13 @@ void list_insert_unique(list_t *list, void* data, list_stat_t* stat, int pid){
     unsigned long long start, end;//, wait, release;
     unsigned int duration;
 
-    /*in this case we don't to always add the task id*/
     lock_acquire(&list->mutexes); 
     start = rdtscp();        
     Node *n = list->head;
         while (n){
-        // if (n->value == data) {
-        //     return;
-        // }
+        if (n->value == data) {
+            return;
+        }
         n = n->next;
         }
 
@@ -91,7 +91,6 @@ void list_insert_unique(list_t *list, void* data, list_stat_t* stat, int pid){
         list->head = threadNode;
     end = rdtscp();    
     lock_release(&list->mutexes);
-
 
 
     duration = end - start;
@@ -106,9 +105,11 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     unsigned long long start, end;//, wait, release;
     unsigned int duration;
 
-    Node *n = list->head;
     lock_acquire(&list->mutexes); 
-    start = rdtscp();        
+    start = rdtscp(); 
+
+    Node *n = list->head;
+       
         while (n){
         if (n->key == k) {
             end = rdtscp();            
@@ -124,11 +125,12 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
         }
     end = rdtscp();
     lock_release(&list->mutexes);
-        duration = end - start;
-        if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
-        stat->cs_time = duration;
-        stat->tot_cs_time += duration;
-        stat->n_ops++;
+
+    duration = end - start;
+    if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
+    stat->cs_time = duration;
+    stat->tot_cs_time += duration;
+    stat->n_ops++;
     return NULL;
 }
 
@@ -140,7 +142,8 @@ int list_delete(list_t *list, int k, list_stat_t* stat, int pid){
 
     Node* toDelete;
     lock_acquire(&list->mutexes); 
-        start = rdtscp();    
+        start = rdtscp();
+            
         Node *n = list->head;
 
         // If head node itself holds the key to be list_deleted 

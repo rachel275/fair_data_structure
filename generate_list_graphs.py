@@ -7,7 +7,7 @@ import sys
 
 
 
-path = "./tables/ns_c_list_tables/"  #FILL THIS IN HERE
+path = "./tables/default_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
@@ -53,24 +53,25 @@ for filename in os.listdir(path):
     #plt.plot(futex_id, wc_time, color='b', linestyle='None', marker='o')
     #plt.plot(insert_id, i_wc_time, color='r', linestyle='None', marker='o')
     fig, ax = plt.subplots()
-    scatter = ax.scatter(genuine_id, wc_time, s=10)
-    scatter2 = ax.scatter(insert_id, i_wc_time, s=15,  c=1, cmap='Blues_r')
+    scatter = ax.bar(genuine_id, tot_time)
+    scatter2 = ax.bar(insert_id, i_tot_time)
+    #scatter = ax.bar(genuine_id, n_ops, color = 'blue')
     #plt.ylim(0, 1.1)
     plt.xlabel("thread id")
-    plt.ylabel("critical section (ms)")
+    plt.ylabel("time (ms)")
     if (max(genuine_id) == 63):
         plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 4))  
     else:
         plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 2)) 
     # Annotating a point
-    plt.text(insert_id[0], i_wc_time[0], 'insert thread', ha='left')
+    plt.text(insert_id[0], i_tot_time[0], 'insert thread', ha='left')
 
     # # Add a colorbar to the plot to represent the 'z' variable
     # plt.colorbar(label='Color Variable (z)')
 
-    plt.plot(genuine_id, wc_time)
+    #plt.plot(genuine_id, wc_time)
     n = len(filename)
-    plt.title("Worst case critical section per thread (DICE)") 
-    figName = "./graphs/ns_c_list_graphs/threads" + str(nthreads)  + "ratios_" + str(ratios)  + "_worst_case_time_DICE.png"
+    plt.title("Total lock hold per thread (DICE)") 
+    figName = "./graphs/default_list_graphs/threads" + str(nthreads)  + "ratios_" + str(ratios)  + "_total_time_DICE.png"
     plt.savefig(figName)          
     plt.close()

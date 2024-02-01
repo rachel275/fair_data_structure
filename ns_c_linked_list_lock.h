@@ -107,7 +107,6 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
     stat->n_ops++;
 }
 
-/*opportunity here for multiple locks*/
 node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     
     unsigned long long start = 0, end = 0;//, wait, release;
@@ -161,7 +160,6 @@ int list_delete(list_t *list, int k, list_stat_t* stat, int pid){
 
     
     struct node_t* toDelete;
-    //struct node_t* prev;
 
     struct head_node_t *thread_node = list->head;
 
@@ -207,7 +205,6 @@ int list_delete(list_t *list, int k, list_stat_t* stat, int pid){
             end = rdtscp();    
             lock_release(&thread_node->mutexes);
         }
-        /*TODO: if this is the last entry in the list for that thread do we want to free the memory here?*/
         thread_node = thread_node->th_next;
     }    
 
