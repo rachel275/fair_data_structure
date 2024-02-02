@@ -149,7 +149,7 @@ void *threadfunc(void *vargp)
             entry = (task->id + (10 * counter));
             list_insert(&list, entry, &entry, &task->stat, task->id);
 
-            sleep((fast_rand() % 10000) / 10000.0);
+            sleep((fast_rand() % 1000) / 1000.0);
         
       }
 
@@ -157,7 +157,7 @@ void *threadfunc(void *vargp)
 
         entry = (task->id + ((fast_rand() % (100)) * 10));
         list_find(&list, entry, &task->stat, task->id);
-        sleep((fast_rand() % 10000) / 10000.0);
+        sleep((fast_rand() % 1000) / 1000.0);
         
       }
 
@@ -166,7 +166,7 @@ void *threadfunc(void *vargp)
 
         entry = (task->id + ((fast_rand() % (100)) * 10));
         list_delete(&list, entry, &task->stat, task->id);
-        sleep((fast_rand() % 10000) / 10000.0);
+        sleep((fast_rand() % 1000) / 1000.0);
 
       }
     }

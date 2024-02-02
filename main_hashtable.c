@@ -27,6 +27,14 @@ typedef struct {
 
 hash_table *ht;
 
+#define RAND_MAX 0x7fffffff
+uint rseed = 0;
+
+// https://rosettacode.org/wiki/Linear_congruential_generator
+uint fastt_rand() {
+    return rseed = (rseed * 1103515245 + 12345) & RAND_MAX;
+}
+
 static inline unsigned int fast_rand() {
     static size_t lfsr = 0xDEADBEEFC0FFEE09;
     //lfsr = (lfsr>>1)|(((lfsr>>3)^(lfsr>>9)^(lfsr>>13)^(lfsr>>21)^(lfsr>>25)^(lfsr>>33)^(lfsr>>45)^(lfsr>>49)^(lfsr>>51)^(lfsr>>55))<<63);
@@ -35,6 +43,8 @@ static inline unsigned int fast_rand() {
     // lfsr *= 1103515245 + 12345;
     // return (unsigned int)(lfsr / 8) % 10000000;
 }
+
+
 
 void setup_worker(task_t *task) {
     int ret;
@@ -104,7 +114,7 @@ void print_summary(char * type, task_t *task, /*ull tot_time,*/ char *buffer) {
 	    //"schedstat %s",
 	    type,
 	    task->id,
-        0,
+        task->stat.bucket_id,
 	    //task->lock_acquires,
 	    //tot_time / (float) (CYCLE_PER_US * 1000),
 	    //task->stat.wait_time / (float) (CYCLE_PER_US * 1000),
@@ -237,12 +247,12 @@ void *futex_worker(void *arg) {
     hash_insert(ht, k, &k+k, &task->stat, task->id);
 	lock_acquires++;
 
-    sleep((rand() % 10000) / 10000.0);
+    sleep((fastt_rand() % 1000) / 1000.0);
 
 	hash_delete(ht, k, &task->stat, task->id); 
 	lock_acquires++;
 
-    sleep((rand() % 10000) / 10000.0);
+    sleep((fastt_rand() % 1000) / 1000.0);
     }
     //end = rdtsc();
     task->lock_acquires = lock_acquires;
@@ -339,6 +349,7 @@ int main(int argc, char *argv[]) {
 
     for (int i = 0; i < nfutex; i++) {
 	pthread_create(&futex_tasks[i].thread, NULL, futex_worker, &futex_tasks[i]);
+    sleep(1);
     }
     for (int i = 0; i < nmalicous; i++) {
 	pthread_create(&mal_tasks[i].thread, NULL, insert_worker, &mal_tasks[i]);
@@ -357,36 +368,36 @@ int main(int argc, char *argv[]) {
 	pthread_join(mal_tasks[i].thread, NULL);
     }
 
-    // hash_table_stat final = {0};
+    hash_table_stat final = {0};
 
-    // for (int i = 0; i < nfutex; i++){ /*for each thread id - each of which has a stat bucket for each stat*/
-    //     for(int j = 0; j < nbuckets; j++){ /*for each bucket*/
-    //         final.b_stats[j].bucket_id = j;
-    //         final.b_stats[j].n_ops += futex_tasks[i].stat.b_stats[j].n_ops;
-    //         final.b_stats[j].op_entries+= futex_tasks[i].stat.b_stats[j].op_entries;
-    //         final.b_stats[j].tot_cs_time += futex_tasks[i].stat.b_stats[j].tot_cs_time;
-    //         if (final.b_stats[j].wc_cs_time < futex_tasks[i].stat.b_stats[j].wc_cs_time){
-    //             final.b_stats[j].wc_cs_time = futex_tasks[i].stat.b_stats[j].wc_cs_time;
-    //         }
-    //     }
-    // }
+    for (int i = 0; i < nfutex; i++){ /*for each thread id - each of which has a stat bucket for each stat*/
+        for(int j = 0; j < nbuckets; j++){ /*for each bucket*/
+            final.b_stats[j].bucket_id = j;
+            final.b_stats[j].n_ops += futex_tasks[i].stat.b_stats[j].n_ops;
+            final.b_stats[j].op_entries+= futex_tasks[i].stat.b_stats[j].op_entries;
+            final.b_stats[j].tot_cs_time += futex_tasks[i].stat.b_stats[j].tot_cs_time;
+            if (final.b_stats[j].wc_cs_time < futex_tasks[i].stat.b_stats[j].wc_cs_time){
+                final.b_stats[j].wc_cs_time = futex_tasks[i].stat.b_stats[j].wc_cs_time;
+            }
+        }
+    }
 
 
-    // for (int i = 0; i < nmalicous; i++){
-    //     for(int j = 0; j < nbuckets; j++){
-    //         final.b_stats[j].bucket_id = j;
-    //         final.b_stats[j].n_ops += mal_tasks[i].stat.b_stats[j].n_ops;
-    //         final.b_stats[j].op_entries += mal_tasks[i].stat.b_stats[j].op_entries;
-    //         //printf("op_entries = %lld", mal_tasks[i].stat.b_stats[j].op_entries);
-    //         final.b_stats[j].tot_cs_time += mal_tasks[i].stat.b_stats[j].tot_cs_time;
-    //         if (final.b_stats[j].wc_cs_time < mal_tasks[i].stat.b_stats[j].wc_cs_time){
-    //             final.b_stats[j].wc_cs_time = mal_tasks[i].stat.b_stats[j].wc_cs_time;
-    //         }
-    //     }
-    // }
+    for (int i = 0; i < nmalicous; i++){
+        for(int j = 0; j < nbuckets; j++){
+            final.b_stats[j].bucket_id = j;
+            final.b_stats[j].n_ops += mal_tasks[i].stat.b_stats[j].n_ops;
+            final.b_stats[j].op_entries += mal_tasks[i].stat.b_stats[j].op_entries;
+            //printf("op_entries = %lld", mal_tasks[i].stat.b_stats[j].op_entries);
+            final.b_stats[j].tot_cs_time += mal_tasks[i].stat.b_stats[j].tot_cs_time;
+            if (final.b_stats[j].wc_cs_time < mal_tasks[i].stat.b_stats[j].wc_cs_time){
+                final.b_stats[j].wc_cs_time = mal_tasks[i].stat.b_stats[j].wc_cs_time;
+            }
+        }
+    }
 
-    // for (int i = 0; i < nbuckets; i++){
-    //     print_summary_buckets(&final.b_stats[i]);
-    // }
+    for (int i = 0; i < nbuckets; i++){
+        print_summary_buckets(&final.b_stats[i]);
+    }
     return 0;
 }

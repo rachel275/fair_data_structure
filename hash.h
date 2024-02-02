@@ -46,7 +46,7 @@ typedef struct bucket_stat {
 } bucket_stat;
 
 typedef struct hash_table_stat {
-    //unsigned int bucket_id;
+    unsigned int bucket_id;
     //unsigned int nentries[MAX_M];
     struct list_stat stats[100];
     struct bucket_stat b_stats[100];
@@ -152,12 +152,14 @@ int hash_insert (hash_table *hp, unsigned int k, void *v, hash_table_stat *stat,
     //stat->bucket_id = bucket_idx;
     stat->b_stats[bucket_idx].op_entries++;
     stat->b_stats[bucket_idx].n_ops++;
+    stat->n_ops++;
     //stat->wait_time += (start - wait);
     //stat->release_time += release - end;
 
     stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
     if (stat->stats->wc_cs_time > stat->wc_cs_time){
         stat->wc_cs_time = stat->stats->wc_cs_time;
+        stat->bucket_id = bucket_idx;
     }
     return insert;
 }
@@ -210,6 +212,15 @@ int hash_delete (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
         stat->b_stats[bucket_idx].op_entries--;
     }
     stat->b_stats[bucket_idx].n_ops++;
+    stat->n_ops++;
+    //stat->wait_time += (start - wait);
+    //stat->release_time += release - end;
+
+    stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
+    if (stat->stats->wc_cs_time > stat->wc_cs_time){
+        stat->wc_cs_time = stat->stats->wc_cs_time;
+        stat->bucket_id = bucket_idx;
+    }
     //stat->wait_time += start - wait;
     //stat->release_time += release - end;
     return found;
@@ -252,6 +263,16 @@ int hash_get (hash_table *hp, unsigned int k, void **vptr, hash_table_stat *stat
     }
 
     stat->b_stats[bucket_idx].n_ops++;
+    stat->n_ops++;
+    //stat->wait_time += (start - wait);
+    //stat->release_time += release - end;
+
+    stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
+    if (stat->stats->wc_cs_time > stat->wc_cs_time){
+        stat->wc_cs_time = stat->stats->wc_cs_time;
+        stat->bucket_id = bucket_idx;
+    }
+
     //stat->nentries[bucket_idx]++;
     if (*vptr != NULL){
         return 0;
