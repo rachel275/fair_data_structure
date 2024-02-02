@@ -33,7 +33,7 @@ build_my_hashtable
 
 for n in 4 16 64
 do
-  for t in 60
+  for t in 30  60
   do
     for i in 1
     do

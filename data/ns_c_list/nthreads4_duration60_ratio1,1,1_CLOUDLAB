@@ -1,6 +1,6 @@
-malicious id: 00 / number of operations: 211783047 / number of entries: 211783047 / tot_time(ms):  24424.248 / max_time(ms):      8.488 /
- genuine id: 03 / number of operations: 885351 / number of entries: 295117 / tot_time(ms):    110.403 / max_time(ms):      0.047 /
- genuine id: 00 / number of operations: 931851 / number of entries: 310617 / tot_time(ms):    116.112 / max_time(ms):      0.012 /
- genuine id: 02 / number of operations: 900933 / number of entries: 300311 / tot_time(ms):    112.240 / max_time(ms):      0.013 /
- genuine id: 01 / number of operations: 916230 / number of entries: 305410 / tot_time(ms):    113.931 / max_time(ms):      0.012 /
+malicious id: 00 / number of operations: 214332577 / number of entries: 214332577 / tot_time(ms):  24756.902 / max_time(ms):      8.433 /
+ genuine id: 01 / number of operations: 916599 / number of entries: 305533 / tot_time(ms):    113.861 / max_time(ms):      0.075 /
+ genuine id: 02 / number of operations: 903993 / number of entries: 301331 / tot_time(ms):    120.899 / max_time(ms):      8.386 /
+ genuine id: 00 / number of operations: 937734 / number of entries: 312578 / tot_time(ms):    116.507 / max_time(ms):      0.015 /
+ genuine id: 03 / number of operations: 890019 / number of entries: 296673 / tot_time(ms):    119.848 / max_time(ms):      8.500 /
  
