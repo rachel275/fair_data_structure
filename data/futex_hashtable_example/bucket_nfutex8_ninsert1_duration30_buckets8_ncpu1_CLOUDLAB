@@ -1,0 +1,17 @@
+insert id: 00 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.000 / tot_time(ms):   2389.300 / no_operations: 139004615 
+futex id: 00 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.015 / tot_time(ms):    241.604 / no_operations: 592924 
+futex id: 04 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.014 / tot_time(ms):    229.496 / no_operations: 528742 
+futex id: 06 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.012 / tot_time(ms):    227.322 / no_operations: 498776 
+futex id: 03 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.013 / tot_time(ms):    233.119 / no_operations: 544876 
+futex id: 02 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.012 / tot_time(ms):    234.235 / no_operations: 560122 
+futex id: 01 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.014 / tot_time(ms):    238.290 / no_operations: 576650 
+futex id: 05 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.018 / tot_time(ms):    228.749 / no_operations: 513426 
+futex id: 07 / worst_case_bucket_id: 0 / worst_case_lock_hold(ms):      0.013 / tot_time(ms):    222.210 / no_operations: 481796 
+bucket_id: 00 / worst_case_lock_hold(ms):      0.018 / tot_time(ms):     91.102 / no_entries: 0 / no_operations: 470490 
+bucket_id: 01 / worst_case_lock_hold(ms):      0.032 / tot_time(ms):   3542.706 / no_entries: 139004615 / no_operations: 139529649 
+bucket_id: 02 / worst_case_lock_hold(ms):      0.041 / tot_time(ms):     92.197 / no_entries: 0 / no_operations: 494640 
+bucket_id: 03 / worst_case_lock_hold(ms):      0.017 / tot_time(ms):     79.032 / no_entries: 0 / no_operations: 448106 
+bucket_id: 04 / worst_case_lock_hold(ms):      0.017 / tot_time(ms):    112.455 / no_entries: 0 / no_operations: 604186 
+bucket_id: 05 / worst_case_lock_hold(ms):      0.029 / tot_time(ms):     90.859 / no_entries: 0 / no_operations: 512124 
+bucket_id: 06 / worst_case_lock_hold(ms):      0.017 / tot_time(ms):    146.833 / no_entries: 0 / no_operations: 745732 
+bucket_id: 07 / worst_case_lock_hold(ms):      0.013 / tot_time(ms):     89.140 / no_entries: 0 / no_operations: 497000 
