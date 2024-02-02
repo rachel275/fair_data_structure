@@ -11,8 +11,24 @@
 #include "linked_list.h"
 #endif
 
-#include <math.h>
+//#include <math.h>
 
+// static inline unsigned int fast_rand() {
+//     static size_t lfsr = 0xDEADBEEFC0FFEE09;
+//     //lfsr = (lfsr>>1)|(((lfsr>>3)^(lfsr>>9)^(lfsr>>13)^(lfsr>>21)^(lfsr>>25)^(lfsr>>33)^(lfsr>>45)^(lfsr>>49)^(lfsr>>51)^(lfsr>>55))<<63);
+//     lfsr = (lfsr>>1)|(((lfsr>>3)^(lfsr>>13)^(lfsr>>25)^(lfsr>>33)^(lfsr>>49)^(lfsr>>55))<<63);
+//     return lfsr & 0x00FFFFFF;
+//     // lfsr *= 1103515245 + 12345;
+//     // return (unsigned int)(lfsr / 8) % 10000000;
+// }
+
+#define RAND_MAX 0x7fffffff
+uint rseed = 0;
+
+// https://rosettacode.org/wiki/Linear_congruential_generator
+uint fast_rand() {
+    return rseed = (rseed * 1103515245 + 12345) & RAND_MAX;
+}
 
 /********************************** Global Variables *****************************************/
 int test_threads = DEFAULT_THREADS;  /*=to some input, set this one when it is first run*/
@@ -78,25 +94,24 @@ void *threadfunc(void *vargp)
             entry = (task->id + (10 * counter));
             list_insert(&list, entry, &entry, &task->stat, task->id);
 
-            sleep((rand() % 10000) / 10000.0);
+            sleep((fast_rand() % 10000) / 10000.0);
         
       }
 
       for (int i = 0; i < test_find_ratio; i++){
 
-
-        entry = (task->id + (rand() % (50)));
+        entry = (task->id + ((fast_rand() % (100)) * 10));
         list_find(&list, entry, &task->stat, task->id);
-        sleep((rand() % 10000) / 10000.0);
+        sleep((fast_rand() % 10000) / 10000.0);
         
       }
 
       for (int i = 0; i < test_delete_ratio; i++){
       /*getting a random number that's a multiple of the id.*/
 
-        entry = (task->id + (rand() % (50)));
+        entry = (task->id + ((fast_rand() % (100)) * 10));
         list_delete(&list, entry, &task->stat, task->id);
-        sleep((rand() % 10000) / 10000.0);
+        sleep((fast_rand() % 10000) / 10000.0);
 
       }
     }
@@ -115,8 +130,6 @@ void *insertfunc(void *vargp)
     // /*loop continuously*/
     while(!*task->stop){
       /*add to the linked list*/
-        counter++;
-        entry = (task->id + (10 * counter));
         list_insert(&list, entry, &entry, &task->stat, task->id);
     }
     print_summary("malicious", task);
@@ -203,6 +216,7 @@ int main(int argc, char **argv)
 
     for (int j = 0; j < test_threads; j++){
         rc = pthread_create(&test_tasks[j].thread, &attr, threadfunc, &test_tasks[j]);
+        sleep(1);
         if (rc) {
             printf("Error:unable to create thread, %d\n", rc);
             exit(-1);

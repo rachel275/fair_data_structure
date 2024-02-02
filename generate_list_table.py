@@ -54,8 +54,8 @@ def find_outliers_num(dataset, avg, sd):
             outlierCount += 1
     return outlierCount
 
-def write_to_table(threads, type, iratio, fratio, dratio):
-    f = open("./tables/" + type + "_list_tables/threads_" + str(threads) + "_ratio_" + str(iratio) + "," + str(fratio) + "," + str(dratio) + "_DICE.csv", 'a+', newline="")
+def write_to_table(threads, duration, type,  iratio, fratio, dratio):
+    f = open("./tables/" + type + "_list_tables/threads_" + str(threads) + "_duration_" + str(duration) + "_ratio_" + str(iratio) + "," + str(fratio) + "," + str(dratio) + "_CLOUDLAB.csv", 'a+', newline="")
     writer = csv.writer(f)
     header = ["Type of thread", "Thread Id","Number of Operations", "Number of Entries", "Worst Case Time", "Total Time"]
     writer.writerow(header)
@@ -109,12 +109,13 @@ for dir in os.listdir(rootdir):
             for filename in os.listdir("./data/" + dir):
                 with open(os.path.join("./data/" + dir, filename), 'r') as file:
                     data = []
-                    if (filename.endswith("_DICE") == False):
+                    if (filename.endswith("_CLOUDLAB") == False):
                         file.close()
                         continue
                     # information = file.readline()
                     # #find this information from the file name
                     nthreads = filename.split('_')[0].split("nthreads")[-1]#find_info(information, 1).lstrip().rstrip()
+                    duration = filename.split('_')[1].split("duration")[-1]
                     ratios = filename.split('_')[2].split('ratio')[1]
                     iratio = ratios.split(",")[0]
                     fratio = ratios.split(",")[1]
@@ -149,7 +150,7 @@ for dir in os.listdir(rootdir):
                     
                     sort_data()
                     #sort_again()
-                    write_to_table(nthreads, type, iratio, fratio, dratio)
+                    write_to_table(nthreads, duration, type, iratio, fratio, dratio)
                     file.close()
                 #print("close this file ")
             # sort_data()
