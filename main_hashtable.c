@@ -239,11 +239,11 @@ void *futex_worker(void *arg) {
     // loop
     ull lock_acquires = 0;
     //start = rdtsc();
-	k = fast_rand();
+	k = fastt_rand();
     while (!*task->stop) {
     
     //assume this is the hashed futexx address and thread id
-	k = fast_rand();
+	k = fastt_rand();
     hash_insert(ht, k, &k+k, &task->stat, task->id);
 	lock_acquires++;
 
