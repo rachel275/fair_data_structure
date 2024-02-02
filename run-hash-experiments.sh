@@ -31,7 +31,7 @@ build_my_hashtable
 # fi
 
 
-for a in 64
+for a in 8 16 64
 do
   for d in 30
   do
@@ -39,8 +39,8 @@ do
     do
       b=1
       g=1
-      echo "./hash_main $a $b $d $t $g > ./data/futex_hashtable_example/bucket_nfutex${a}_ninsert${b}_duration${d}_buckets${t}_ncpu${g}_DICE"
-      ./hash_main $a $b $d $t $g > ./data/futex_hashtable_example/bucket_nfutex${a}_ninsert${b}_duration${d}_buckets${t}_ncpu${g}_DICE
+      echo "./hash_main $a $b $d $t $g > ./data/futex_hashtable_example/bucket_nfutex${a}_ninsert${b}_duration${d}_buckets${t}_ncpu${g}_CLOUDLAB"
+      ./hash_main $a $b $d $t $g > ./data/futex_hashtable_example/bucket_nfutex${a}_ninsert${b}_duration${d}_buckets${t}_ncpu${g}_CLOUDLAB
     done
   done
 done

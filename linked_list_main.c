@@ -274,7 +274,6 @@ int main(int argc, char **argv)
 
     for (int j = 0; j < test_threads; j++){
         rc = pthread_create(&test_tasks[j].thread, &attr, threadfunc, &test_tasks[j]);
-        sleep(1);
         if (rc) {
             printf("Error:unable to create thread, %d\n", rc);
             exit(-1);
