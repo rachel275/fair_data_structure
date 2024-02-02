@@ -14,7 +14,7 @@
 #define DEFAULT_WAIT     0
 #define DEFAULT_RATIO    1
 
-#define STACKSIZE        10000000
+#define STACKSIZE        1000000000
 
 #define FALSE            0
 #define TRUE             1

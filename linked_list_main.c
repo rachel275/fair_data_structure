@@ -1,7 +1,16 @@
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <sched.h>
+#include <sys/resource.h>
+#include <sys/syscall.h>
+#include <inttypes.h>
+#define gettid() syscall(SYS_gettid)
 /*simple linked list with insert and find functions*/
 #include "rdtsc.h"
-#include "lock.h"
-
 
 #ifdef NSC
 #include "ns_c_linked_list.h"
@@ -10,6 +19,47 @@
 #else
 #include "linked_list.h"
 #endif
+
+typedef struct {
+    volatile int *stop;
+    pthread_t thread;
+    int priority;
+    int id;
+    int ncpu;
+    list_stat_t stat;
+} task_t __attribute__ ((aligned (64)));
+
+void setup_worker(task_t *task) {
+    int ret;
+
+    if (task->ncpu != 0) {
+	cpu_set_t cpuset;
+	CPU_ZERO(&cpuset);
+	for (int i = 0; i < task->ncpu; i++) {
+	    /*
+	    if (i < 8 || i >= 24)
+		CPU_SET(i, &cpuset);
+	    else if (i < 16)
+		CPU_SET(i+8, &cpuset);
+	    else
+		CPU_SET(i-8, &cpuset);
+		*/
+	    CPU_SET(i, &cpuset);
+	}
+	ret = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+	if (ret != 0) {
+	    perror("pthread_set_affinity_np");
+	    exit(-1);
+	}
+    }
+
+    pid_t tid = gettid();
+    ret = setpriority(PRIO_PROCESS, tid, task->priority);
+    if (ret != 0) {
+	perror("setpriority");
+	exit(-1);
+    }
+}
 
 //#include <math.h>
 
@@ -41,16 +91,21 @@ unsigned int test_delete_ratio = DEFAULT_RATIO;
 unsigned int test_insert_ratio = DEFAULT_RATIO; 
 unsigned int test_find_ratio = DEFAULT_RATIO;
 
-typedef struct {
-    volatile int *stop;
-    pthread_t thread;
-    int priority;
-    int id;
-    int ncpu;
-    list_stat_t stat;
-} task_t __attribute__ ((aligned (64)));
+// typedef struct {
+//     volatile int *stop;
+//     pthread_t thread;
+//     int priority;
+//     int id;
+//     double cs;
+//     int ncpu;
+//     // output
+//     ull lock_acquires;
+//     hash_table_stat stat;
+// } task_t __attribute__ ((aligned (64)));
 
 pthread_attr_t attr;
+
+
 
 /********************************* Main Functions *******************************************/
 void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
@@ -82,7 +137,7 @@ void *threadfunc(void *vargp)
 {
     /*get the thread id*/
     task_t *task = (task_t *) vargp;
-
+    setup_worker(task);
     int counter = -1;
     int entry = task->id;
 
@@ -123,7 +178,7 @@ void *threadfunc(void *vargp)
 void *insertfunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
-
+    setup_worker(task);
     int counter = -1;
     int entry = task->id;
 
@@ -194,6 +249,7 @@ int main(int argc, char **argv)
     }
 
     int stop __attribute__((aligned (64))) = 0;
+    int ncpu = 0;
     task_t *test_tasks = malloc(sizeof(task_t) * (test_threads));
     task_t *mal_tasks = malloc(sizeof(task_t) * (test_ninserts));
 
@@ -201,16 +257,18 @@ int main(int argc, char **argv)
 
     List_Init(&list);
 
-    pthread_attr_init(&attr);
-    pthread_attr_setstacksize (&attr, (size_t)STACKSIZE);
+    // pthread_attr_init(&attr);
+    // pthread_attr_setstacksize (&attr, (size_t)STACKSIZE);
 
     for (int j = 0; j < test_threads; j++){
         test_tasks[j].id = j;
+    	test_tasks[i].ncpu = ncpu;
         test_tasks[j].stop = &stop;
     }
 
     for (int j = 0; j < test_ninserts; j++){
         mal_tasks[j].id = j;
+    	mal_tasks[i].ncpu = ncpu;
         mal_tasks[j].stop = &stop;
     }
 
