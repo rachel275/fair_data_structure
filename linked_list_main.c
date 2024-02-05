@@ -116,7 +116,9 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
         "number of operations: %lli / "
         "number of entries: %i / "
 	    "tot_time(ms): %10.3f / "
-	    "max_time(ms): %10.3f /\n ",
+	    "max_time(ms): %10.3f / "
+	    "tot_find_time(ms): %10.3f / "
+	    "max_find_time(ms): %10.3f /\n ",
 	    //"(ms): %10.3f \n ",
 	    //"release_time(ms) %10.3f "
 	    //"other_time(ms) %10.3f "
@@ -127,7 +129,9 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
         (int)task->stat.op_entries,
 	    //task->lock_acquires,
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
-	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
+	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000),
+        task->stat.tot_find_cs_time / (float) (CYCLE_PER_US * 1000),
+	    task->stat.wc_find_cs_time / (float) (CYCLE_PER_US * 1000));
 	    //task->stat.cs_time / (float) (CYCLE_PER_US * 1000));//,
 	    //task->stat.release_time / (float) (CYCLE_PER_US * 1000),
 	    //(tot_time-task->stat.wait_time-task->stat.cs_time-task->stat.release_time)/(float) (CYCLE_PER_US * 1000),
