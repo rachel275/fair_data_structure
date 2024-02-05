@@ -44,6 +44,8 @@ typedef struct list_stat {
     unsigned long long wc_cs_time;
     unsigned long long cs_time;
     unsigned long long tot_cs_time;
+    unsigned long long tot_find_cs_time;
+    unsigned long long wc_find_cs_time;
     size_t n_ops;
     unsigned int op_entries;
 } list_stat_t;
