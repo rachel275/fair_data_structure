@@ -50,32 +50,32 @@ for filename in os.listdir(path):
                     n_ops.append(int(row[int(2)]))
                     n_entries.append(int(row[int(3)]))  
 
-    #plot threads against their 
-    #plt.plot(futex_id, wc_time, color='b', linestyle='None', marker='o')
-    #plt.plot(insert_id, i_wc_time, color='r', linestyle='None', marker='o')
-    fig, ax = plt.subplots()
-    scatter = ax.bar(genuine_id, tot_time)
-    scatter2 = ax.bar(insert_id, i_tot_time)
-    #scatter = ax.bar(genuine_id, n_ops, color = 'blue')
-    #plt.ylim(0, 1.1)
-    plt.xlabel("thread id")
-    plt.ylabel("time (ms)")
-    if (max(genuine_id) == 63):
-        plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 4))  
-    else:
-        plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 2)) 
-    # Annotating a point
-    plt.text(insert_id[0], i_tot_time[0], 'insert thread', ha='left')
+    # #plot threads against their 
+    # #plt.plot(futex_id, wc_time, color='b', linestyle='None', marker='o')
+    # #plt.plot(insert_id, i_wc_time, color='r', linestyle='None', marker='o')
+    # fig, ax = plt.subplots()
+    # scatter = ax.bar(genuine_id, tot_time)
+    # scatter2 = ax.bar(insert_id, i_tot_time)
+    # #scatter = ax.bar(genuine_id, n_ops, color = 'blue')
+    # #plt.ylim(0, 1.1)
+    # plt.xlabel("thread id")
+    # plt.ylabel("time (ms)")
+    # if (max(genuine_id) == 63):
+    #     plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 4))  
+    # else:
+    #     plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 2)) 
+    # # Annotating a point
+    # plt.text(insert_id[0], i_tot_time[0], 'insert thread', ha='left')
 
-    # # Add a colorbar to the plot to represent the 'z' variable
-    # plt.colorbar(label='Color Variable (z)')
+    # # # Add a colorbar to the plot to represent the 'z' variable
+    # # plt.colorbar(label='Color Variable (z)')
 
-    #plt.plot(genuine_id, wc_time)
-    n = len(filename)
-    plt.title("Total lock hold per thread (CLOUDLAB," + str(duration) + "s)") 
-    figName = "./graphs/default_list_graphs/threads" + str(nthreads)  + "_duration " + str(duration) + "_ratios_" + str(ratios)  + "_total_time_CLOUDLAB.png"
-    plt.savefig(figName)          
-    plt.close()
+    # #plt.plot(genuine_id, wc_time)
+    # n = len(filename)
+    # plt.title("Total lock hold per thread (CLOUDLAB," + str(duration) + "s)") 
+    # figName = "./graphs/ns_c_list_graphs/threads" + str(nthreads)  + "_duration " + str(duration) + "_ratios_" + str(ratios)  + "_total_time_CLOUDLAB.png"
+    # plt.savefig(figName)          
+    # plt.close()
 
     #     #plot threads against their 
     # #plt.plot(futex_id, wc_time, color='b', linestyle='None', marker='o')
@@ -100,6 +100,36 @@ for filename in os.listdir(path):
     # #plt.plot(genuine_id, wc_time)
     # n = len(filename)
     # plt.title("Number of operations per thread (CLOUDLAB, " + str(duration) + "s)") 
-    # figName = "./graphs/default_list_graphs/threads" + str(nthreads)  + "_duration " + str(duration) + "_ratios_" + str(ratios)  + "_n_ops_CLOUDLAB.png"
+    # figName = "./graphs/ns_c_list_graphs/threads" + str(nthreads)  + "_duration " + str(duration) + "_ratios_" + str(ratios)  + "_n_ops_CLOUDLAB.png"
     # plt.savefig(figName)          
     # plt.close()
+
+
+
+
+            #plot threads against their 
+    #plt.plot(futex_id, wc_time, color='b', linestyle='None', marker='o')
+    #plt.plot(insert_id, i_wc_time, color='r', linestyle='None', marker='o')
+    fig, ax = plt.subplots()
+    #scatter = ax.bar(genuine_id, n_ops)
+    scatter2 = ax.bar(insert_id, i_n_entries)
+    scatter = ax.bar(genuine_id, n_entries)
+    #plt.ylim(0, 1.1)
+    plt.xlabel("thread id")
+    plt.ylabel("number of entries")
+    if (max(genuine_id) == 63):
+        plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 4))  
+    else:
+        plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 2)) 
+    # Annotating a point
+    plt.text(insert_id[0], i_n_entries[0], 'insert thread', ha='left')
+
+    # # Add a colorbar to the plot to represent the 'z' variable
+    # plt.colorbar(label='Color Variable (z)')
+
+    plt.plot(genuine_id, tot_time)
+    n = len(filename)
+    plt.title("Total critical section time and entries per thread (CLOUDLAB, " + str(duration) + "s)") 
+    figName = "./graphs/default_list_graphs/threads" + str(nthreads)  + "_duration " + str(duration) + "_ratios_" + str(ratios)  + "_n_entries_CLOUDLAB.png"
+    plt.savefig(figName)          
+    plt.close()

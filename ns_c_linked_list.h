@@ -96,10 +96,10 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
         lock_release(&list->mutexes);
     }
 
-    duration = end - start;
-    if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
-    stat->cs_time = duration;
-    stat->tot_cs_time += duration;
+    // duration = end - start;
+    // if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
+    // stat->cs_time = duration;
+    // stat->tot_cs_time += duration;
     stat->op_entries++;
     stat->n_ops++;
 }
@@ -203,12 +203,12 @@ int list_delete(list_t *list, int k, list_stat_t* stat, int pid){
     end = rdtscp();    
     lock_release(&list->mutexes);
 
-    duration = end - start;
-    if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
-    stat->cs_time = duration;
-    stat->tot_cs_time += duration;
+    // duration = end - start;
+    // if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
+    // stat->cs_time = duration;
+    // stat->tot_cs_time += duration;
     stat->n_ops++;
-    return 0;
+    // return 0;
 }
 
 #endif /*LINKED_LIST_H*/

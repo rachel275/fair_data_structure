@@ -55,9 +55,9 @@ def find_outliers_num(dataset, avg, sd):
     return outlierCount
 
 def write_to_table(threads, buckets):
-    f = open("./tables/futex_example_tables/buckets_threads_" + str(threads) + "_buckets_" + str(buckets) + ".csv", 'a+', newline="")
+    f = open("./tables/futex_example_tables/buckets_threads_" + str(threads) + "_buckets_" + str(buckets) + "_CLOUDLAB.csv", 'a+', newline="")
     writer = csv.writer(f)
-    header = ["Type of thread", "Thread Id", "Worst Case Bucket", "Worst Case Time", "Total Time", "Number of Operations"]
+    header = ["Type of thread", "Thread Id", "Total Time", "Worst Case Bucket", "Worst Case Time", "Number of Operations"]
     writer.writerow(header)
     writer.writerows(data)
     f.close()
@@ -108,36 +108,36 @@ for filename in os.listdir(path):
         data = []
         # information = file.readline()
         # #find this information from the file name
-        if (filename.endswith("_DICE") == False & filename.split('_')[0] == "bucket"):
+        if (filename.endswith("_CLOUDLAB") == False or filename.split('_')[0] != "bucket"):
             file.close()
             continue
         else:
-            nthreads = filename.split('_')[0].split("nfutex")[-1]#find_info(information, 1).lstrip().rstrip()
-            malthreads = filename.split('_')[1].split("ninsert")[-1] #find_info(information, 1).lstrip().rstrip()
+            nthreads = filename.split('_')[1].split("nfutex")[-1]#find_info(information, 1).lstrip().rstrip()
+            malthreads = filename.split('_')[2].split("ninsert")[-1] #find_info(information, 1).lstrip().rstrip()
         # duration = int(filename.split('_')[2].split("duration")[-1]) #find_info(information, 1).lstrip().rstrip()
-            buckets = int(filename.split('_')[3].split("buckets")[-1]) #find_info(information, 1).lstrip().rstrip()
+            buckets = int(filename.split('_')[4].split("buckets")[-1]) #find_info(information, 1).lstrip().rstrip()
 
 #bucket id, worst case lock hold, total lock hold, no_entries, no_operations
         threadNum = int(nthreads) + int(malthreads)
-        for i in range(buckets):
+        for i in range(threadNum):
             text = file.readline().split('/')
             thread_type = text[0].split(' ')[0]
             #bucket_id = int(text[0].split(' ')[0])
             thread_id = int(text[0].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
             #wc_time = float(text[1].split(':')[-1])
-            bucket_id = int(text[0].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
+            bucket_id = int(text[1].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
             #thread_bucket_id.append(bucket_id)
-            thread_wc_time= float(text[1].split(':')[-1])#(find_info(text, 1).lstrip().rstrip())
+            thread_wc_time= float(text[2].split(':')[-1])#(find_info(text, 1).lstrip().rstrip())
             #thread_wc_time.append(wc_time)
-            thread_total_time = float(text[2].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
+            thread_total_time = float(text[3].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
             #thread_total_time.append(total_time)
-            thread_entries= int(text[3].split(':')[-1])
+            thread_entries= int(text[4].split(':')[-1])
             #thread_execution= int(text[4].split(':')[-1])#(find_info(text, 1).lstrip().rstrip())
             #thread_executions.append(thread_execution)
 
             #sd = round(statistics.stdev(thread_executions), 2)
 
-            data.append([bucket_id, wc_time, total_time, bucket_entries, bucket_execution])
+            data.append([thread_type, thread_id, thread_total_time, thread_wc_time, bucket_id, thread_entries])
         
         sort_data()
         #sort_again()
