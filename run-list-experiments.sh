@@ -41,11 +41,11 @@ do
       do
         for d in 0
         do
-          m=1
-          echo "./list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/default_list/nthreads${n}_duration${t}_CLOUBLAB"
-          ./list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/default_list/nthreads${n}_duration${t}_CLOUDLAB
-          echo "./ns_c_list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/ns_c_list/nthreads${n}_duration${t}_CLOUDLAB"
-          ./ns_c_list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/ns_c_list/nthreads${n}_duration${t}_CLOUDLAB
+          m=0
+          echo "./list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/default_list/nthreads${n}_duration${t}_basecase_CLOUBLAB"
+          ./list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/default_list/nthreads${n}_duration${t}_basecase_CLOUDLAB
+         # echo "./ns_c_list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/ns_c_list/nthreads${n}_duration${t}_CLOUDLAB"
+         # ./ns_c_list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/ns_c_list/nthreads${n}_duration${t}_CLOUDLAB
         done
       done  
     done
