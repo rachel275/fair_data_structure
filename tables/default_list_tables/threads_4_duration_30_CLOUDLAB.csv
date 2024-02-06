@@ -1,0 +1,6 @@
+Type of thread,Thread Id,Number of Operations,Number of Entries,Total Time,Worst Case Time,Find Total Time,Find Worst Case Time
+insert_find,0,7106,3553,10.645,8319.017,8318.561,10.645
+insert_find,1,7014,3507,11.357,9958.96,9958.43,11.357
+insert_find,2,6784,3392,9.068,9578.396,9577.874,9.068
+insert_find,3,8248,4124,10.065,10411.446,10410.898,10.065
+malicious,0,588709,588709,0.035,36.303,0.0,0.0
