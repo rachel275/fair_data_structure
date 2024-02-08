@@ -176,7 +176,7 @@ void *findfunc(void *vargp)
     // /*loop continuously*/
     while(!*task->stop){
       /*add to the linked list*/
-        entry = ((fast_rand() % (key_space * 50)) + task->id);
+        entry = ((fast_rand() % (key_space)) + task->id);
         list_find(&list, entry, &task->stat, task->id);
         //sleep((fast_rand() % 1000) / 1000.0);
     }
@@ -284,7 +284,7 @@ int main(int argc, char **argv)
     /*set up the linked list before hand*/
     struct list_stat dummy = {0};
     for (int n = 0; n < key_space; n++){
-        list_insert(&list, n, &n+n, &dummy, 0);
+        list_insert(&list, n, &n+n, &dummy, (n % (test_find_ratio)));
     }
 
     for (int j = 0; j < test_insert_ratio; j++){
