@@ -7,11 +7,11 @@ import sys
 
 
 
-path = "./tables/ns_c_list_tables/"  #FILL THIS IN HERE
+path = "./tables/default_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
-        if (filename.endswith("_CLOUDLAB.csv") == False):
+        if (filename.endswith("_basecase_CLOUDLAB.csv") == True):
             file.close()
             continue
         nthreads = int(filename.split('_')[1]) #find_info(information, 1).lstrip().rstrip()
@@ -121,20 +121,25 @@ for filename in os.listdir(path):
     for i in range(len(n_entries)):
         avg_find_time.append(tot_time[i]/n_entries[i])
 
-    fig, ax = plt.subplots()
-
-    twin1 = ax.twinx()
+    fig, ax = plt.subplots(1, 2)
+    twin1 = ax[1].twinx()
     #twin2 = ax.twinx()
+    
+    ax[0].bar(insert_id, i_n_entries)
 
     #scatter = ax.bar(genuine_id, n_ops)
     #scatter2 = ax.bar(insert_id, i_n_entries)
-    scatter = ax.bar(genuine_id, n_entries)
-    twin1.plot(genuine_id, avg_find_time, color="green")
-    twin1.plot(genuine_id, find_wc_time, color="red")
+    scatter = ax[1].bar(genuine_id, n_entries)
+    twin1.plot(genuine_id, avg_find_time, color="green", label="Average lock hold time per entry")
+    twin1.plot(genuine_id, find_wc_time, color="red", label="Worst case lock hold time")
     #plt.ylim(0, 1.1)
-    ax.set(xlabel="thread id", ylabel="number of entries")
-    twin1.set(ylim=(0, max(find_wc_time)), ylabel="Avg Lock Hold Time")
-    twin1.yaxis.label.set_color("green")
+    ax[0].set_xticks(np.arange(0, 1, 1))
+    ax[0].set( ylabel="Number of entries")
+    ax[0].set(xlabel="Thread ID")
+    ax[1].set(xlabel="Thread ID")
+    twin1.set(ylim=(0, max(find_wc_time)), ylabel="Lock hold time")
+    twin1.legend(loc='best')
+    #twin1.yaxis.label.set_color("green")
 
     #twin2.set(ylim=(0, max(find_wc_time)), ylabel="Worst Case Lock Hold Time")
     #twin2.yaxis.label.set_color("red")
@@ -150,7 +155,7 @@ for filename in os.listdir(path):
 
 
     n = len(filename)
-    plt.title("Total critical section time and entries per thread (CLOUDLAB, " + str(duration) + "s)") 
-    figName = "./graphs/ns_c_list_graphs/threads" + str(nthreads)  + "_duration " + str(duration) + "_n_entries_CLOUDLAB.png"
+    fig.set_title("Lock hold time for find operations (CLOUDLAB, basecase, " + str(duration) + "s)") 
+    figName = "./graphs/default_list_graphs/threads" + str(nthreads)  + "_duration " + str(duration) + "_n_entries_CLOUDLAB.png"
     plt.savefig(figName)          
     plt.close()

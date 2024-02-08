@@ -55,7 +55,7 @@ def find_outliers_num(dataset, avg, sd):
     return outlierCount
 
 def write_to_table(threads, duration, type):
-    f = open("./tables/" + type + "_list_tables/threads_" + str(threads) + "_duration_" + str(duration) + "_CLOUDLAB.csv", 'a+', newline="")
+    f = open("./tables/" + type + "_list_tables/threads_" + str(threads) + "_duration_" + str(duration) + "_basecase_CLOUDLAB.csv", 'a+', newline="")
     writer = csv.writer(f)
     header = ["Type of thread", "Thread Id","Number of Operations", "Number of Entries", "Total Time", "Worst Case Time", "Find Total Time", "Find Worst Case Time"]
     writer.writerow(header)
@@ -109,7 +109,7 @@ for dir in os.listdir(rootdir):
             for filename in os.listdir("./data/" + dir):
                 with open(os.path.join("./data/" + dir, filename), 'r') as file:
                     data = []
-                    if (filename.endswith("_CLOUDLAB") == False):
+                    if (filename.endswith("_basecase_CLOUDLAB") == False):
                         file.close()
                         continue
                     # information = file.readline()
@@ -118,7 +118,7 @@ for dir in os.listdir(rootdir):
                     duration = filename.split('_')[1].split("duration")[-1]
 
             #thread type, thread id, number of operations, number of entries, total cs time, worst case critical section time.
-                    threadNum = int(nthreads) + 1
+                    threadNum = int(nthreads) #+ 1
                     for i in range(threadNum):
                         text = file.readline().split('/')
                         thread_type = text[0].split(' ')[1]
