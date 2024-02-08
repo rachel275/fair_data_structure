@@ -261,7 +261,7 @@ int main(int argc, char **argv)
     }
 
     int stop __attribute__((aligned (64))) = 0;
-    int ncpu = 0;
+    int ncpu = test_insert_ratio + test_find_ratio + test_delete_ratio;
     // task_t *mal_tasks = malloc(sizeof(task_t) * (test_threads));
     // task_t *insert_find_tasks = malloc((sizeof(task_t) * (test_insert_find_ratio)));
     task_t *insert_tasks = malloc(sizeof(task_t) * (test_insert_ratio));
