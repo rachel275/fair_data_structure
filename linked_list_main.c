@@ -83,6 +83,7 @@ unsigned int test_insert_find_ratio = 0;
 unsigned int test_delete_ratio = 0;
 unsigned int test_insert_ratio = 0; 
 unsigned int test_find_ratio = 0;
+unsigned int key_space = 0;
 
 pthread_attr_t attr;
 
@@ -175,7 +176,7 @@ void *findfunc(void *vargp)
     // /*loop continuously*/
     while(!*task->stop){
       /*add to the linked list*/
-        entry = ((fast_rand() % (500)) + task->id);
+        entry = ((fast_rand() % (key_space * 50)) + task->id);
         list_find(&list, entry, &task->stat, task->id);
         //sleep((fast_rand() % 1000) / 1000.0);
     }
@@ -268,7 +269,7 @@ int main(int argc, char **argv)
     task_t *delete_tasks = malloc(sizeof(task_t) * (test_delete_ratio));
 
     int rc;
-    int key_space = (test_find_ratio * 50);
+    key_space = (test_find_ratio * 50);
 
     List_Init(&list);
 
