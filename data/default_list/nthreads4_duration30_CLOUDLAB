@@ -1,6 +1,0 @@
-insert_find id: 01 / number of operations: 7014 / number of entries: 3507 / tot_time(ms):   9958.960 / max_time(ms):     11.357 / tot_find_time(ms):   9958.430 / max_find_time(ms):     11.357 /
- insert_find id: 00 / number of operations: 7106 / number of entries: 3553 / tot_time(ms):   8319.017 / max_time(ms):     10.645 / tot_find_time(ms):   8318.561 / max_find_time(ms):     10.645 /
- malicious id: 00 / number of operations: 588709 / number of entries: 588709 / tot_time(ms):     36.303 / max_time(ms):      0.035 / tot_find_time(ms):      0.000 / max_find_time(ms):      0.000 /
- insert_find id: 02 / number of operations: 6784 / number of entries: 3392 / tot_time(ms):   9578.396 / max_time(ms):      9.068 / tot_find_time(ms):   9577.874 / max_find_time(ms):      9.068 /
- insert_find id: 03 / number of operations: 8248 / number of entries: 4124 / tot_time(ms):  10411.446 / max_time(ms):     10.065 / tot_find_time(ms):  10410.898 / max_find_time(ms):     10.065 /
- 
