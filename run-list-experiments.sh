@@ -31,23 +31,16 @@ build_my_hashtable
 # fi
 
 
-for n in 4 16
+for i in 1 2 4 8
 do
-  for t in 2 10 30  60
+  for f in 1 2 4 8
   do
-    for i in 0
+    for t in 10 30 60
     do
-      for f in 0
-      do
-        for d in 0
-        do
-          m=0
-          echo "./list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/default_list/nthreads${n}_duration${t}_basecase_CLOUBLAB"
-          ./list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/default_list/nthreads${n}_duration${t}_basecase_CLOUDLAB
-         # echo "./ns_c_list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/ns_c_list/nthreads${n}_duration${t}_CLOUDLAB"
-         # ./ns_c_list_main -n$n -m$m -t$t -i$i -f$f -d$d > ./data/ns_c_list/nthreads${n}_duration${t}_CLOUDLAB
-        done
-      done  
+       echo "./list_main -t$t -i$i -f$f > ./data/default_list/ithreads${i}_fthreads${f}_duration${t}_basecase_CLOUBLAB"
+       ./list_main -t$t -i$i -f$f > ./data/default_list/ithreads${i}_fthreads${f}_duration${t}_basecase_CLOUDLAB
+      # echo "./ns_c_list_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_CLOUDLAB"
+      # ./ns_c_list_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_CLOUDLAB  
     done
   done
 done

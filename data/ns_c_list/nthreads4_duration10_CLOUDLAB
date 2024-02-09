@@ -1,6 +1,0 @@
-malicious id: 00 / number of operations: 88478421 / number of entries: 88478421 / tot_time(ms):   4999.181 / max_time(ms):      0.110 / tot_find_time(ms):      0.000 / max_find_time(ms):      0.000 /
- insert_find id: 02 / number of operations: 164778 / number of entries: 82389 / tot_time(ms):     22.077 / max_time(ms):      0.007 / tot_find_time(ms):      5.110 / max_find_time(ms):      0.007 /
- insert_find id: 03 / number of operations: 173014 / number of entries: 86507 / tot_time(ms):     17.006 / max_time(ms):      0.007 / tot_find_time(ms):      3.784 / max_find_time(ms):      0.006 /
- insert_find id: 00 / number of operations: 173324 / number of entries: 86662 / tot_time(ms):     16.655 / max_time(ms):      0.007 / tot_find_time(ms):      3.800 / max_find_time(ms):      0.000 /
- insert_find id: 01 / number of operations: 167052 / number of entries: 83526 / tot_time(ms):     20.564 / max_time(ms):      0.007 / tot_find_time(ms):      4.741 / max_find_time(ms):      0.000 /
- 

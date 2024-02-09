@@ -45,7 +45,6 @@ static inline unsigned int fast_rand() {
 }
 
 
-
 void setup_worker(task_t *task) {
     int ret;
 
@@ -120,7 +119,7 @@ void print_summary(char * type, task_t *task, /*ull tot_time,*/ char *buffer) {
 	    //task->stat.wait_time / (float) (CYCLE_PER_US * 1000),
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000),
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
-        (int)task->stat.n_ops);//,
+        (int)task->stat.n_ops);
 	    //task->stat.release_time / (float) (CYCLE_PER_US * 1000),
 	    //(tot_time-task->stat.wait_time-task->stat.cs_time-task->stat.release_time)/(float) (CYCLE_PER_US * 1000),
 	    //buffer);
