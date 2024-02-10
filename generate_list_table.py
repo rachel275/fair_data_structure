@@ -54,10 +54,10 @@ def find_outliers_num(dataset, avg, sd):
             outlierCount += 1
     return outlierCount
 
-def write_to_table(threads, duration, type):
-    f = open("./tables/" + type + "_list_tables/threads_" + str(threads) + "_duration_" + str(duration) + "_basecase_CLOUDLAB.csv", 'a+', newline="")
+def write_to_table(ithreads, fthreads, duration, type):
+    f = open("./tables/" + type + "_list_tables/ithreads_" + str(ithreads) + "_fthreads_" + str(fthreads) + "_duration_" + str(duration) + "_basecase_CLOUDLAB.csv", 'a+', newline="")
     writer = csv.writer(f)
-    header = ["Type of thread", "Thread Id","Number of Operations", "Number of Entries", "Total Time", "Worst Case Time", "Find Total Time", "Find Worst Case Time"]
+    header = ["Type of thread", "Thread Id","Number of Operations", "Number of Entries", "Total Time", "Worst Case Time"]
     writer.writerow(header)
     writer.writerows(data)
     f.close()
@@ -114,11 +114,14 @@ for dir in os.listdir(rootdir):
                         continue
                     # information = file.readline()
                     # #find this information from the file name
-                    nthreads = filename.split('_')[0].split("nthreads")[-1]#find_info(information, 1).lstrip().rstrip()
-                    duration = filename.split('_')[1].split("duration")[-1]
-
+                    ithreads = filename.split('_')[0].split("ithreads")[-1]#find_info(information, 1).lstrip().rstrip()
+                    fthreads = filename.split('_')[1].split("fthreads")[-1]
+                    duration = filename.split('_')[2].split("duration")[-1]
+                    if (ithreads != fthreads):
+                        file.close()
+                        continue
             #thread type, thread id, number of operations, number of entries, total cs time, worst case critical section time.
-                    threadNum = int(nthreads) #+ 1
+                    threadNum = int(ithreads) + int(fthreads)
                     for i in range(threadNum):
                         text = file.readline().split('/')
                         thread_type = text[0].split(' ')[1]
@@ -134,19 +137,19 @@ for dir in os.listdir(rootdir):
                         total_time = float(text[3].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
                         #thread_total_time.append(total_time)
                         wc_time= float(text[4].split(':')[-1])
-                        find_total_time = float(text[5].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
-                        #thread_total_time.append(total_time)
-                        find_wc_time= float(text[6].split(':')[-1])
+                        # find_total_time = float(text[5].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
+                        # #thread_total_time.append(total_time)
+                        # find_wc_time= float(text[6].split(':')[-1])
                         #bucket_execution= int(text[4].split(':')[-1])#(find_info(text, 1).lstrip().rstrip())
                         #thread_executions.append(thread_execution)
 
                         #sd = round(statistics.stdev(thread_executions), 2)
 
-                        data.append([thread_type, thread_id, no_ops, no_entries, wc_time, total_time, find_total_time, find_wc_time])
+                        data.append([thread_type, thread_id, no_ops, no_entries, wc_time, total_time])
                     
                     sort_data()
                     #sort_again()
-                    write_to_table(nthreads, duration, type)
+                    write_to_table(ithreads, fthreads, duration, type)
                     file.close()
                 #print("close this file ")
             # sort_data()
