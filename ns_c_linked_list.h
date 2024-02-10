@@ -78,7 +78,7 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
             end = rdtscp();
             lock_release(&list->mutexes);
             insert = TRUE;
-	    break;
+            break;
         }
         n = n->th_next;
     }
