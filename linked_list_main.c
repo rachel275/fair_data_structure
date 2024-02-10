@@ -288,7 +288,7 @@ int main(int argc, char **argv)
     }
 
     for (int j = 0; j < test_insert_ratio; j++){
-        insert_tasks[j].id = j;
+        insert_tasks[j].id = j + test_find_ratio;
     	insert_tasks[i].ncpu = ncpu;
         insert_tasks[j].stop = &stop;
     }
@@ -306,7 +306,7 @@ int main(int argc, char **argv)
     // }
 
     for (int j = 0; j < test_delete_ratio; j++){
-        delete_tasks[j].id = j;
+        delete_tasks[j].id = j + test_insert_ratio + test_find_ratio;
     	delete_tasks[i].ncpu = ncpu;
         delete_tasks[j].stop = &stop;
     }

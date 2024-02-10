@@ -1,0 +1,3 @@
+insert id: 02 / number of operations: 14900942 / number of entries: 14900942 / tot_time(ms):   1430.822 / max_time(ms):      0.031 / 
+find id: 01 / number of operations: 20238137 / number of entries: 0 / tot_time(ms):    390.884 / max_time(ms):      0.015 / 
+find id: 00 / number of operations: 18552338 / number of entries: 0 / tot_time(ms):    440.497 / max_time(ms):      0.071 / 
