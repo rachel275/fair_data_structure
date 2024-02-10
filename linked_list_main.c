@@ -170,7 +170,6 @@ void *findfunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
     setup_worker(task);
-    int counter = -1;
     int entry = task->id;
 
     // /*loop continuously*/
@@ -188,7 +187,6 @@ void *deletefunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
     setup_worker(task);
-    int counter = -1;
     int entry = task->id;
 
     // /*loop continuously*/
@@ -288,14 +286,14 @@ int main(int argc, char **argv)
     }
 
     for (int j = 0; j < test_insert_ratio; j++){
-        insert_tasks[j].id = j;
-    	insert_tasks[i].ncpu = ncpu;
+        insert_tasks[j].id = j + test_find_ratio;
+    	insert_tasks[j].ncpu = ncpu;
         insert_tasks[j].stop = &stop;
     }
 
     for (int j = 0; j < test_find_ratio; j++){
-        find_tasks[j].id = j + test_insert_ratio;
-    	find_tasks[i].ncpu = ncpu;
+        find_tasks[j].id = j;
+    	find_tasks[j].ncpu = ncpu;
         find_tasks[j].stop = &stop;
     }
 
@@ -307,7 +305,7 @@ int main(int argc, char **argv)
 
     for (int j = 0; j < test_delete_ratio; j++){
         delete_tasks[j].id = j + test_insert_ratio + test_find_ratio;
-    	delete_tasks[i].ncpu = ncpu;
+    	delete_tasks[j].ncpu = ncpu;
         delete_tasks[j].stop = &stop;
     }
 
