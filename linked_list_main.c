@@ -23,7 +23,7 @@
 typedef struct {
     volatile int *stop;
     pthread_t thread;
-    int priority;
+//    int priority;
     int id;
     int ncpu;
     list_stat_t stat;
@@ -35,22 +35,21 @@ void setup_worker(task_t *task) {
     if (task->ncpu != 0) {
 	cpu_set_t cpuset;
 	CPU_ZERO(&cpuset);
-	for (int i = 0; i < task->ncpu; i++) {
-	    CPU_SET(i, &cpuset);
-	}
+	//for (int i =0; i < task->ncpu; i++){
+	CPU_SET(task->ncpu, &cpuset);
+	//}
 	ret = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
 	if (ret != 0) {
 	    perror("pthread_set_affinity_np");
 	    exit(-1);
 	}
     }
-
-    pid_t tid = gettid();
-    ret = setpriority(PRIO_PROCESS, tid, task->priority);
-    if (ret != 0) {
-	perror("setpriority");
-	exit(-1);
-    }
+//    pid_t tid = gettid();
+//    ret = setpriority(PRIO_PROCESS, tid, task->priority);
+//    if (ret != 0) {
+//	perror("setpriority");
+//	exit(-1);
+   // }
 }
 
 //#include <math.h>
@@ -170,7 +169,6 @@ void *findfunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
     setup_worker(task);
-    int counter = -1;
     int entry = task->id;
 
     // /*loop continuously*/
@@ -188,7 +186,6 @@ void *deletefunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
     setup_worker(task);
-    int counter = -1;
     int entry = task->id;
 
     // /*loop continuously*/
@@ -284,18 +281,18 @@ int main(int argc, char **argv)
     /*set up the linked list before hand*/
     struct list_stat dummy = {0};
     for (int n = 0; n < key_space; n++){
-        list_insert(&list, n, &n+n, &dummy, (n % (test_find_ratio)));
+        list_insert(&list, n, &n, &dummy, (n % (test_find_ratio)));
     }
 
     for (int j = 0; j < test_insert_ratio; j++){
         insert_tasks[j].id = j + test_find_ratio;
-    	insert_tasks[i].ncpu = ncpu;
+    	insert_tasks[j].ncpu = j + test_find_ratio;
         insert_tasks[j].stop = &stop;
     }
 
     for (int j = 0; j < test_find_ratio; j++){
-        find_tasks[j].id = j + test_insert_ratio;
-    	find_tasks[i].ncpu = ncpu;
+        find_tasks[j].id = j;
+    	find_tasks[j].ncpu = j;
         find_tasks[j].stop = &stop;
     }
 
@@ -307,7 +304,7 @@ int main(int argc, char **argv)
 
     for (int j = 0; j < test_delete_ratio; j++){
         delete_tasks[j].id = j + test_insert_ratio + test_find_ratio;
-    	delete_tasks[i].ncpu = ncpu;
+    	delete_tasks[j].ncpu = ncpu;
         delete_tasks[j].stop = &stop;
     }
 
