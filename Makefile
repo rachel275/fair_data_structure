@@ -24,10 +24,10 @@ FLAGS=-I../ -g -lpthread -Wall ${OFLAG} -DCYCLE_PER_US=${CYCLE_PER_US}
 # 	gcc main.c -o main ${FLAGS} -DFAIRLOCK
 
 mutex:
-	gcc main_hashtable.c -o hash_main ${FLAGS} -DMUTEX
-	gcc linked_list_main.c -o list_main ${FLAGS} -DMUTEX
-	gcc linked_list_main.c -o ns_c_list_main ${FLAGS} -DMUTEX -DNSC
-	gcc linked_list_main.c -o ns_c_list_lock_main ${FLAGS} -DMUTEX -DNSCLOCK
+	gcc main_hashtable.c -o hash_main ${FLAGS} -DSPIN
+	gcc linked_list_main.c -o list_main ${FLAGS} -DSPIN
+	gcc linked_list_main.c -o ns_c_list_main ${FLAGS} -DSPIN -DNSC
+	gcc linked_list_main.c -o ns_c_list_lock_main ${FLAGS} -DSPIN -DNSCLOCK
 # spin:
 # 	gcc main.c -o main ${FLAGS} -DSPIN
 
