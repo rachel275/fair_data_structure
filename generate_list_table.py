@@ -55,7 +55,7 @@ def find_outliers_num(dataset, avg, sd):
     return outlierCount
 
 def write_to_table(ithreads, fthreads, duration, type):
-    f = open("./tables/" + type + "_list_tables/ithreads_" + str(ithreads) + "_fthreads_" + str(fthreads) + "_duration_" + str(duration) + "_basecase_CLOUDLAB.csv", 'a+', newline="")
+    f = open("./tables/" + type + "_list_tables/ithreads_" + str(ithreads) + "_fthreads_" + str(fthreads) + "_duration_" + str(duration) + "_CLOUDLAB.csv", 'a+', newline="")
     writer = csv.writer(f)
     header = ["Type of thread", "Thread Id","Number of Operations", "Number of Entries", "Total Time", "Worst Case Time"]
     writer.writerow(header)
@@ -109,7 +109,7 @@ for dir in os.listdir(rootdir):
             for filename in os.listdir("./data/" + dir):
                 with open(os.path.join("./data/" + dir, filename), 'r') as file:
                     data = []
-                    if (filename.endswith("_basecase_CLOUDLAB") == False):
+                    if ((filename.endswith("_sepCPU_CLOUDLAB") == True) or (filename.endswith("_basecase_CLOUDLAB") == True )):
                         file.close()
                         continue
                     # information = file.readline()

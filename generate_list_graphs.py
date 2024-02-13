@@ -7,13 +7,13 @@ import sys
 
 
 
-path = "./tables/default_list_tables/"  #FILL THIS IN HERE
+path = "./tables/ns_c_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
-        # if (filename.endswith("_basecase_CLOUDLAB.csv") == False):
-        #     file.close()
-        #     continue
+        if ((filename.endswith("_sepCPU_CLOUDLAB.csv") == False) or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
+            file.close()
+            continue
         ithreads = int(filename.split('_')[1]) 
         fthreads = int(filename.split('_')[3]) 
         duration = filename.split('_')[5]
@@ -50,29 +50,37 @@ for filename in os.listdir(path):
                     n_ops.append(int(row[int(2)]))
                     n_entries.append(int(row[int(3)])) 
 
+    new_insert_id = []
+    for i in insert_id:
+        new_insert_id.append(i - len(genuine_id))
 
+    print(insert_id)
+    print(new_insert_id)
+    print("\n")
 
     tot_n_ops = []
     tot_id = []
-    for i in range(len(insert_id) * 2):
+    for i in range(len(new_insert_id) * 2):
         if (i % 2 == 0):
             tot_n_ops.append(n_ops[int(i/2)])
         else:
             tot_n_ops.append(i_n_ops[int((i-1)/2)])
+    
 
-    for i in insert_id:
+    for i in new_insert_id:
         tot_id.extend([i - 0.2, i + 0.2])
 
     f_threads = [x - 0.2 for x in genuine_id]
-    i_threads = [x + 0.2 for x in insert_id]
+    i_threads = [x + 0.2 for x in new_insert_id]
+
 
     fig, ax = plt.subplots()
 
     twin1 = ax.twinx()
     #twin2 = ax.twinx()
 
-    ax.bar(f_threads, tot_time, width=0.3, color='b', align='center', label = "insert")
-    ax.bar(i_threads, i_tot_time, width=0.3, color='g', align='center', label = "find")
+    ax.bar(f_threads, tot_time, width=0.3, color='b', align='center', label = "find")
+    ax.bar(i_threads, i_tot_time, width=0.3, color='g', align='center', label = "insert")
 
     handles, labels = ax.get_legend_handles_labels()
 
@@ -91,7 +99,7 @@ for filename in os.listdir(path):
     #plt.plot(genuine_id, wc_time)
     n = len(filename)
     plt.title("Total lock hold per thread (CLOUDLAB," + str(duration) + "s)") 
-    figName = "./graphs/default_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_total_time_CLOUDLAB.png"
+    figName = "./graphs/ns_c_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_total_time_CLOUDLAB.png"
     plt.savefig(figName)          
     plt.close()
 
