@@ -37,10 +37,10 @@ do
   do
     for t in 10 30 60
     do
-       echo "./list_main -t$t -i$i -f$f > ./data/default_list/ithreads${i}_fthreads${f}_duration${t}_CLOUBLAB"
-       ./list_main -t$t -i$i -f$f > ./data/default_list/ithreads${i}_fthreads${f}_duration${t}_CLOUDLAB
-       echo "./ns_c_list_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_CLOUDLAB"
-       ./ns_c_list_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_CLOUDLAB  
+      # echo "./list_main -t$t -i$i -f$f > ./data/default_list/ithreads${i}_fthreads${f}_duration${t}_CLOUBLAB"
+      # ./list_main -t$t -i$i -f$f > ./data/default_list/ithreads${i}_fthreads${f}_duration${t}_CLOUDLAB
+       echo "./ns_c_list_lock_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_lock_CLOUDLAB"
+       ./ns_c_list_lock_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_lock_CLOUDLAB  
     done
   done
 done
