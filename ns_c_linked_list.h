@@ -90,7 +90,8 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
         th_node->thread_id = pid;
 
         /*fix it to the end of the list*/
-        n = th_node;
+        th_node->th_next = list->head;
+	list->head = th_node;
 
         /*add the element to the front of the list*/       
         thread_node->next = th_node->next;
