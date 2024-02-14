@@ -11,7 +11,7 @@ path = "./tables/ns_c_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
-        if ((filename.endswith("_sepCPU_CLOUDLAB.csv") == False) or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
+        if ((filename.endswith("_lock_CLOUDLAB.csv") == False)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
             file.close()
             continue
         ithreads = int(filename.split('_')[1]) 
@@ -99,7 +99,7 @@ for filename in os.listdir(path):
     #plt.plot(genuine_id, wc_time)
     n = len(filename)
     plt.title("Total lock hold per thread (CLOUDLAB," + str(duration) + "s)") 
-    figName = "./graphs/ns_c_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_total_time_CLOUDLAB.png"
+    figName = "./graphs/ns_c_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_total_time_lock_CLOUDLAB.png"
     plt.savefig(figName)          
     plt.close()
 
