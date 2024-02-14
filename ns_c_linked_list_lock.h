@@ -73,12 +73,13 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
         if (n->thread_id == pid) {
             /*found thread's list, add entry*/
             lock_acquire(&n->mutexes);
-            start = rdtscp();       
+            start = rdtscp();	    
             thread_node->next = n->next;
             n->next = thread_node;
             end = rdtscp();
             lock_release(&n->mutexes);
             insert = TRUE;
+	    break;
         }
         n = n->th_next;
     }
@@ -111,14 +112,14 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
 
 node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     
-    unsigned long long start = 0, end = 0;//, wait, release;
+    unsigned long long start, end;//, wait, release;
     unsigned int duration;
 
 
     struct head_node_t *thread_node = list->head;    
 
-
         while(thread_node){
+		printf("	%i", thread_node->thread_id);
             if(thread_node->thread_id == pid){
                 lock_acquire(&thread_node->mutexes); 
                 start = rdtscp(); 
@@ -132,8 +133,6 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
                     stat->cs_time = duration;
                     stat->tot_cs_time += duration;
                     stat->n_ops++;
-                    duration = end - start;
-                    stat->cs_time = duration;
                     return n;
                 }
                 n = n->next;
@@ -144,20 +143,18 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
             thread_node = thread_node->th_next;
         }    
 
-        duration = end - start;
+        duration = 0;
         if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
         stat->cs_time = duration;
         stat->tot_cs_time += duration;
         stat->n_ops++;
-    duration = end - start;
-    stat->cs_time = duration;
     return NULL;
             
 }
 
 int list_delete(list_t *list, int k, list_stat_t* stat, int pid){
     
-    unsigned long long start = 0, end = 0;//, wait, release;
+    unsigned long long start, end;//, wait, release;
     unsigned int duration;
 
     
