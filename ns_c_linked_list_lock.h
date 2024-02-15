@@ -37,7 +37,7 @@ typedef struct head_node_t {
 
 typedef struct list_t {
     struct head_node_t *head;
-    //lock_t mutexes __attribute__ ((aligned (64)));
+    lock_t head_mutexes __attribute__ ((aligned (64)));
 } list_t;
 
 typedef struct list_stat {
@@ -52,13 +52,13 @@ typedef struct list_stat {
 
 void List_Init(list_t *list){
     list->head = NULL;
-    //lock_init(&list->mutexes);
+    lock_init(&list->head_mutexes);
 }
 
 void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
 
     unsigned long long start, end;//, wait, release;
-    unsigned int duration;
+    unsigned int duration = 0;
 
     /*create the node to add*/
     struct node_t *thread_node = (struct node_t *)malloc(sizeof(struct node_t));
@@ -66,11 +66,16 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
     thread_node->key = k;
     int insert = FALSE;
 
+    lock_acquire(&list->head_mutexes);
+    start = rdtscp();
     /*use thread id to index in to the linked list of that thread*/
     struct head_node_t *n = list->head;
 
-    while (n){
+    while (n != NULL){
         if (n->thread_id == pid) {
+	    end = rdtscp();
+	    duration += end - start;
+	    lock_release(&list->head_mutexes);
             /*found thread's list, add entry*/
             lock_acquire(&n->mutexes);
             start = rdtscp();	    
@@ -92,17 +97,20 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
         lock_init(&th_node->mutexes);
 
         /*fix it to the end of the list*/
-        n = th_node;
-
+        th_node->th_next = list->head;
+	list->head = th_node;
+	end = rdtscp();
+	lock_release(&list->head_mutexes);
+	duration += end - start;
         /*add the element to the front of the list*/
-        lock_acquire(&n->mutexes);
+        lock_acquire(&th_node->mutexes);
         start = rdtscp();       
-            thread_node->next = n->next;
-            n->next = thread_node;
+            thread_node->next = th_node->next;
+            th_node->next = thread_node;
         end = rdtscp();
-        lock_release(&n->mutexes);
+        lock_release(&th_node->mutexes);
     }
-    duration = end - start;
+    duration += end - start;
     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
     stat->cs_time = duration;
     stat->tot_cs_time += duration;
@@ -113,22 +121,25 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
 node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     
     unsigned long long start, end;//, wait, release;
-    unsigned int duration;
+    unsigned int duration = 0;
 
-
+    lock_acquire(&list->head_mutexes);
+    start = rdtscp();
     struct head_node_t *thread_node = list->head;    
 
-        while(thread_node){
-		printf("	%i", thread_node->thread_id);
+        while(thread_node != NULL){
             if(thread_node->thread_id == pid){
-                lock_acquire(&thread_node->mutexes); 
+                end = rdtscp();
+		lock_release(&list->head_mutexes);
+		duration += end - start;
+		lock_acquire(&thread_node->mutexes); 
                 start = rdtscp(); 
                 struct node_t *n = thread_node->next;
-                while (n){
+                while (n != NULL){
                 if (n->key == k) {
                     end = rdtscp();
                     lock_release(&thread_node->mutexes);
-                    duration = end - start;
+                    duration += end - start;
                     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
                     stat->cs_time = duration;
                     stat->tot_cs_time += duration;
@@ -143,7 +154,7 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
             thread_node = thread_node->th_next;
         }    
 
-        duration = 0;
+        duration += 0;
         if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
         stat->cs_time = duration;
         stat->tot_cs_time += duration;
