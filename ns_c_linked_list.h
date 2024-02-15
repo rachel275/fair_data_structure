@@ -69,15 +69,15 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
     struct head_node_t *n = list->head;
 
 //should this bit be inside the lock
-    while (n){
+    while (n != NULL){
         if (n->thread_id == pid) {
             /*found thread's list, add entry*/
        
             thread_node->next = n->next;
             n->next = thread_node;
             end = rdtscp();
-            lock_release(&list->mutexes);
-            insert = TRUE;
+            lock_release(&list->mutexes);	
+	    insert = TRUE;
             break;
         }
         n = n->th_next;
@@ -88,7 +88,6 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
         /*create new head node*/
         struct head_node_t *th_node = (struct head_node_t *)malloc(sizeof(struct head_node_t));
         th_node->thread_id = pid;
-
         /*fix it to the end of the list*/
         th_node->th_next = list->head;
 	list->head = th_node;
@@ -118,10 +117,10 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
 
     struct head_node_t *thread_node = list->head;    
 
-        while(thread_node){
+        while(thread_node != NULL){
             if(thread_node->thread_id == pid){
                 struct node_t *n = thread_node->next;
-                while (n){
+                while (n != NULL){
                 if (n->key == k) {
                     end = rdtscp();
                     lock_release(&list->mutexes);

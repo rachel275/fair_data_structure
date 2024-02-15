@@ -1,5 +1,5 @@
-find id: 02 / number of operations: 15885418 / number of entries: 0 / tot_time(ms):   1216.210 / max_time(ms):     42.586 / 
-find id: 01 / number of operations: 18450827 / number of entries: 0 / tot_time(ms):    999.931 / max_time(ms):     42.570 / 
-find id: 03 / number of operations: 12467902 / number of entries: 0 / tot_time(ms):    713.529 / max_time(ms):     42.569 / 
-insert id: 04 / number of operations: 2702901 / number of entries: 2702901 / tot_time(ms):    889.886 / max_time(ms):     79.813 / 
-find id: 00 / number of operations: 12869304 / number of entries: 0 / tot_time(ms):    639.194 / max_time(ms):     42.576 / 
+find id: 01 / number of operations: 48827470 / number of entries: 0 / tot_time(ms):   5413.348 / max_time(ms):      0.054 / 
+insert id: 04 / number of operations: 339 / number of entries: 339 / tot_time(ms):      0.027 / max_time(ms):      0.001 / 
+find id: 00 / number of operations: 1181 / number of entries: 0 / tot_time(ms):      0.319 / max_time(ms):      0.016 / 
+find id: 02 / number of operations: 10191108 / number of entries: 0 / tot_time(ms):   1122.494 / max_time(ms):      0.060 / 
+find id: 03 / number of operations: 12080565 / number of entries: 0 / tot_time(ms):   1321.917 / max_time(ms):      0.022 / 
