@@ -71,8 +71,7 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
 //should this bit be inside the lock
     while (n != NULL){
         if (n->thread_id == pid) {
-            /*found thread's list, add entry*/
-       
+            /*found thread's list, add entry*/      
             thread_node->next = n->next;
             n->next = thread_node;
             end = rdtscp();
@@ -86,7 +85,7 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
     /*if the thread id isn't found, create a new list at the bottom*/
     if (insert == FALSE){
         /*create new head node*/
-        struct head_node_t *th_node = (struct head_node_t *)malloc(sizeof(struct head_node_t));
+	struct head_node_t *th_node = (struct head_node_t *)malloc(sizeof(struct head_node_t));
         th_node->thread_id = pid;
         /*fix it to the end of the list*/
         th_node->th_next = list->head;
@@ -126,10 +125,8 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
                     lock_release(&list->mutexes);
                     duration = end - start;
                     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
-                    if(duration > stat->wc_find_cs_time){stat->wc_find_cs_time = duration;}
                     stat->cs_time = duration;
                     stat->tot_cs_time += duration;
-                    stat->tot_find_cs_time += duration;
                     stat->n_ops++;
                     return n;
                 }
@@ -142,10 +139,8 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     lock_release(&list->mutexes);
     duration = end - start;
     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
-    if(duration > stat->wc_find_cs_time){stat->wc_find_cs_time = duration;}
     stat->cs_time = duration;
     stat->tot_cs_time += duration;
-    stat->tot_find_cs_time += duration;
     stat->n_ops++;
     return NULL;
             

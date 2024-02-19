@@ -1,0 +1,8 @@
+insert id: 05 / number of operations: 12438596 / number of entries: 12438596 / tot_time(ms):   3791.585 / max_time(ms):     53.209 / 
+find id: 02 / number of operations: 10961975 / number of entries: 0 / tot_time(ms):   3145.909 / max_time(ms):     79.813 / 
+find id: 00 / number of operations: 10852389 / number of entries: 0 / tot_time(ms):   3885.086 / max_time(ms):    111.735 / 
+find id: 03 / number of operations: 11138607 / number of entries: 0 / tot_time(ms):   2723.033 / max_time(ms):     85.131 / 
+find id: 01 / number of operations: 11208307 / number of entries: 0 / tot_time(ms):   3369.647 / max_time(ms):     90.457 / 
+insert id: 04 / number of operations: 11358603 / number of entries: 11358603 / tot_time(ms):   1929.813 / max_time(ms):     47.892 / 
+insert id: 07 / number of operations: 11096209 / number of entries: 11096209 / tot_time(ms):   2469.011 / max_time(ms):     47.891 / 
+insert id: 06 / number of operations: 11702799 / number of entries: 11702799 / tot_time(ms):   2385.517 / max_time(ms):     42.569 / 
