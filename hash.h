@@ -49,7 +49,7 @@ typedef struct hash_table_stat {
     unsigned int bucket_id;
     //unsigned int nentries[MAX_M];
     struct list_stat stats[100];
-    struct bucket_stat b_stats[100];
+    //struct bucket_stat b_stats[100];
     unsigned long long wc_cs_time;
     unsigned long long cs_time;
     unsigned long long tot_cs_time;
@@ -95,134 +95,50 @@ int hash_insert (hash_table *hp, unsigned int k, void *v, hash_table_stat *stat,
 {
     
     size_t bucket_idx = k % hp->size;
-    //unsigned long long start, end;//, wait, release;
-    //struct Node* toAdd;
     int insert;
-    //unsigned int duration;
-
-    //wait = rdtscp();
-    //printf("(0)Trying lock:  %llu\n", wait);
-    //lock_acquire(&hp->mutexes);
-    //start = rdtscp();
-    //toAdd = (struct Node*)malloc(sizeof(struct Node));W
     struct list_t* bucket = &hp->table[bucket_idx];
-    //truct Node* head = bucket->head;
-
     insert = 1;
-    /*
-    searched = 0;
-    while (bucket->next && searched++ < 10) {
-        if (bucket->next->key == k) {
-            insert = 0;
-            goto done;
-        }
-        bucket = bucket->next;
-    }
-    */
 
-    // while(head->next != NULL){
-    //     head = head->next;
-    // }
-    // toAdd->key = k;
-    // toAdd->next = head->next;
-    // toAdd->value = v;
-    // head->next = toAdd;
 
     list_insert(bucket, k, v, &stat->stats[bucket_idx], pid);
 
-    //end = rdtscp();
-    //release = rdtscp();
-    //printf("(0)Lock obtained:  %llu\n", start);
-    //printf("(0)Lock released:  %llu\n", end);
-    //printf("Insert_time = %llu, wait time = %llu\n", (end - start), (start - wait));
-    //duration = end - start;
 
 #ifdef CS_DIST
     if (stat->n_ops < stat->op_durations_size)
         stat->op_durations[stat->n_ops++] = release - end;
 #endif
-    //stat->cs_time += duration;
-    //printf("%10.3f  ", stat->stats[bucket_idx].cs_time);
-    //fflush(stdout);
-    stat->b_stats[bucket_idx].tot_cs_time += stat->stats[bucket_idx].cs_time;
-    if (stat->b_stats[bucket_idx].wc_cs_time < stat->stats[bucket_idx].cs_time){
-        stat->b_stats[bucket_idx].wc_cs_time = stat->stats[bucket_idx].cs_time;
-        //stat->bucket_id = bucket_idx;
-    }
-    //stat->bucket_id = bucket_idx;
-    stat->b_stats[bucket_idx].op_entries++;
-    stat->b_stats[bucket_idx].n_ops++;
-    stat->n_ops++;
-    //stat->wait_time += (start - wait);
-    //stat->release_time += release - end;
 
     stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
-    if (stat->stats->wc_cs_time > stat->wc_cs_time){
-        stat->wc_cs_time = stat->stats->wc_cs_time;
+    if (stat->wc_cs_time < stat->stats[bucket_idx].cs_time){
+        stat->wc_cs_time = stat->stats[bucket_idx].cs_time;
         stat->bucket_id = bucket_idx;
     }
+    stat->op_entries++;
+    stat->n_ops++;
     return insert;
 }
 
 // Function deleting from hp hash table, key k and it's properties
 int hash_delete (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
 {
-    //struct Node* toDelete;
 
     size_t bucket_idx = k % hp->size;
     int found = 0;
-    //unsigned long long start, end;//, wait, release;
-    //unsigned int duration;
-
-    //printf("(1)Trying lock:  %llu\n", wait);
-    //wait = rdtscp();
-    //lock_acquire(&hp->mutexes);
-    //start = rdtscp();
     struct list_t* bucket = &hp->table[bucket_idx];
-    // struct Node* head = bucket->head;
-
-    // while(head->next != NULL){
-    //     if(head->next->key == k){
-    //         toDelete = head->next;
-    //         head->next = head->next->next;
-    //         free(toDelete);
-    //         found++;
-    //     } else {
-    //         head = head->next;
-    //     }
-    // }
 
     found = list_delete(bucket, k, &stat->stats[bucket_idx], pid);
 
-    //end = rdtscp();
-    //lock_release(&hp->mutexes);
-    //release = rdtscp();
-    //printf("(1)Lock obtained:  %llu\n", start);
-    //printf("(1)Lock released:  %llu\n", end);
-    //printf("Delete_time = %llu, wait time = %llu\n", (end - start), (start - wait));
-    //printf("%10.3f  ", stat->stats[bucket_idx].cs_time);
-    //fflush(stdout);
-    stat->b_stats[bucket_idx].tot_cs_time += stat->stats[bucket_idx].cs_time;
-    if (stat->b_stats[bucket_idx].wc_cs_time < stat->stats[bucket_idx].cs_time){
-        stat->b_stats[bucket_idx].wc_cs_time = stat->stats[bucket_idx].cs_time;
-        //stat->bucket_id = bucket_idx;
-    }
-
     if (found == 1){
-        stat->b_stats[bucket_idx].op_entries--;
+        stat->op_entries--;
     }
-    stat->b_stats[bucket_idx].n_ops++;
     stat->n_ops++;
-    //stat->wait_time += (start - wait);
-    //stat->release_time += release - end;
 
     stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
     if (stat->stats->wc_cs_time > stat->wc_cs_time){
         stat->wc_cs_time = stat->stats->wc_cs_time;
         stat->bucket_id = bucket_idx;
     }
-    //stat->wait_time += start - wait;
-    //stat->release_time += release - end;
+
     return found;
 }
 
@@ -233,39 +149,12 @@ int hash_get (hash_table *hp, unsigned int k, void **vptr, hash_table_stat *stat
     // finding the correct bucket
     size_t bucket_idx = k % hp->size;
 
-    // locking respective region
     //lock_acquire&hp->mutexes);
     struct list_t* bucket = &hp->table[bucket_idx];
-    // struct Node* head = bucket->head;
-
-    // // iterate to find the key
-    // while(head != NULL){
-    //     // when key's found
-    //     if(head->key == k){
-    //         *vptr = head->value;
-    //         //lock_release(&hp->mutexes);
-    //         return 0;
-    //     }
-    //     head = head->next->next;
-    // }
-    // //lock_release(&hp->mutexes);
-
-    // return -1;
 
     *vptr = list_find(bucket, k, &stat->stats[bucket_idx], pid)->value;
 
-    //printf("%10.3f  ", stat->stats[bucket_idx].cs_time);
-    //fflush(stdout);
-    stat->b_stats[bucket_idx].tot_cs_time += stat->stats[bucket_idx].cs_time;
-    if (stat->b_stats[bucket_idx].wc_cs_time < stat->stats[bucket_idx].cs_time){
-        stat->b_stats[bucket_idx].wc_cs_time = stat->stats[bucket_idx].cs_time;
-        //stat.bucket_id = bucket_idx;
-    }
-
-    stat->b_stats[bucket_idx].n_ops++;
     stat->n_ops++;
-    //stat->wait_time += (start - wait);
-    //stat->release_time += release - end;
 
     stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
     if (stat->stats->wc_cs_time > stat->wc_cs_time){
@@ -273,7 +162,6 @@ int hash_get (hash_table *hp, unsigned int k, void **vptr, hash_table_stat *stat
         stat->bucket_id = bucket_idx;
     }
 
-    //stat->nentries[bucket_idx]++;
     if (*vptr != NULL){
         return 0;
     } else {

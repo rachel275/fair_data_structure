@@ -1,5 +1,0 @@
-Type of thread,Thread Id,Number of Operations,Number of Entries,Total Time,Worst Case Time
-find,0,39983546,0,0.035,1649.122
-find,1,79939109,0,1.944,2193.118
-insert,2,89405759,89405759,2.19,7895.2
-insert,3,55970806,55970806,2.254,5229.381

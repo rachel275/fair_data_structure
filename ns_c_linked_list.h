@@ -14,8 +14,6 @@
 #define DEFAULT_WAIT     0
 #define DEFAULT_RATIO    1
 
-#define STACKSIZE        1000000000
-
 #define FALSE            0
 #define TRUE             1
 
@@ -42,8 +40,6 @@ typedef struct list_stat {
     unsigned long long wc_cs_time;
     unsigned long long cs_time;
     unsigned long long tot_cs_time;
-    unsigned long long tot_find_cs_time;
-    unsigned long long wc_find_cs_time;
     size_t n_ops;
     unsigned int op_entries;
 } list_stat_t;
@@ -126,10 +122,8 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
                     lock_release(&list->mutexes);
                     duration = end - start;
                     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
-                    if(duration > stat->wc_find_cs_time){stat->wc_find_cs_time = duration;}
                     stat->cs_time = duration;
                     stat->tot_cs_time += duration;
-                    stat->tot_find_cs_time += duration;
                     stat->n_ops++;
                     return n;
                 }
@@ -137,15 +131,13 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
                 }
             }    
             thread_node = thread_node->th_next;
-        }    
+        }   
     end = rdtscp();
     lock_release(&list->mutexes);
     duration = end - start;
     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
-    if(duration > stat->wc_find_cs_time){stat->wc_find_cs_time = duration;}
     stat->cs_time = duration;
     stat->tot_cs_time += duration;
-    stat->tot_find_cs_time += duration;
     stat->n_ops++;
     return NULL;
             

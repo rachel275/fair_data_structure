@@ -88,7 +88,8 @@ for filename in os.listdir(path):
     ax.set(xlabel="Thread id", ylabel="Time (ms)",  yscale = "log")    
 
     twin1.plot(tot_id, tot_n_ops, linestyle='-', color='k')
-    twin1.set(ylabel="Number of operations")#, yscale = "log")
+    twin1.set(ylabel="Number of operations", yscale = "log")
+    ax.set_ylim(bottom = 0)
     plt.text(tot_id[0], tot_n_ops[0], 'Throughout', ha='left')
     plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 2)) 
     # Annotating a point

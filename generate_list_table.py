@@ -104,7 +104,7 @@ def sort_again():
 
 rootdir = "./data/"
 for dir in os.listdir(rootdir):
-        if dir.split('_')[-1] == "list":
+        if dir.split('_')[-2] == "c":
             type = dir.split('_list')[0]
             for filename in os.listdir("./data/" + dir):
                 with open(os.path.join("./data/" + dir, filename), 'r') as file:
