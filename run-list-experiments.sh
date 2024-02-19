@@ -31,16 +31,18 @@ build_my_hashtable
 # fi
 
 
-for i in 1 2 4
+for e  in 1 2 3 4 5
 do
   for f in 1 2 4
   do
     for t in 10 30 60
     do
-      echo "./ns_c_list_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_CLOUBLAB"
-      ./ns_c_list_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_CLOUDLAB
-       echo "./ns_c_list_lock_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_lock_CLOUDLAB"
-       ./ns_c_list_lock_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_lock_CLOUDLAB  
+      echo "./list_main -t$t -i$f -f$f > ./data/default_list/ithreads${f}_fthreads${f}_duration${t}_CLOUBLAB_experiment_${e}"
+      ./ns_c_list_main -t$t -i$f -f$f > ./data/ns_c_list/ithreads${f}_fthreads${f}_duration${t}_CLOUDLAB_experiment_${e}	    
+      echo "./ns_c_list_main -t$t -i$f -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_CLOUBLAB_experiment_${e}"
+      ./ns_c_list_main -t$t -i$f -f$f > ./data/ns_c_list/ithreads${f}_fthreads${f}_duration${t}_CLOUDLAB_experiment_${e}
+       echo "./ns_c_list_lock_main -t$t -i$i -f$f > ./data/ns_c_list/ithreads${i}_fthreads${f}_duration${t}_lock_CLOUDLAB_experiment_${e}"
+       ./ns_c_list_lock_main -t$t -i$f -f$f > ./data/ns_c_list/ithreads${f}_fthreads${f}_duration${t}_lock_CLOUDLAB_experiment_${e}  
     done
   done
 done
