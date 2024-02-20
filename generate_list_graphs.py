@@ -7,11 +7,11 @@ import sys
 
 
 
-path = "./tables/ns_c_list_tables/"  #FILL THIS IN HERE
+path = "./tables/default_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
-        if ((filename.endswith("_lock_CLOUDLAB.csv") == False)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
+        if ((filename.endswith("_sepCPU_CLOUDLAB.csv") == False)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
             file.close()
             continue
         ithreads = int(filename.split('_')[1]) 
@@ -90,7 +90,7 @@ for filename in os.listdir(path):
     twin1.plot(tot_id, tot_n_ops, linestyle='-', color='k')
     twin1.set(ylabel="Number of operations", yscale = "log")
     ax.set_ylim(bottom = 0)
-    plt.text(tot_id[0], tot_n_ops[0], 'Throughout', ha='left')
+    plt.text(tot_id[0], tot_n_ops[0], 'Throughput', ha='left')
     plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 2)) 
     # Annotating a point
 
@@ -100,7 +100,7 @@ for filename in os.listdir(path):
     #plt.plot(genuine_id, wc_time)
     n = len(filename)
     plt.title("Total lock hold per thread (CLOUDLAB," + str(duration) + "s)") 
-    figName = "./graphs/ns_c_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_total_time_lock_CLOUDLAB.png"
+    figName = "./graphs/default_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_total_time_CLOUDLAB.png"
     plt.savefig(figName)          
     plt.close()
 

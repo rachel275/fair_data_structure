@@ -31,7 +31,6 @@ typedef struct {
 
 void setup_worker(task_t *task) {
     int ret;
-
     if (task->ncpu != 0) {
 	cpu_set_t cpuset;
 	CPU_ZERO(&cpuset);
@@ -52,16 +51,6 @@ void setup_worker(task_t *task) {
    // }
 }
 
-//#include <math.h>
-
-// static inline unsigned int fast_rand() {
-//     static size_t lfsr = 0xDEADBEEFC0FFEE09;
-//     //lfsr = (lfsr>>1)|(((lfsr>>3)^(lfsr>>9)^(lfsr>>13)^(lfsr>>21)^(lfsr>>25)^(lfsr>>33)^(lfsr>>45)^(lfsr>>49)^(lfsr>>51)^(lfsr>>55))<<63);
-//     lfsr = (lfsr>>1)|(((lfsr>>3)^(lfsr>>13)^(lfsr>>25)^(lfsr>>33)^(lfsr>>49)^(lfsr>>55))<<63);
-//     return lfsr & 0x00FFFFFF;
-//     // lfsr *= 1103515245 + 12345;
-//     // return (unsigned int)(lfsr / 8) % 10000000;
-// }
 
 #define RAND_MAX 0x7fffffff
 uint rseed = 0;
@@ -77,12 +66,12 @@ list_t list;                         /*global linked list*/
 
 unsigned int test_duration = DEFAULT_DURATION;
 unsigned int test_wait_duration = DEFAULT_WAIT;
-unsigned int test_nmalicious = 0;
-unsigned int test_insert_find_ratio = 0;
 unsigned int test_delete_ratio = 0;
 unsigned int test_insert_ratio = 0; 
 unsigned int test_find_ratio = 0;
 unsigned int key_space = 0;
+unsigned int napplications = 0;
+unsigned int nratio[100];
 
 pthread_attr_t attr;
 
@@ -96,57 +85,13 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
         "number of entries: %i / "
 	    "tot_time(ms): %10.3f / "
 	    "max_time(ms): %10.3f / \n",
-	    // "tot_find_time(ms): %10.3f / "
-	    // "max_find_time(ms): %10.3f /\n ",
 	    type,
 	    task->id,
         (int)task->stat.n_ops,
         (int)task->stat.op_entries,
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
-        // task->stat.tot_find_cs_time / (float) (CYCLE_PER_US * 1000),
-	    // task->stat.wc_find_cs_time / (float) (CYCLE_PER_US * 1000));
 }
-
-// void *threadfunc(void *vargp)
-// {
-//     /*get the thread id*/
-//     task_t *task = (task_t *) vargp;
-//     setup_worker(task);
-//     int counter = -1;
-//     int entry = task->id;
-
-//     /*loop continuously*/
-//     while(!*task->stop){
-//       /*add to the linked list*/
-//     counter++;
-//     entry = (task->id + (10 * counter));
-//     list_insert(&list, entry, &entry, &task->stat, task->id);
-//     sleep((fast_rand() % 1000) / 1000.0);
-
-//     entry = (task->id + ((fast_rand() % (100)) * 10));
-//     list_find(&list, entry, &task->stat, task->id);
-//     sleep((fast_rand() % 1000) / 1000.0);
-//     }
-
-//     print_summary("insert_find", task);
-//     return NULL;
-// }
-
-// void *malfunc(void *vargp)
-// {
-//     task_t *task = (task_t *) vargp;
-//     setup_worker(task);
-//     int entry = task->id;
-
-//     // /*loop continuously*/
-//     while(!*task->stop){
-//       /*add to the linked list*/
-//         list_insert(&list, entry, &entry, &task->stat, task->id);
-//     }
-//     print_summary("malicious", task);
-//     return NULL;
-// }
 
 void *insertfunc(void *vargp)
 {
@@ -156,8 +101,9 @@ void *insertfunc(void *vargp)
 
     // /*loop continuously*/
     while(!*task->stop){
+            //printf("step 1.a\n");
       /*add to the linked list*/
-        entry = ((fast_rand()));
+        entry = ((fast_rand() % key_space)  + task->id);
         list_insert(&list, entry, &entry+entry, &task->stat, task->id);
         //sleep((fast_rand() % 1000) / 1000.0);
     }
@@ -173,6 +119,7 @@ void *findfunc(void *vargp)
 
     // /*loop continuously*/
     while(!*task->stop){
+        //printf("step 1.b\n");
       /*add to the linked list*/
         entry = ((fast_rand() % (key_space)) + task->id);
         list_find(&list, entry, &task->stat, task->id);
@@ -199,68 +146,34 @@ void *deletefunc(void *vargp)
     return NULL;
 }
 
-
-  
-
 int main(int argc, char **argv)
 {
-
-    struct option long_options[] = 
-    {
-      // These options don't set a flag
-      //{"nregular",                   required_argument, NULL, 'n'},
-     //{"nmalicious",                    required_argument, NULL, 'm'},
-      {"duration",                   required_argument, NULL, 't'},
-      {"insert_ratio",               required_argument, NULL, 'i'},
-      {"find_ratio",                 required_argument, NULL, 'f'},
-      {"delete_ratio",               required_argument, NULL, 'd'},
-      {NULL, 0, NULL, 0}
-    };
-
-    int i;
-    char c;
-
-    while(1) 
-    {
-      i = 0;
-      c = getopt_long(argc, argv, "t:n:m:i:f:d:", long_options, &i);
-
-      if(c == -1)
-	    break;
-    
-      if(c == 0 && long_options[i].flag == 0)
-	    c = long_options[i].val;
-
-      switch(c) {
-	    case 0:
-            break;
-        case 't':
-            test_duration = atoi(optarg);
-	        break;
-	    // case 'n':
-	    //     test_insert_find_ratio = atoi(optarg);
-	    //     break;
-        // case 'm':
-        //     test_nmalicious = atoi(optarg);
-	    //     break;
-	    case 'i':
-	        test_insert_ratio = atoi(optarg);
-	        break;
-	    case 'f':
-	        test_find_ratio = atoi(optarg);
-	        break;
-	    case 'd':
-	        test_delete_ratio = atoi(optarg);
-	        break;
-        default:
-	    exit(1);
-        }
+    if (argc < 3) {
+	printf("usage: %s <napplications> <ratio1> <ratio2> <...> <duration> \n", argv[0]);
+	return 1;
+    }
+    napplications = atoi(argv[1]);
+    if (argc < 2 + napplications) {
+	printf("usage: %s <napplications> <ratio1> <ratio2> <...> <duration> \n", argv[0]);
+	return 1;
     }
 
+    for (int i = 0; i < napplications; i++){
+        nratio[i] = atoi(argv[i+2]);
+        //printf("%i ", nratio[i]);
+        test_insert_ratio += ((nratio[i] * 8) / 100);
+        test_find_ratio += (((100 - nratio[i]) * 8) / 100);
+    }
+
+    test_duration = atoi(argv[napplications + 2]);       //the time the test shall run for
+    //printf ("apps: %i, durations: %i", napplications, test_duration);
+
+    /*now we need to see how many threads of each type we want and make sure we are setting them for each applicaiton...*/
+    /*how do we split up the keyspace*/
+
+    //printf("insert: %i      find: %i        \n", test_insert_ratio, test_find_ratio);
     int stop __attribute__((aligned (64))) = 0;
-    int ncpu = test_insert_ratio + test_find_ratio + test_delete_ratio;
-    // task_t *mal_tasks = malloc(sizeof(task_t) * (test_threads));
-    // task_t *insert_find_tasks = malloc((sizeof(task_t) * (test_insert_find_ratio)));
+    int ncpu = 0;
     task_t *insert_tasks = malloc(sizeof(task_t) * (test_insert_ratio));
     task_t *find_tasks = malloc(sizeof(task_t) * (test_find_ratio));
     task_t *delete_tasks = malloc(sizeof(task_t) * (test_delete_ratio));
@@ -270,67 +183,27 @@ int main(int argc, char **argv)
 
     List_Init(&list);
 
-    // pthread_attr_init(&attr);
-    // pthread_attr_setstacksize (&attr, (size_t)STACKSIZE);
-
-    // for (int j = 0; j < test_nmalicious; j++){
-    //     mal_tasks[j].id = j;
-    // 	mal_tasks[i].ncpu = ncpu;
-    //     mal_tasks[j].stop = &stop;
-    // }
-    /*set up the linked list before hand*/
-    struct list_stat dummy = {0};
-    for (int n = 0; n < key_space; n++){
-        list_insert(&list, n, &n, &dummy, (n % (test_find_ratio)));
-    }
-
-    for (int j = 0; j < test_insert_ratio; j++){
-        insert_tasks[j].id = j + test_find_ratio;
-<<<<<<< HEAD
-    	insert_tasks[j].ncpu = 1;//j + test_find_ratio;
-=======
-    	insert_tasks[j].ncpu = 1;//2*j + 1;
->>>>>>> 909ffc7b0795e27b055b2b88959ae0638217cd49
-        insert_tasks[j].stop = &stop;
-    }
-
-    for (int j = 0; j < test_find_ratio; j++){
-        find_tasks[j].id = j;
-<<<<<<< HEAD
-    	find_tasks[j].ncpu = 1;
-=======
-    	find_tasks[j].ncpu = 1;//2*j;
->>>>>>> 909ffc7b0795e27b055b2b88959ae0638217cd49
-        find_tasks[j].stop = &stop;
-    }
-
-    // for (int j = 0; j < test_insert_find_ratio; j++){
-    //     insert_find_tasks[j].id = j;
-    // 	insert_find_tasks[i].ncpu = ncpu;
-    //     insert_find_tasks[j].stop = &stop;
+    // /*set up the linked list before hand*/
+    // for (int n = 0; n < key_space; n++){
+    //     list_insert(&list, n, &n, &dummy, (n % (test_find_ratio)));
     // }
 
-    for (int j = 0; j < test_delete_ratio; j++){
-        delete_tasks[j].id = j + test_insert_ratio + test_find_ratio;
-    	delete_tasks[j].ncpu = ncpu;
-        delete_tasks[j].stop = &stop;
-    }
+    for (int i = 0; i < napplications; i++){
+        for (int j = 0; j < ((nratio[i] * 8) / 100); j++){
+            insert_tasks[j].id = i; //work on this so the id's are related
+    	    insert_tasks[j].ncpu = i; //j;//2*(j + i) + 1;
+            insert_tasks[j].stop = &stop;
+        }
 
-    // for (int k = 0; k < test_nmalicious; k++){
-    //     rc = pthread_create(&mal_tasks[k].thread, &attr, malfunc, &mal_tasks[k]);
-    //     if (rc){
-    //         printf("Error:unable to create malicious thread, %d\n", rc);
-    //         exit(-1);
-    //     }
-    // }
+        for (int j = 0; j < (((100 - nratio[i]) * 8) / 100); j++){
+            find_tasks[j].id = i;
+    	    find_tasks[j].ncpu = i;//napplications - j;//2*(j + i);
+            find_tasks[j].stop = &stop;
+        }
+    } 
+    printf("step 1\n");
 
-    // for (int k = 0; k < test_insert_find_ratio; k++){
-    //     rc = pthread_create(&insert_find_tasks[k].thread, &attr, threadfunc, &insert_find_tasks[k]);
-    //     if (rc){
-    //         printf("Error:unable to create malicious thread, %d\n", rc);
-    //         exit(-1);
-    //     }
-    // }
+  /*now that we've orgainsed the threads we need to  */
 
     for (int k = 0; k < test_insert_ratio; k++){
         rc = pthread_create(&insert_tasks[k].thread, &attr, insertfunc, &insert_tasks[k]);
@@ -340,6 +213,8 @@ int main(int argc, char **argv)
         }
     }
 
+    printf("step 2\n");  
+
     for (int k = 0; k < test_find_ratio; k++){
         rc = pthread_create(&find_tasks[k].thread, &attr, findfunc, &find_tasks[k]);
         if (rc){
@@ -347,7 +222,7 @@ int main(int argc, char **argv)
             exit(-1);
         }
     }
-
+    printf("step 3\n");
     for (int k = 0; k < test_delete_ratio; k++){
         rc = pthread_create(&delete_tasks[k].thread, &attr, deletefunc, &delete_tasks[k]);
         if (rc){
@@ -356,20 +231,16 @@ int main(int argc, char **argv)
         }
     }
 
+    printf("step 4\n");
     sleep(test_duration); 
 
     stop = 1;
-    // for (int p = 0; p < (test_nmalicious); p++){
-    //     pthread_join(mal_tasks[p].thread, NULL);
-    // }
 
+    printf("step 5\n");
     for (int p = 0; p < (test_insert_ratio); p++){
         pthread_join(insert_tasks[p].thread, NULL);
     }
 
-    // for (int p = 0; p < (test_insert_find_ratio); p++){
-    //     pthread_join(insert_find_tasks[p].thread, NULL);
-    // }
 
     for (int p = 0; p < (test_find_ratio); p++){
         pthread_join(find_tasks[p].thread, NULL);

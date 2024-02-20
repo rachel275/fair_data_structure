@@ -200,11 +200,11 @@ ax.bar(def_insert_id, def_i_tot_time, width=0.5, color='g', align='center', labe
 handles, labels = ax.get_legend_handles_labels()
 
 # reverse the order
-ax.set(xlabel="Thread id", ylabel="Time (ms)")# ,  yscale = "log")    
+ax.set(xlabel="Thread id", ylabel="Time (ms)",  yscale = "log")    
 
 twin1.plot(tot_id, tot_n_ops, linestyle='-', color='k')
-twin1.set(ylabel="Number of operations")#, yscale = "log")
-plt.text(tot_id[0], tot_n_ops[0], 'Throughout', ha='left')
+twin1.set(ylabel="Number of operations", yscale = "log")
+plt.text(tot_id[0], tot_n_ops[0], 'Throughput', ha='left')
 plt.xticks(np.arange(min(def_genuine_id), max(insert_id)+1, 4)) 
 # Annotating a point
 
@@ -214,6 +214,6 @@ plt.legend(handles[::-1], labels[::-1])
 #plt.plot(genuine_id, wc_time)
 n = len(filename)
 plt.title("Total lock hold per thread (CLOUDLAB," + str(duration) + "s)") 
-figName = "./graphs/ns_c_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_combined_1.png"
+figName = "./graphs/ns_c_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_combined.png"
 plt.savefig(figName)          
 plt.close()
