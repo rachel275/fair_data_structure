@@ -101,11 +101,11 @@ void *insertfunc(void *vargp)
 
     // /*loop continuously*/
     while(!*task->stop){
-            //printf("step 1.a\n");
+       // printf("step 1.a\n");
       /*add to the linked list*/
-        entry = ((fast_rand() % key_space)  + task->id);
+        entry = ((fast_rand() % (key_space / 10) * 10)  + task->id);
         list_insert(&list, entry, &entry+entry, &task->stat, task->id);
-        //sleep((fast_rand() % 1000) / 1000.0);
+   //     sleep((fast_rand() % 1000) / 1000.0);
     }
     print_summary("insert", task);
     return NULL;
@@ -119,11 +119,11 @@ void *findfunc(void *vargp)
 
     // /*loop continuously*/
     while(!*task->stop){
-        //printf("step 1.b\n");
-      /*add to the linked list*/
-        entry = ((fast_rand() % (key_space)) + task->id);
+    //    //printf("step 1.b\n");
+    //  /*add to the linked list*/
+        entry = ((fast_rand() % (key_space / 10) * 10) + task->id);
         list_find(&list, entry, &task->stat, task->id);
-        //sleep((fast_rand() % 1000) / 1000.0);
+   //     sleep((fast_rand() % 1000) / 1000.0);
     }
     print_summary("find", task);
     return NULL;
@@ -171,7 +171,7 @@ int main(int argc, char **argv)
     /*now we need to see how many threads of each type we want and make sure we are setting them for each applicaiton...*/
     /*how do we split up the keyspace*/
 
-    //printf("insert: %i      find: %i        \n", test_insert_ratio, test_find_ratio);
+   // printf("insert: %i      find: %i        \n", test_insert_ratio, test_find_ratio);
     int stop __attribute__((aligned (64))) = 0;
     int ncpu = 0;
     task_t *insert_tasks = malloc(sizeof(task_t) * (test_insert_ratio));
@@ -188,55 +188,64 @@ int main(int argc, char **argv)
     //     list_insert(&list, n, &n, &dummy, (n % (test_find_ratio)));
     // }
 
+    int h = 0; 
+    int g = 0; 
+    int ninserts = 0; 
+    int nfinds = 0;
     for (int i = 0; i < napplications; i++){
-        for (int j = 0; j < ((nratio[i] * 8) / 100); j++){
-            insert_tasks[j].id = i; //work on this so the id's are related
-    	    insert_tasks[j].ncpu = i; //j;//2*(j + i) + 1;
-            insert_tasks[j].stop = &stop;
+        ninserts += ((nratio[i] * 8) / 100);
+	for (h; h < ninserts; h++){
+            insert_tasks[h].id = i; //work on this so the id's are related
+    	    insert_tasks[h].ncpu = 2*h + 1;
+            insert_tasks[h].stop = &stop;
         }
-
-        for (int j = 0; j < (((100 - nratio[i]) * 8) / 100); j++){
-            find_tasks[j].id = i;
-    	    find_tasks[j].ncpu = i;//napplications - j;//2*(j + i);
-            find_tasks[j].stop = &stop;
+	nfinds += (((100 - nratio[i]) * 8) / 100);
+        for (g; g < nfinds; g++){
+            find_tasks[g].id = i;
+    	    find_tasks[g].ncpu = 2*g;
+            find_tasks[g].stop = &stop;
         }
     } 
-    printf("step 1\n");
+    //printf("step 1\n");
 
   /*now that we've orgainsed the threads we need to  */
 
     for (int k = 0; k < test_insert_ratio; k++){
-        rc = pthread_create(&insert_tasks[k].thread, &attr, insertfunc, &insert_tasks[k]);
+        rc = pthread_create(&insert_tasks[k].thread, NULL, insertfunc, &insert_tasks[k]);
+	//printf("create insert thread\n");
         if (rc){
             printf("Error:unable to create insert thread, %d\n", rc);
             exit(-1);
         }
     }
 
-    printf("step 2\n");  
+    //printf("step 2\n");  
 
     for (int k = 0; k < test_find_ratio; k++){
-        rc = pthread_create(&find_tasks[k].thread, &attr, findfunc, &find_tasks[k]);
-        if (rc){
+        rc = pthread_create(&find_tasks[k].thread, NULL, findfunc, &find_tasks[k]);
+        //printf("create find thread\n");
+	if (rc){
             printf("Error:unable to create find thread, %d\n", rc);
             exit(-1);
         }
     }
-    printf("step 3\n");
+
+    //printf("step 3\n");
+
     for (int k = 0; k < test_delete_ratio; k++){
-        rc = pthread_create(&delete_tasks[k].thread, &attr, deletefunc, &delete_tasks[k]);
+        rc = pthread_create(&delete_tasks[k].thread, NULL, deletefunc, &delete_tasks[k]);
         if (rc){
             printf("Error:unable to create delete thread, %d\n", rc);
             exit(-1);
         }
     }
 
-    printf("step 4\n");
+    //printf("step 4\n");
     sleep(test_duration); 
 
     stop = 1;
 
-    printf("step 5\n");
+    //printf("step 5\n");
     for (int p = 0; p < (test_insert_ratio); p++){
         pthread_join(insert_tasks[p].thread, NULL);
     }
