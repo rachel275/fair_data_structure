@@ -1,6 +1,0 @@
-find id: 00 / number of operations: 12296 / number of entries: 0 / tot_time(ms):  13369.320 / max_time(ms):     64.045 / 
-insert id: 04 / number of operations: 1 / number of entries: 1 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-find id: 01 / number of operations: 1 / number of entries: 0 / tot_time(ms):      0.212 / max_time(ms):      0.212 / 
-find id: 02 / number of operations: 1 / number of entries: 0 / tot_time(ms):      0.213 / max_time(ms):      0.213 / 
-find id: 03 / number of operations: 1 / number of entries: 0 / tot_time(ms):      0.197 / max_time(ms):      0.197 / 
-insert id: 05 / number of operations: 84064 / number of entries: 84064 / tot_time(ms):      1.160 / max_time(ms):      0.015 / 

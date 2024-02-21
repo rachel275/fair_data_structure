@@ -1,0 +1,16 @@
+find id: 00 / number of operations: 12191216 / number of entries: 0 / tot_time(ms):   2747.201 / max_time(ms):      5.280 / 
+find id: 01 / number of operations: 68570 / number of entries: 0 / tot_time(ms):   4964.069 / max_time(ms):      7.926 / 
+find id: 00 / number of operations: 12188828 / number of entries: 0 / tot_time(ms):   2730.668 / max_time(ms):      0.061 / 
+find id: 00 / number of operations: 12186402 / number of entries: 0 / tot_time(ms):   2736.689 / max_time(ms):      0.051 / 
+find id: 01 / number of operations: 70430 / number of entries: 0 / tot_time(ms):   4963.310 / max_time(ms):      0.213 / 
+insert id: 01 / number of operations: 12704914 / number of entries: 12704914 / tot_time(ms):    436.241 / max_time(ms):      0.054 / 
+find id: 01 / number of operations: 12208624 / number of entries: 0 / tot_time(ms):   2742.747 / max_time(ms):      0.109 / 
+find id: 01 / number of operations: 12186007 / number of entries: 0 / tot_time(ms):   2733.430 / max_time(ms):      0.097 / 
+insert id: 00 / number of operations: 12706087 / number of entries: 12706087 / tot_time(ms):    440.626 / max_time(ms):      0.052 / 
+insert id: 00 / number of operations: 12701586 / number of entries: 12701586 / tot_time(ms):    443.758 / max_time(ms):      0.055 / 
+insert id: 01 / number of operations: 12743364 / number of entries: 12743364 / tot_time(ms):    444.448 / max_time(ms):      0.045 / 
+insert id: 00 / number of operations: 12704949 / number of entries: 12704949 / tot_time(ms):    444.294 / max_time(ms):      0.054 / 
+insert id: 01 / number of operations: 12771858 / number of entries: 12771858 / tot_time(ms):    437.896 / max_time(ms):      0.054 / 
+insert id: 01 / number of operations: 12800786 / number of entries: 12800786 / tot_time(ms):    442.873 / max_time(ms):      0.054 / 
+insert id: 00 / number of operations: 12712850 / number of entries: 12712850 / tot_time(ms):    436.030 / max_time(ms):      0.064 / 
+find id: 00 / number of operations: 12142826 / number of entries: 0 / tot_time(ms):   2753.122 / max_time(ms):      0.356 / 

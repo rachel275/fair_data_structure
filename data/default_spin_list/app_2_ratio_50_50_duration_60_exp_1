@@ -1,0 +1,16 @@
+find id: 00 / number of operations: 33125290 / number of entries: 0 / tot_time(ms):  10444.516 / max_time(ms):      0.022 / 
+find id: 00 / number of operations: 30000214 / number of entries: 0 / tot_time(ms):   9501.057 / max_time(ms):      0.043 / 
+find id: 00 / number of operations: 4548520 / number of entries: 0 / tot_time(ms):   1724.938 / max_time(ms):      0.014 / 
+find id: 00 / number of operations: 36347838 / number of entries: 0 / tot_time(ms):  11458.826 / max_time(ms):      0.021 / 
+insert id: 00 / number of operations: 239686 / number of entries: 239686 / tot_time(ms):     54.536 / max_time(ms):      0.011 / 
+find id: 01 / number of operations: 3003143 / number of entries: 0 / tot_time(ms):    785.925 / max_time(ms):      0.035 / 
+insert id: 01 / number of operations: 374872 / number of entries: 374872 / tot_time(ms):     99.502 / max_time(ms):      0.007 / 
+insert id: 01 / number of operations: 387802 / number of entries: 387802 / tot_time(ms):     97.033 / max_time(ms):      0.007 / 
+find id: 01 / number of operations: 3375397 / number of entries: 0 / tot_time(ms):    875.659 / max_time(ms):      0.085 / 
+insert id: 00 / number of operations: 237695 / number of entries: 237695 / tot_time(ms):     54.373 / max_time(ms):      0.012 / 
+insert id: 00 / number of operations: 203804 / number of entries: 203804 / tot_time(ms):     47.318 / max_time(ms):      0.006 / 
+find id: 01 / number of operations: 3559849 / number of entries: 0 / tot_time(ms):    916.383 / max_time(ms):      0.014 / 
+insert id: 01 / number of operations: 508921 / number of entries: 508921 / tot_time(ms):    119.360 / max_time(ms):      0.010 / 
+find id: 01 / number of operations: 3001591 / number of entries: 0 / tot_time(ms):    786.729 / max_time(ms):      0.008 / 
+insert id: 01 / number of operations: 513909 / number of entries: 513909 / tot_time(ms):    120.681 / max_time(ms):      0.017 / 
+insert id: 00 / number of operations: 216395 / number of entries: 216395 / tot_time(ms):     49.763 / max_time(ms):      0.005 / 
