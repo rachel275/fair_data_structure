@@ -54,8 +54,13 @@ def find_outliers_num(dataset, avg, sd):
             outlierCount += 1
     return outlierCount
 
-def write_to_table(ithreads, fthreads, duration, type):
-    f = open("./tables/" + type + "_list_tables/ithreads_" + str(ithreads) + "_fthreads_" + str(fthreads) + "_duration_" + str(duration) + "_lock_CLOUDLAB.csv", 'a+', newline="")
+def write_to_table(applications, ratio, duration, type):
+    ratio_string = ""
+    print(ratio)
+    for i in ratio:
+        ratio_string = ratio_string + str(i) + "_"
+    print(ratio_string)
+    f = open("./tables/" + type + "_list_tables/applications_" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + ".csv", 'a+', newline="")
     writer = csv.writer(f)
     header = ["Type of thread", "Thread Id","Number of Operations", "Number of Entries", "Total Time", "Worst Case Time"]
     writer.writerow(header)
@@ -104,52 +109,38 @@ def sort_again():
 
 rootdir = "./data/"
 for dir in os.listdir(rootdir):
-        if dir.split('_')[-2] == "c":
+        if dir.split('_')[-2] == "spin":
             type = dir.split('_list')[0]
             for filename in os.listdir("./data/" + dir):
                 with open(os.path.join("./data/" + dir, filename), 'r') as file:
                     data = []
-                    if ((filename.endswith("_lock_CLOUDLAB") == False)): # or (filename.endswith("_basecase_CLOUDLAB") == True )):
+                    if ((filename.endswith("_exp_0")) == False): # or (filename.endswith("_basecase_CLOUDLAB") == True )):
                         file.close()
                         continue
-                    # information = file.readline()
-                    # #find this information from the file name
-                    ithreads = filename.split('_')[0].split("ithreads")[-1]#find_info(information, 1).lstrip().rstrip()
-                    fthreads = filename.split('_')[1].split("fthreads")[-1]
-                    duration = filename.split('_')[2].split("duration")[-1]
-                    if (ithreads != fthreads):
-                        file.close()
-                        continue
+                    ratio = []
+                    applications = int(filename.split('_')[1])#find_info(information, 1).lstrip().rstrip()
+                    for i in range(applications):
+                        ratio.append(int(filename.split('_')[i + 3]))
+                    duration = filename.split('_')[i + 5]
+                    print(ratio)
             #thread type, thread id, number of operations, number of entries, total cs time, worst case critical section time.
-                    threadNum = int(ithreads) + int(fthreads)
-                    for i in range(threadNum):
-                        text = file.readline().split('/')
+                    text_line = file.readline()
+                    while text_line:
+                        text = text_line.split('/')
                         thread_type = text[0].split(' ')[1]
                         if (thread_type == "id:"):
                             thread_type = text[0].split(' ')[0]
-                        #bucket_id = int(text[0].split(' ')[0])
                         thread_id = int(text[0].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
-                        #wc_time = float(text[1].split(':')[-1])
                         no_ops = int(text[1].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
-                        #thread_bucket_id.append(bucket_id)
                         no_entries= int(text[2].split(':')[-1])#(find_info(text, 1).lstrip().rstrip())
-                        #thread_wc_time.append(wc_time)
                         total_time = float(text[3].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
-                        #thread_total_time.append(total_time)
                         wc_time= float(text[4].split(':')[-1])
-                        # find_total_time = float(text[5].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
-                        # #thread_total_time.append(total_time)
-                        # find_wc_time= float(text[6].split(':')[-1])
-                        #bucket_execution= int(text[4].split(':')[-1])#(find_info(text, 1).lstrip().rstrip())
-                        #thread_executions.append(thread_execution)
-
-                        #sd = round(statistics.stdev(thread_executions), 2)
 
                         data.append([thread_type, thread_id, no_ops, no_entries, wc_time, total_time])
+                        text_line = file.readline()
                     
                     sort_data()
-                    #sort_again()
-                    write_to_table(ithreads, fthreads, duration, type)
+                    write_to_table(applications, ratio, duration, type)
                     file.close()
                 #print("close this file ")
             # sort_data()

@@ -7,16 +7,18 @@ import sys
 
 
 
-path = "./tables/default_list_tables/"  #FILL THIS IN HERE
+path = "./tables/default_spin_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
-        if ((filename.endswith("_sepCPU_CLOUDLAB.csv") == False)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
-            file.close()
-            continue
-        ithreads = int(filename.split('_')[1]) 
-        fthreads = int(filename.split('_')[3]) 
-        duration = filename.split('_')[5]
+        # if ((filename.split('_')[1] == str(2))):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
+        #     file.close()
+        #     continue
+        applications = int(filename.split('_')[1]) 
+        ratio = []
+        for i in range(applications):
+            ratio.append(int(filename.split('_')[i + 3]))
+        duration = filename.split('_')[i + 5]
         i = -1
         reader = csv.reader(file)
         no_threads = []
@@ -50,48 +52,105 @@ for filename in os.listdir(path):
                     n_ops.append(int(row[int(2)]))
                     n_entries.append(int(row[int(3)])) 
 
-    new_insert_id = []
-    for i in insert_id:
-        new_insert_id.append(i - len(genuine_id))
+# we want to group by application i.e thread ID
+    #but we want to distingusih between insert and find threads
 
-    print(insert_id)
-    print(new_insert_id)
-    print("\n")
 
-    tot_n_ops = []
-    tot_id = []
-    for i in range(len(new_insert_id) * 2):
-        if (i % 2 == 0):
-            tot_n_ops.append(n_ops[int(i/2)])
-        else:
-            tot_n_ops.append(i_n_ops[int((i-1)/2)])
+#for the insert thread, make it slightly less then the id
+#for the find threads, make it more than the id
+
+    # new_insert_id = []
+    # for i in insert_id:
+    #     new_insert_id.append(i - len(genuine_id))
+
+    # print(insert_id)
+    # print(new_insert_id)
+    # print("\n")
+
+    # tot_n_ops = []
+    # tot_id = []
+    # for i in range(len(new_insert_id) * 2):
+    #     if (i % 2 == 0):
+    #         tot_n_ops.append(n_ops[int(i/2)])
+    #     else:
+    #         tot_n_ops.append(i_n_ops[int((i-1)/2)])
     
 
-    for i in new_insert_id:
-        tot_id.extend([i - 0.2, i + 0.2])
+    # for i in new_insert_id:
+    #     tot_id.extend([i - 0.2, i + 0.2])
+    counter_one = 0
+    counter_two = 0
+    counter_three = 0
+    new_insert_id = []
+    new_find_id = []
 
-    f_threads = [x - 0.2 for x in genuine_id]
-    i_threads = [x + 0.2 for x in new_insert_id]
+    for i in insert_id:
+        if i == 0:
+            if counter_one == 0:
+                new_insert_id.append(i - (counter_one + 0.05))
+                counter_one = counter_one + 0.05
+            else:
+                new_insert_id.append(i - (counter_one + 0.1))
+                counter_one = counter_one + 0.1
+        elif i == 1:
+            if counter_two == 0:
+                new_insert_id.append(i - (counter_two + 0.05))
+                counter_two = counter_two + 0.05
+            else:
+                new_insert_id.append(i - (counter_two + 0.1))
+                counter_two = counter_two + 0.1
+        elif i == 2:
+            new_insert_id.append(i - (counter_three + 0.1))
+            counter_three = counter_three + 0.1
+
+    count_one = 0
+    count_two = 0
+    count_three = 0
+
+    for i in genuine_id:
+        if i == 0:
+            if count_one == 0:
+                new_find_id.append(i + (count_one + 0.05))
+                count_one = count_one + 0.05
+            else:
+                new_find_id.append(i + (count_one + 0.1))
+                count_one = count_one + 0.1
+        elif i == 1:
+            if count_two == 0:
+                new_find_id.append(i + (count_two + 0.05))
+                count_two = count_two + 0.05
+            else:
+                new_find_id.append(i + (count_two + 0.1))
+                count_two = count_two + 0.1
+        elif i == 2:
+            new_find_id.append(i + (count_three + 0.1))
+            count_three = count_three + 0.1
+
+
+    # f_threads = [x - 0.2 for x in genuine_id]
+    # i_threads = [x + 0.2 for x in new_insert_id]
+    print(new_insert_id)
+    print(new_find_id)
 
 
     fig, ax = plt.subplots()
 
-    twin1 = ax.twinx()
+    #twin1 = ax.twinx()
     #twin2 = ax.twinx()
 
-    ax.bar(f_threads, tot_time, width=0.3, color='b', align='center', label = "find")
-    ax.bar(i_threads, i_tot_time, width=0.3, color='g', align='center', label = "insert")
+    ax.bar(new_find_id, tot_time, width=0.09, color='b', align='center', label = "find")
+    ax.bar(new_insert_id, i_tot_time, width=0.09, color='g', align='center', label = "insert")
 
     handles, labels = ax.get_legend_handles_labels()
 
     # reverse the order
-    ax.set(xlabel="Thread id", ylabel="Time (ms)",  yscale = "log")    
+    ax.set(xlabel="Threads", ylabel="Time (ms)",  yscale = "log")    
 
-    twin1.plot(tot_id, tot_n_ops, linestyle='-', color='k')
-    twin1.set(ylabel="Number of operations", yscale = "log")
+    # twin1.plot(tot_id, tot_n_ops, linestyle='-', color='k')
+    # twin1.set(ylabel="Number of operations", yscale = "log")
     ax.set_ylim(bottom = 0)
-    plt.text(tot_id[0], tot_n_ops[0], 'Throughput', ha='left')
-    plt.xticks(np.arange(min(genuine_id), max(genuine_id)+1, 2)) 
+    # plt.text(tot_id[0], tot_n_ops[0], 'Throughput', ha='left')
+    plt.xticks([]) 
     # Annotating a point
 
     # # Add a colorbar to the plot to represent the 'z' variable
@@ -99,8 +158,11 @@ for filename in os.listdir(path):
     plt.legend(handles[::-1], labels[::-1])
     #plt.plot(genuine_id, wc_time)
     n = len(filename)
-    plt.title("Total lock hold per thread (CLOUDLAB," + str(duration) + "s)") 
-    figName = "./graphs/default_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_total_time_CLOUDLAB.png"
+    plt.title("Total lock hold per thread") 
+    ratio_string = ""
+    for i in ratio:
+        ratio_string = ratio_string + str(i) + "_"
+    figName = "./graphs/default_spin_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
     plt.savefig(figName)          
     plt.close()
 
