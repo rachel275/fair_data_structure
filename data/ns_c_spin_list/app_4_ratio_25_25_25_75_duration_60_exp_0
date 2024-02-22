@@ -1,0 +1,16 @@
+create new head node	create new head node	create new head node	create new head node	find id: 01 / number of operations: 356100 / number of entries: 0 / tot_time(ms):    121.143 / max_time(ms):      0.007 / 
+find id: 02 / number of operations: 12752051 / number of entries: 0 / tot_time(ms):   3212.562 / max_time(ms):      0.021 / 
+find id: 02 / number of operations: 7970788 / number of entries: 0 / tot_time(ms):   2031.362 / max_time(ms):      0.017 / 
+find id: 00 / number of operations: 9359150 / number of entries: 0 / tot_time(ms):   4824.433 / max_time(ms):     21.324 / 
+find id: 03 / number of operations: 8636598 / number of entries: 0 / tot_time(ms):   2309.389 / max_time(ms):      0.034 / 
+insert id: 03 / number of operations: 81371 / number of entries: 81371 / tot_time(ms):     25.045 / max_time(ms):      0.011 / 
+find id: 02 / number of operations: 10485181 / number of entries: 0 / tot_time(ms):   2626.965 / max_time(ms):      0.021 / 
+insert id: 00 / number of operations: 1086516 / number of entries: 1086516 / tot_time(ms):    243.915 / max_time(ms):      0.048 / 
+find id: 01 / number of operations: 14954001 / number of entries: 0 / tot_time(ms):   3573.437 / max_time(ms):      0.010 / 
+insert id: 02 / number of operations: 76459 / number of entries: 76459 / tot_time(ms):     41.564 / max_time(ms):     21.288 / 
+insert id: 03 / number of operations: 165435 / number of entries: 165435 / tot_time(ms):     50.176 / max_time(ms):      0.015 / 
+find id: 01 / number of operations: 8600388 / number of entries: 0 / tot_time(ms):   3719.735 / max_time(ms):     21.293 / 
+insert id: 01 / number of operations: 76665 / number of entries: 76665 / tot_time(ms):     18.451 / max_time(ms):      0.004 / 
+find id: 00 / number of operations: 11464529 / number of entries: 0 / tot_time(ms):   6058.489 / max_time(ms):     37.251 / 
+find id: 00 / number of operations: 8341176 / number of entries: 0 / tot_time(ms):   4497.070 / max_time(ms):     21.297 / 
+insert id: 03 / number of operations: 81155 / number of entries: 81155 / tot_time(ms):     40.626 / max_time(ms):     15.968 / 
