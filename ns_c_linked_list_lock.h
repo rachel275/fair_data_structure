@@ -30,7 +30,8 @@ typedef struct head_node_t {
     int thread_id;
     struct head_node_t *th_next;
     struct node_t *next;
-    lock_t mutexes __attribute__ ((aligned (64)));
+    pthread_mutex_t lock; 
+    //lock_t mutexes __attribute__ ((aligned (64)));
 } head_node_t;
 
 typedef struct list_t {

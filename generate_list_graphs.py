@@ -7,7 +7,7 @@ import sys
 
 
 
-path = "./tables/default_spin_list_tables/"  #FILL THIS IN HERE
+path = "./tables/ns_c_fair_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
@@ -162,7 +162,7 @@ for filename in os.listdir(path):
     ratio_string = ""
     for i in ratio:
         ratio_string = ratio_string + str(i) + "_"
-    figName = "./graphs/default_spin_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
+    figName = "./graphs/ns_c_fair_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
     plt.savefig(figName)          
     plt.close()
 
