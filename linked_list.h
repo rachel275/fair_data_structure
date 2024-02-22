@@ -133,6 +133,7 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     stat->cs_time = duration;
     stat->tot_cs_time += duration;
     stat->n_ops++;
+    //printf("Not found	");
     return NULL;
 }
 

@@ -1,0 +1,12 @@
+find id: 00 / number of operations: 866009 / number of entries: 0 / tot_time(ms):   6510.562 / max_time(ms):      0.236 / 
+find id: 02 / number of operations: 12353994 / number of entries: 0 / tot_time(ms):   4343.353 / max_time(ms):      0.892 / 
+find id: 02 / number of operations: 12362821 / number of entries: 0 / tot_time(ms):   4331.195 / max_time(ms):      0.134 / 
+find id: 01 / number of operations: 7327296 / number of entries: 0 / tot_time(ms):   5497.150 / max_time(ms):      0.386 / 
+insert id: 01 / number of operations: 17023716 / number of entries: 17023716 / tot_time(ms):    587.510 / max_time(ms):      0.067 / 
+find id: 01 / number of operations: 13012622 / number of entries: 0 / tot_time(ms):   4217.302 / max_time(ms):      0.369 / 
+find id: 01 / number of operations: 13077765 / number of entries: 0 / tot_time(ms):   4205.891 / max_time(ms):      0.444 / 
+insert id: 02 / number of operations: 17003879 / number of entries: 17003879 / tot_time(ms):    586.206 / max_time(ms):      0.025 / 
+insert id: 00 / number of operations: 17014853 / number of entries: 17014853 / tot_time(ms):    588.008 / max_time(ms):      0.026 / 
+find id: 00 / number of operations: 6704703 / number of entries: 0 / tot_time(ms):   2515.979 / max_time(ms):      1.743 / 
+insert id: 02 / number of operations: 16175644 / number of entries: 16175644 / tot_time(ms):    559.006 / max_time(ms):      0.047 / 
+find id: 00 / number of operations: 845967 / number of entries: 0 / tot_time(ms):   6543.013 / max_time(ms):      4.223 / 

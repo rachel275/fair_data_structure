@@ -1,0 +1,16 @@
+find id: 00 / number of operations: 2007908 / number of entries: 0 / tot_time(ms):   4779.189 / max_time(ms):     21.302 / 
+insert id: 00 / number of operations: 85086 / number of entries: 85086 / tot_time(ms):     19.571 / max_time(ms):      0.012 / 
+find id: 03 / number of operations: 23056993 / number of entries: 0 / tot_time(ms):  15838.955 / max_time(ms):      0.038 / 
+find id: 02 / number of operations: 17593627 / number of entries: 0 / tot_time(ms):   9329.522 / max_time(ms):      0.050 / 
+insert id: 03 / number of operations: 411643 / number of entries: 411643 / tot_time(ms):     86.701 / max_time(ms):      0.018 / 
+find id: 03 / number of operations: 29677850 / number of entries: 0 / tot_time(ms):  20401.352 / max_time(ms):      0.057 / 
+insert id: 02 / number of operations: 38067 / number of entries: 38067 / tot_time(ms):     29.973 / max_time(ms):     21.289 / 
+insert id: 02 / number of operations: 423570 / number of entries: 423570 / tot_time(ms):     90.848 / max_time(ms):      0.018 / 
+find id: 03 / number of operations: 4263918 / number of entries: 0 / tot_time(ms):   3070.300 / max_time(ms):      0.226 / 
+find id: 01 / number of operations: 1851573 / number of entries: 0 / tot_time(ms):   5291.764 / max_time(ms):     37.254 / 
+insert id: 01 / number of operations: 40794 / number of entries: 40794 / tot_time(ms):      9.117 / max_time(ms):      0.010 / 
+insert id: 00 / number of operations: 86729 / number of entries: 86729 / tot_time(ms):     19.285 / max_time(ms):      0.050 / 
+insert id: 01 / number of operations: 92432 / number of entries: 92432 / tot_time(ms):     21.078 / max_time(ms):      0.011 / 
+insert id: 02 / number of operations: 92638 / number of entries: 92638 / tot_time(ms):     21.390 / max_time(ms):      0.011 / 
+insert id: 01 / number of operations: 93809 / number of entries: 93809 / tot_time(ms):     20.740 / max_time(ms):      0.011 / 
+insert id: 00 / number of operations: 89566 / number of entries: 89566 / tot_time(ms):     20.094 / max_time(ms):      0.012 / 

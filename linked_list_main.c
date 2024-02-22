@@ -161,8 +161,8 @@ int main(int argc, char **argv)
     for (int i = 0; i < napplications; i++){
         nratio[i] = atoi(argv[i+2]);
         //printf("%i ", nratio[i]);
-        test_insert_ratio += ((nratio[i] * 8) / 100);
-        test_find_ratio += (((100 - nratio[i]) * 8) / 100);
+        test_insert_ratio += ((nratio[i] * 4) / 100);
+        test_find_ratio += (((100 - nratio[i]) * 4) / 100);
     }
 
     test_duration = atoi(argv[napplications + 2]);       //the time the test shall run for
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
     task_t *delete_tasks = malloc(sizeof(task_t) * (test_delete_ratio));
 
     int rc;
-    key_space = (test_find_ratio * 50);
+    key_space = ((test_insert_ratio + test_find_ratio) * 50);
 
     List_Init(&list);
 
@@ -193,16 +193,16 @@ int main(int argc, char **argv)
     int ninserts = 0; 
     int nfinds = 0;
     for (int i = 0; i < napplications; i++){
-        ninserts += ((nratio[i] * 8) / 100);
+        ninserts += ((nratio[i] * 4) / 100);
 	for (h; h < ninserts; h++){
             insert_tasks[h].id = i; //work on this so the id's are related
-    	    insert_tasks[h].ncpu = 2*h + 1;
+    	    insert_tasks[h].ncpu = h;
             insert_tasks[h].stop = &stop;
         }
-	nfinds += (((100 - nratio[i]) * 8) / 100);
+	nfinds += (((100 - nratio[i]) * 4) / 100);
         for (g; g < nfinds; g++){
             find_tasks[g].id = i;
-    	    find_tasks[g].ncpu = 2*g;
+    	    find_tasks[g].ncpu = g + ninserts;
             find_tasks[g].stop = &stop;
         }
     } 
