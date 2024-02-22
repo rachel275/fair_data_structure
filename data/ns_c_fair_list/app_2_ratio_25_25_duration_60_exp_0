@@ -1,0 +1,8 @@
+create new head node	create new head node	find id: 00 / number of operations: 23735512 / number of entries: 0 / tot_time(ms):   5655.330 / max_time(ms):      0.046 / 
+find id: 00 / number of operations: 23718532 / number of entries: 0 / tot_time(ms):   5666.494 / max_time(ms):      4.507 / 
+find id: 01 / number of operations: 23899332 / number of entries: 0 / tot_time(ms):   5626.849 / max_time(ms):      2.707 / 
+find id: 01 / number of operations: 23902399 / number of entries: 0 / tot_time(ms):   5622.002 / max_time(ms):      1.320 / 
+find id: 01 / number of operations: 23888445 / number of entries: 0 / tot_time(ms):   5622.702 / max_time(ms):      0.100 / 
+insert id: 00 / number of operations: 24325634 / number of entries: 24325634 / tot_time(ms):   1250.277 / max_time(ms):      4.198 / 
+find id: 00 / number of operations: 16831878 / number of entries: 0 / tot_time(ms):   4224.234 / max_time(ms):      2.028 / 
+insert id: 01 / number of operations: 19952806 / number of entries: 19952806 / tot_time(ms):    740.235 / max_time(ms):      0.031 / 

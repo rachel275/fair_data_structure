@@ -1,0 +1,16 @@
+find id: 03 / number of operations: 8783601 / number of entries: 0 / tot_time(ms):   3368.493 / max_time(ms):      0.044 / 
+find id: 03 / number of operations: 8777011 / number of entries: 0 / tot_time(ms):   3362.083 / max_time(ms):      0.046 / 
+insert id: 00 / number of operations: 12816046 / number of entries: 12816046 / tot_time(ms):    443.533 / max_time(ms):      0.055 / 
+find id: 00 / number of operations: 5299666 / number of entries: 0 / tot_time(ms):   4009.307 / max_time(ms):      5.647 / 
+find id: 00 / number of operations: 8691700 / number of entries: 0 / tot_time(ms):   3388.835 / max_time(ms):      0.561 / 
+find id: 00 / number of operations: 6414480 / number of entries: 0 / tot_time(ms):   3801.081 / max_time(ms):      2.218 / 
+insert id: 02 / number of operations: 12815077 / number of entries: 12815077 / tot_time(ms):    441.639 / max_time(ms):      0.052 / 
+find id: 02 / number of operations: 8755634 / number of entries: 0 / tot_time(ms):   3376.201 / max_time(ms):      0.350 / 
+find id: 02 / number of operations: 8785522 / number of entries: 0 / tot_time(ms):   3367.357 / max_time(ms):      0.265 / 
+find id: 02 / number of operations: 8799016 / number of entries: 0 / tot_time(ms):   3369.115 / max_time(ms):      0.266 / 
+insert id: 01 / number of operations: 12812121 / number of entries: 12812121 / tot_time(ms):    443.739 / max_time(ms):      0.079 / 
+find id: 01 / number of operations: 6035411 / number of entries: 0 / tot_time(ms):   3873.074 / max_time(ms):      4.623 / 
+find id: 01 / number of operations: 8768078 / number of entries: 0 / tot_time(ms):   3375.305 / max_time(ms):      0.636 / 
+find id: 01 / number of operations: 8778356 / number of entries: 0 / tot_time(ms):   3377.956 / max_time(ms):      3.933 / 
+insert id: 03 / number of operations: 12831484 / number of entries: 12831484 / tot_time(ms):    443.167 / max_time(ms):      0.049 / 
+find id: 03 / number of operations: 8766698 / number of entries: 0 / tot_time(ms):   3374.879 / max_time(ms):      0.053 / 

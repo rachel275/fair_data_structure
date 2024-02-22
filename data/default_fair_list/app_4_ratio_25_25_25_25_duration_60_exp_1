@@ -1,0 +1,16 @@
+insert id: 03 / number of operations: 12782972 / number of entries: 12782972 / tot_time(ms):    443.122 / max_time(ms):      1.136 / 
+find id: 03 / number of operations: 8724498 / number of entries: 0 / tot_time(ms):   3368.951 / max_time(ms):      0.396 / 
+find id: 03 / number of operations: 8760967 / number of entries: 0 / tot_time(ms):   3362.589 / max_time(ms):      0.400 / 
+find id: 03 / number of operations: 8755515 / number of entries: 0 / tot_time(ms):   3363.106 / max_time(ms):      1.621 / 
+insert id: 00 / number of operations: 12807996 / number of entries: 12807996 / tot_time(ms):    442.004 / max_time(ms):      0.030 / 
+find id: 00 / number of operations: 8743932 / number of entries: 0 / tot_time(ms):   3367.082 / max_time(ms):      0.314 / 
+find id: 00 / number of operations: 8773799 / number of entries: 0 / tot_time(ms):   3358.686 / max_time(ms):      0.217 / 
+find id: 00 / number of operations: 4450493 / number of entries: 0 / tot_time(ms):   2311.152 / max_time(ms):      2.643 / 
+insert id: 01 / number of operations: 11486720 / number of entries: 11486720 / tot_time(ms):    396.238 / max_time(ms):      0.027 / 
+find id: 01 / number of operations: 7795147 / number of entries: 0 / tot_time(ms):   3553.777 / max_time(ms):      0.418 / 
+find id: 01 / number of operations: 7853212 / number of entries: 0 / tot_time(ms):   3565.541 / max_time(ms):      0.405 / 
+find id: 01 / number of operations: 7855063 / number of entries: 0 / tot_time(ms):   3565.166 / max_time(ms):      0.801 / 
+insert id: 02 / number of operations: 12803255 / number of entries: 12803255 / tot_time(ms):    441.627 / max_time(ms):      0.025 / 
+find id: 02 / number of operations: 8717102 / number of entries: 0 / tot_time(ms):   3374.088 / max_time(ms):      4.783 / 
+find id: 02 / number of operations: 8755755 / number of entries: 0 / tot_time(ms):   3361.675 / max_time(ms):      0.370 / 
+find id: 02 / number of operations: 8755614 / number of entries: 0 / tot_time(ms):   3359.244 / max_time(ms):      2.552 / 
