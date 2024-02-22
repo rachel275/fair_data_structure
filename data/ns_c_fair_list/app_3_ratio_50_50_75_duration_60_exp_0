@@ -1,0 +1,12 @@
+create new head node	create new head node	create new head node	insert id: 00 / number of operations: 16784395 / number of entries: 16784395 / tot_time(ms):    702.590 / max_time(ms):      0.055 / 
+insert id: 01 / number of operations: 16892844 / number of entries: 16892844 / tot_time(ms):    676.633 / max_time(ms):      0.069 / 
+insert id: 02 / number of operations: 16732116 / number of entries: 16732116 / tot_time(ms):    611.359 / max_time(ms):      4.991 / 
+insert id: 02 / number of operations: 17049462 / number of entries: 17049462 / tot_time(ms):    630.380 / max_time(ms):      0.056 / 
+find id: 00 / number of operations: 12859481 / number of entries: 0 / tot_time(ms):   4306.662 / max_time(ms):      0.426 / 
+insert id: 02 / number of operations: 17038987 / number of entries: 17038987 / tot_time(ms):    629.432 / max_time(ms):      0.057 / 
+find id: 01 / number of operations: 12926591 / number of entries: 0 / tot_time(ms):   4286.583 / max_time(ms):      0.058 / 
+insert id: 00 / number of operations: 16782108 / number of entries: 16782108 / tot_time(ms):    703.655 / max_time(ms):      0.049 / 
+find id: 01 / number of operations: 12928338 / number of entries: 0 / tot_time(ms):   4297.193 / max_time(ms):      5.449 / 
+find id: 02 / number of operations: 12994908 / number of entries: 0 / tot_time(ms):   4273.625 / max_time(ms):      2.963 / 
+find id: 00 / number of operations: 9813023 / number of entries: 0 / tot_time(ms):   3320.592 / max_time(ms):      0.614 / 
+insert id: 01 / number of operations: 12560862 / number of entries: 12560862 / tot_time(ms):    495.444 / max_time(ms):      1.604 / 

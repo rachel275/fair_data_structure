@@ -1,0 +1,16 @@
+create new head node	create new head node	create new head node	create new head node	find id: 00 / number of operations: 7948665 / number of entries: 0 / tot_time(ms):   3524.855 / max_time(ms):      2.974 / 
+find id: 00 / number of operations: 8404470 / number of entries: 0 / tot_time(ms):   3447.855 / max_time(ms):      0.057 / 
+insert id: 00 / number of operations: 11367490 / number of entries: 11367490 / tot_time(ms):    883.877 / max_time(ms):      0.092 / 
+find id: 01 / number of operations: 8021880 / number of entries: 0 / tot_time(ms):   3504.733 / max_time(ms):      4.055 / 
+find id: 02 / number of operations: 8545514 / number of entries: 0 / tot_time(ms):   3420.734 / max_time(ms):      0.053 / 
+find id: 03 / number of operations: 8392573 / number of entries: 0 / tot_time(ms):   3441.834 / max_time(ms):      2.009 / 
+find id: 02 / number of operations: 8309470 / number of entries: 0 / tot_time(ms):   3448.860 / max_time(ms):      0.055 / 
+find id: 01 / number of operations: 8030959 / number of entries: 0 / tot_time(ms):   3493.190 / max_time(ms):      0.070 / 
+insert id: 01 / number of operations: 12257749 / number of entries: 12257749 / tot_time(ms):    660.296 / max_time(ms):      0.051 / 
+insert id: 02 / number of operations: 12444465 / number of entries: 12444465 / tot_time(ms):    508.171 / max_time(ms):      0.060 / 
+insert id: 01 / number of operations: 11490993 / number of entries: 11490993 / tot_time(ms):    838.148 / max_time(ms):      0.074 / 
+insert id: 00 / number of operations: 11366116 / number of entries: 11366116 / tot_time(ms):    883.686 / max_time(ms):      0.089 / 
+insert id: 02 / number of operations: 11710930 / number of entries: 11710930 / tot_time(ms):    752.225 / max_time(ms):      0.053 / 
+insert id: 03 / number of operations: 12822478 / number of entries: 12822478 / tot_time(ms):    474.293 / max_time(ms):      0.025 / 
+insert id: 03 / number of operations: 12780997 / number of entries: 12780997 / tot_time(ms):    498.246 / max_time(ms):      0.052 / 
+insert id: 03 / number of operations: 13556166 / number of entries: 13556166 / tot_time(ms):    499.269 / max_time(ms):      0.041 / 
