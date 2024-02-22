@@ -3,3 +3,13 @@ find,0,59401878,0,1.275,10725.553
 find,0,68967689,0,2.247,12125.931
 find,0,57672239,0,0.723,10533.818
 insert,0,42158670,42158670,0.031,6029.254
+Type of thread,Thread Id,Number of Operations,Number of Entries,Total Time,Worst Case Time
+find,0,59401878,0,1.275,10725.553
+find,0,68967689,0,2.247,12125.931
+find,0,57672239,0,0.723,10533.818
+insert,0,42158670,42158670,0.031,6029.254
+Type of thread,Thread Id,Number of Operations,Number of Entries,Total Time,Worst Case Time
+find,0,59401878,0,1.275,10725.553
+find,0,68967689,0,2.247,12125.931
+find,0,57672239,0,0.723,10533.818
+insert,0,42158670,42158670,0.031,6029.254

@@ -20,11 +20,13 @@
 #include "linked_list.h"
 #endif
 
+#define THREADS_PER_APP  4
+
 typedef struct {
     volatile int *stop;
     pthread_t thread;
 //    int priority;
-    int id;
+    int app_id;
     int ncpu;
     list_stat_t stat;
 } task_t __attribute__ ((aligned (64)));
@@ -34,9 +36,7 @@ void setup_worker(task_t *task) {
     if (task->ncpu != 0) {
 	cpu_set_t cpuset;
 	CPU_ZERO(&cpuset);
-	//for (int i =0; i < task->ncpu; i++){
 	CPU_SET(task->ncpu, &cpuset);
-	//}
 	ret = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
 	if (ret != 0) {
 	    perror("pthread_set_affinity_np");
@@ -50,7 +50,6 @@ void setup_worker(task_t *task) {
 //	exit(-1);
    // }
 }
-
 
 #define RAND_MAX 0x7fffffff
 uint rseed = 0;
@@ -86,7 +85,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
 	    "tot_time(ms): %10.3f / "
 	    "max_time(ms): %10.3f / \n",
 	    type,
-	    task->id,
+	    task->app_id,
         (int)task->stat.n_ops,
         (int)task->stat.op_entries,
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
@@ -97,15 +96,13 @@ void *insertfunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
     setup_worker(task);
-    int entry = task->id;
+    int entry = task->app_id;
 
     // /*loop continuously*/
     while(!*task->stop){
-       // printf("step 1.a\n");
       /*add to the linked list*/
-        entry = ((fast_rand() % (key_space / 10) * 10)  + task->id);
-        list_insert(&list, entry, &entry+entry, &task->stat, task->id);
-   //     sleep((fast_rand() % 1000) / 1000.0);
+        entry = ((fast_rand() % (key_space / 10) * 10)  + task->app_id);
+        list_insert(&list, entry, &entry+entry, &task->stat, task->app_id);
     }
     print_summary("insert", task);
     return NULL;
@@ -115,15 +112,13 @@ void *findfunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
     setup_worker(task);
-    int entry = task->id;
+    int entry = task->app_id;
 
     // /*loop continuously*/
     while(!*task->stop){
-    //    //printf("step 1.b\n");
     //  /*add to the linked list*/
-        entry = ((fast_rand() % (key_space / 10) * 10) + task->id);
-        list_find(&list, entry, &task->stat, task->id);
-   //     sleep((fast_rand() % 1000) / 1000.0);
+        entry = ((fast_rand() % (key_space / 10) * 10) + task->app_id);
+        list_find(&list, entry, &task->stat, task->app_id);
     }
     print_summary("find", task);
     return NULL;
@@ -133,14 +128,13 @@ void *deletefunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
     setup_worker(task);
-    int entry = task->id;
+    int entry = task->app_id;
 
     // /*loop continuously*/
     while(!*task->stop){
       /*add to the linked list*/
         entry = ((fast_rand() % (500)));
-        list_delete(&list, entry, &task->stat, task->id);
-        sleep((fast_rand() % 1000) / 1000.0);
+        list_delete(&list, entry, &task->stat, task->app_id);
     }
     print_summary("delete", task);
     return NULL;
@@ -160,18 +154,11 @@ int main(int argc, char **argv)
 
     for (int i = 0; i < napplications; i++){
         nratio[i] = atoi(argv[i+2]);
-        //printf("%i ", nratio[i]);
-        test_insert_ratio += ((nratio[i] * 4) / 100);
-        test_find_ratio += (((100 - nratio[i]) * 4) / 100);
+        test_insert_ratio += ((nratio[i] * THREADS_PER_APP) / 100);
+        test_find_ratio += (((100 - nratio[i]) * THREADS_PER_APP) / 100);
     }
 
     test_duration = atoi(argv[napplications + 2]);       //the time the test shall run for
-    //printf ("apps: %i, durations: %i", napplications, test_duration);
-
-    /*now we need to see how many threads of each type we want and make sure we are setting them for each applicaiton...*/
-    /*how do we split up the keyspace*/
-
-   // printf("insert: %i      find: %i        \n", test_insert_ratio, test_find_ratio);
     int stop __attribute__((aligned (64))) = 0;
     int ncpu = 0;
     task_t *insert_tasks = malloc(sizeof(task_t) * (test_insert_ratio));
@@ -183,30 +170,33 @@ int main(int argc, char **argv)
 
     List_Init(&list);
 
-    // /*set up the linked list before hand*/
-    // for (int n = 0; n < key_space; n++){
-    //     list_insert(&list, n, &n, &dummy, (n % (test_find_ratio)));
-    // }
+    /*iterate through h so 0 to ninserts*/
+    /*then iterate through g from 0 + h to nfinds ++ ninserts*/
+    /*recalculate ninserts to the bigger number: want to assign the remaining values so we want to carry on from where g + h left off to */
+    /*so now we recalculate nfinds for the next lot of threads: want to start from where h left off*/
 
     int h = 0; 
     int g = 0; 
     int ninserts = 0; 
     int nfinds = 0;
     for (int i = 0; i < napplications; i++){
-        ninserts += ((nratio[i] * 4) / 100);
-	for (h; h < ninserts; h++){
-            insert_tasks[h].id = i; //work on this so the id's are related
+        ninserts += ((nratio[i] * THREADS_PER_APP) / 100);
+        printf("ninserts is: %i\n", ninserts);
+	    for (h += g ; h < ninserts; h++){
+            insert_tasks[h].app_id = i; //work on this so the id's are related
     	    insert_tasks[h].ncpu = h;
             insert_tasks[h].stop = &stop;
         }
-	nfinds += (((100 - nratio[i]) * 4) / 100);
+        printf("h is: %i\n", h);
+	    nfinds += (((100 - nratio[i]) * THREADS_PER_APP) / 100);
+        printf("nfinds is: %i\n", nfinds);
         for (g; g < nfinds; g++){
-            find_tasks[g].id = i;
-    	    find_tasks[g].ncpu = g + ninserts;
+            find_tasks[g].app_id = i;
+    	    find_tasks[g].ncpu = g + h;
             find_tasks[g].stop = &stop;
         }
+        printf("g is: %i\n", g);
     } 
-    //printf("step 1\n");
 
   /*now that we've orgainsed the threads we need to  */
 
@@ -219,7 +209,6 @@ int main(int argc, char **argv)
         }
     }
 
-    //printf("step 2\n");  
 
     for (int k = 0; k < test_find_ratio; k++){
         rc = pthread_create(&find_tasks[k].thread, NULL, findfunc, &find_tasks[k]);
@@ -230,7 +219,6 @@ int main(int argc, char **argv)
         }
     }
 
-    //printf("step 3\n");
 
     for (int k = 0; k < test_delete_ratio; k++){
         rc = pthread_create(&delete_tasks[k].thread, NULL, deletefunc, &delete_tasks[k]);
@@ -240,12 +228,10 @@ int main(int argc, char **argv)
         }
     }
 
-    //printf("step 4\n");
     sleep(test_duration); 
 
     stop = 1;
 
-    //printf("step 5\n");
     for (int p = 0; p < (test_insert_ratio); p++){
         pthread_join(insert_tasks[p].thread, NULL);
     }

@@ -7,7 +7,7 @@ import sys
 
 
 
-path = "./tables/default_fair_list_tables/"  #FILL THIS IN HERE
+path = "./tables/ns_c_spin_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
@@ -162,6 +162,8 @@ for filename in os.listdir(path):
     # f_threads = [x - 0.2 for x in genuine_id]
     # i_threads = [x + 0.2 for x in new_insert_id]
 
+    print(total_entries)
+
 
     fig, ax = plt.subplots()
 
@@ -179,7 +181,7 @@ for filename in os.listdir(path):
     twin1.plot(range(len(total_entries)), total_entries, linestyle='-', color='k')
     twin1.set(ylabel="Total number of entries", yscale = "log")
     #ax.set_ylim(bottom = 0)
-    plt.text(insert_id[0], total_entries[0], 'No. entries', ha='left')
+    #plt.text(new_insert_id[0], total_entries[0], 'No. entries', ha='left')
     plt.xticks([]) 
     # Annotating a point
 
@@ -192,7 +194,7 @@ for filename in os.listdir(path):
     ratio_string = ""
     for i in ratio:
         ratio_string = ratio_string + str(i) + "_"
-    figName = "./graphs/default_fair_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
+    figName = "./graphs/ns_c_spin_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
     plt.savefig(figName)          
     plt.close()
 
