@@ -181,21 +181,23 @@ int main(int argc, char **argv)
     int nfinds = 0;
     for (int i = 0; i < napplications; i++){
         ninserts += ((nratio[i] * THREADS_PER_APP) / 100);
-        printf("ninserts is: %i\n", ninserts);
-	    for (h += g ; h < ninserts; h++){
+        //printf("ninserts is: %i\n", ninserts);
+	for (h; h < ninserts; h++){
             insert_tasks[h].app_id = i; //work on this so the id's are related
-    	    insert_tasks[h].ncpu = h;
+    	    insert_tasks[h].ncpu = h + g;
+	    printf("The CPU is %i\n", insert_tasks[h].ncpu);
             insert_tasks[h].stop = &stop;
         }
-        printf("h is: %i\n", h);
+        //printf("h is: %i\n", h);
 	    nfinds += (((100 - nratio[i]) * THREADS_PER_APP) / 100);
-        printf("nfinds is: %i\n", nfinds);
+        //printf("nfinds is: %i\n", nfinds);
         for (g; g < nfinds; g++){
-            find_tasks[g].app_id = i;
+	    find_tasks[g].app_id = i;
     	    find_tasks[g].ncpu = g + h;
+	    printf("THe CPU is %i\n", find_tasks[g].ncpu);
             find_tasks[g].stop = &stop;
         }
-        printf("g is: %i\n", g);
+        //printf("g is: %i\n", g);
     } 
 
   /*now that we've orgainsed the threads we need to  */
