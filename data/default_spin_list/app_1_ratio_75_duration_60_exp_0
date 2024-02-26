@@ -1,4 +1,4 @@
-insert id: 00 / number of operations: 2772685 / number of entries: 2772685 / tot_time(ms):    162.949 / max_time(ms):      0.017 / 
-find id: 00 / number of operations: 516758250 / number of entries: 0 / tot_time(ms):  36080.234 / max_time(ms):      0.043 / 
-insert id: 00 / number of operations: 3886258 / number of entries: 3886258 / tot_time(ms):    238.477 / max_time(ms):      0.017 / 
-insert id: 00 / number of operations: 3162090 / number of entries: 3162090 / tot_time(ms):    195.820 / max_time(ms):      0.016 / 
+insert app id: 00 / number of operations: 94182582 / tot_time(ms):   8143.167 / max_time(ms):      2.666 / 
+insert app id: 00 / number of operations: 280983487 / tot_time(ms):  24121.836 / max_time(ms):      2.022 / 
+find app id: 00 / number of operations: 2039826 / tot_time(ms):    108.404 / max_time(ms):      0.021 / 
+insert app id: 00 / number of operations: 75683648 / tot_time(ms):   6510.238 / max_time(ms):      2.037 / 
