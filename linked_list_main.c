@@ -33,7 +33,6 @@ typedef struct {
 
 void setup_worker(task_t *task) {
     int ret;
-    if (task->ncpu != 0) {
 	cpu_set_t cpuset;
 	CPU_ZERO(&cpuset);
 	CPU_SET(task->ncpu, &cpuset);
@@ -42,7 +41,6 @@ void setup_worker(task_t *task) {
 	    perror("pthread_set_affinity_np");
 	    exit(-1);
 	}
-    }
 //    pid_t tid = gettid();
 //    ret = setpriority(PRIO_PROCESS, tid, task->priority);
 //    if (ret != 0) {
@@ -79,14 +77,12 @@ pthread_attr_t attr;
 /********************************* Main Functions *******************************************/
 void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
     printf("%s "
-	    "id: %02d / "
-        "number of operations: %lli / "
+	    "app id: %02d / "
         "number of entries: %i / "
 	    "tot_time(ms): %10.3f / "
 	    "max_time(ms): %10.3f / \n",
 	    type,
 	    task->app_id,
-        (int)task->stat.n_ops,
         (int)task->stat.op_entries,
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
@@ -170,41 +166,30 @@ int main(int argc, char **argv)
 
     List_Init(&list);
 
-    /*iterate through h so 0 to ninserts*/
-    /*then iterate through g from 0 + h to nfinds ++ ninserts*/
-    /*recalculate ninserts to the bigger number: want to assign the remaining values so we want to carry on from where g + h left off to */
-    /*so now we recalculate nfinds for the next lot of threads: want to start from where h left off*/
-
     int h = 0; 
     int g = 0; 
     int ninserts = 0; 
     int nfinds = 0;
     for (int i = 0; i < napplications; i++){
         ninserts += ((nratio[i] * THREADS_PER_APP) / 100);
-        //printf("ninserts is: %i\n", ninserts);
 	for (h; h < ninserts; h++){
-            insert_tasks[h].app_id = i; //work on this so the id's are related
+            insert_tasks[h].app_id = i;
     	    insert_tasks[h].ncpu = h + g;
-	    printf("The CPU is %i\n", insert_tasks[h].ncpu);
             insert_tasks[h].stop = &stop;
         }
-        //printf("h is: %i\n", h);
+
 	    nfinds += (((100 - nratio[i]) * THREADS_PER_APP) / 100);
-        //printf("nfinds is: %i\n", nfinds);
         for (g; g < nfinds; g++){
 	    find_tasks[g].app_id = i;
     	    find_tasks[g].ncpu = g + h;
-	    printf("THe CPU is %i\n", find_tasks[g].ncpu);
             find_tasks[g].stop = &stop;
         }
-        //printf("g is: %i\n", g);
     } 
 
   /*now that we've orgainsed the threads we need to  */
 
     for (int k = 0; k < test_insert_ratio; k++){
         rc = pthread_create(&insert_tasks[k].thread, NULL, insertfunc, &insert_tasks[k]);
-	//printf("create insert thread\n");
         if (rc){
             printf("Error:unable to create insert thread, %d\n", rc);
             exit(-1);
@@ -214,7 +199,6 @@ int main(int argc, char **argv)
 
     for (int k = 0; k < test_find_ratio; k++){
         rc = pthread_create(&find_tasks[k].thread, NULL, findfunc, &find_tasks[k]);
-        //printf("create find thread\n");
 	if (rc){
             printf("Error:unable to create find thread, %d\n", rc);
             exit(-1);
