@@ -1,8 +1,16 @@
-find id: 01 / number of operations: 24652242 / number of entries: 0 / tot_time(ms):   5444.990 / max_time(ms):      0.097 / 
-insert id: 00 / number of operations: 25646327 / number of entries: 25646327 / tot_time(ms):    885.423 / max_time(ms):      0.052 / 
-find id: 00 / number of operations: 24608987 / number of entries: 0 / tot_time(ms):   5427.818 / max_time(ms):      0.095 / 
-find id: 01 / number of operations: 143620 / number of entries: 0 / tot_time(ms):   9904.321 / max_time(ms):      0.224 / 
-insert id: 01 / number of operations: 25744500 / number of entries: 25744500 / tot_time(ms):    887.067 / max_time(ms):      0.067 / 
-find id: 00 / number of operations: 139542 / number of entries: 0 / tot_time(ms):   9935.923 / max_time(ms):      4.992 / 
-find id: 00 / number of operations: 140050 / number of entries: 0 / tot_time(ms):   9936.154 / max_time(ms):      0.184 / 
-find id: 01 / number of operations: 16402689 / number of entries: 0 / tot_time(ms):   6959.124 / max_time(ms):      4.685 / 
+find app id: 01 / number of operations: 26410888 / tot_time(ms):   5588.164 / max_time(ms):      0.085 / 
+  slice 5391 / own_slice_wait 0
+find app id: 01 / number of operations: 22908470 / tot_time(ms):   6278.510 / max_time(ms):      2.741 / 
+  slice 5389 / own_slice_wait 0
+find app id: 00 / number of operations: 151796 / tot_time(ms):  10761.451 / max_time(ms):      4.743 / 
+  slice 5388 / own_slice_wait 0
+find app id: 01 / number of operations: 26437324 / tot_time(ms):   5591.095 / max_time(ms):      3.048 / 
+  slice 5391 / own_slice_wait 0
+find app id: 00 / number of operations: 154364 / tot_time(ms):  10761.965 / max_time(ms):      3.677 / 
+  slice 5392 / own_slice_wait 0
+insert app id: 00 / number of operations: 26601594 / tot_time(ms):   5595.896 / max_time(ms):      0.578 / 
+  slice 5394 / own_slice_wait 188
+find app id: 00 / number of operations: 26453074 / tot_time(ms):   5589.882 / max_time(ms):      0.092 / 
+  slice 5392 / own_slice_wait 0
+insert app id: 01 / number of operations: 26624596 / tot_time(ms):   5599.723 / max_time(ms):      4.151 / 
+  slice 5395 / own_slice_wait 0

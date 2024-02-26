@@ -1,8 +1,16 @@
-find id: 01 / number of operations: 13881361 / number of entries: 0 / tot_time(ms):   7683.677 / max_time(ms):      5.172 / 
-find id: 01 / number of operations: 18479264 / number of entries: 0 / tot_time(ms):   6563.741 / max_time(ms):      7.399 / 
-find id: 01 / number of operations: 1173003 / number of entries: 0 / tot_time(ms):   9751.122 / max_time(ms):      0.543 / 
-insert id: 00 / number of operations: 25476363 / number of entries: 25476363 / tot_time(ms):    880.127 / max_time(ms):      0.054 / 
-insert id: 00 / number of operations: 24571651 / number of entries: 24571651 / tot_time(ms):    859.813 / max_time(ms):      0.059 / 
-insert id: 00 / number of operations: 25477051 / number of entries: 25477051 / tot_time(ms):    885.758 / max_time(ms):      4.730 / 
-insert id: 01 / number of operations: 23440909 / number of entries: 23440909 / tot_time(ms):    808.698 / max_time(ms):      0.027 / 
-find id: 00 / number of operations: 16649280 / number of entries: 0 / tot_time(ms):   4590.509 / max_time(ms):      1.966 / 
+insert app id: 00 / number of operations: 26657406 / tot_time(ms):   5600.424 / max_time(ms):      0.200 / 
+  slice 5398 / own_slice_wait 0
+insert app id: 01 / number of operations: 26668799 / tot_time(ms):   5595.738 / max_time(ms):      0.076 / 
+  slice 5397 / own_slice_wait 0
+find app id: 01 / number of operations: 22747425 / tot_time(ms):   6330.882 / max_time(ms):      5.407 / 
+  slice 5394 / own_slice_wait 0
+find app id: 01 / number of operations: 26418537 / tot_time(ms):   5599.626 / max_time(ms):      0.220 / 
+  slice 5397 / own_slice_wait 0
+find app id: 01 / number of operations: 26497162 / tot_time(ms):   5590.308 / max_time(ms):      0.170 / 
+  slice 5397 / own_slice_wait 0
+insert app id: 00 / number of operations: 26637439 / tot_time(ms):   5603.293 / max_time(ms):      2.475 / 
+  slice 5400 / own_slice_wait 190
+find app id: 00 / number of operations: 19806088 / tot_time(ms):   6906.514 / max_time(ms):      7.340 / 
+  slice 5389 / own_slice_wait 0
+insert app id: 00 / number of operations: 26640127 / tot_time(ms):   5607.446 / max_time(ms):      5.363 / 
+  slice 5399 / own_slice_wait 0
