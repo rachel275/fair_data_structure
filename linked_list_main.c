@@ -88,9 +88,9 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
 #if defined(FAIRLOCK) && defined(DEBUG)
     flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
-    printf("  slice %llu\n",
-          //  "  own_slice_wait %llu\n"
-           // "  prev_slice_wait %llu\n"
+    printf("  slice %llu	"
+           "  own_slice_wait %llu\n",
+           //"  lock opportunity %llu\n"
            // "  runnable_wait %llu\n"
             //"  next_runnable_wait %llu\n"
             //"  succ_wait %llu\n"
@@ -98,8 +98,8 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
             //"  banned(actual) %llu\n"
             //"  banned %llu\n"
             //"  elapse %llu\n",
-            task->stat.n_ops - info->stat.reenter);
-            //info->stat.own_slice_wait,
+            task->stat.n_ops - info->stat.reenter,
+            info->stat.own_slice_wait);
             //info->stat.prev_slice_wait,
             //info->stat.runnable_wait,
            // info->stat.next_runnable_wait,
