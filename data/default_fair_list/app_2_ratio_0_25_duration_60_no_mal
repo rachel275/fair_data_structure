@@ -1,16 +1,16 @@
-find app id: 00 / number of operations: 680 / tot_time(ms):  11035.467 / max_time(ms):    303.646 / 
-  slice 182 / own_slice_wait 0
-find app id: 01 / number of operations: 28962362 / tot_time(ms):   5618.011 / max_time(ms):      5.818 / 
-  slice 5432 / own_slice_wait 0
-insert app id: 01 / number of operations: 28936253 / tot_time(ms):    770.722 / max_time(ms):      0.059 / 
-  slice 5433 / own_slice_wait 0
-find app id: 01 / number of operations: 29447826 / tot_time(ms):   5578.559 / max_time(ms):      5.340 / 
-  slice 5433 / own_slice_wait 0
-find app id: 01 / number of operations: 29298746 / tot_time(ms):   5623.543 / max_time(ms):      3.395 / 
-  slice 5433 / own_slice_wait 0
-find app id: 00 / number of operations: 895 / tot_time(ms):  10891.479 / max_time(ms):    327.065 / 
-  slice 184 / own_slice_wait 113
-find app id: 00 / number of operations: 290 / tot_time(ms):  10983.445 / max_time(ms):    269.283 / 
-  slice 183 / own_slice_wait 0
-find app id: 00 / number of operations: 313 / tot_time(ms):  11190.849 / max_time(ms):    306.499 / 
-  slice 183 / own_slice_wait 0
+find app id: 01 / number of operations: 209185 / tot_time(ms):  10691.929 / max_time(ms):      3.995 / 
+  slice 5391
+find app id: 01 / number of operations: 207049 / tot_time(ms):  10695.264 / max_time(ms):      5.077 / 
+  slice 5384
+insert app id: 01 / number of operations: 29055739 / tot_time(ms):    769.516 / max_time(ms):      5.086 / 
+  slice 5395
+find app id: 01 / number of operations: 205235 / tot_time(ms):  10695.989 / max_time(ms):      6.764 / 
+  slice 5393
+find app id: 00 / number of operations: 1187 / tot_time(ms):  11070.063 / max_time(ms):    309.489 / 
+  slice 183
+find app id: 00 / number of operations: 349 / tot_time(ms):  11081.786 / max_time(ms):    292.817 / 
+  slice 184
+find app id: 00 / number of operations: 293 / tot_time(ms):  11129.486 / max_time(ms):    320.167 / 
+  slice 189
+find app id: 00 / number of operations: 309 / tot_time(ms):  11158.115 / max_time(ms):    328.219 / 
+  slice 183

@@ -31,7 +31,7 @@ build_my_hashtable
 # fi
 
 
-for e  in 0 1
+for e  in 0
 do
   for f in 0 25 50 75 100
   do

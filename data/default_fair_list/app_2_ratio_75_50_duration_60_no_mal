@@ -1,16 +1,16 @@
-insert app id: 01 / number of operations: 26528229 / tot_time(ms):    770.622 / max_time(ms):      0.059 / 
-  slice 5383 / own_slice_wait 0
-insert app id: 01 / number of operations: 26576241 / tot_time(ms):    769.829 / max_time(ms):      0.027 / 
-  slice 5383 / own_slice_wait 0
-insert app id: 00 / number of operations: 26535919 / tot_time(ms):    769.207 / max_time(ms):      0.067 / 
-  slice 5384 / own_slice_wait 0
-find app id: 00 / number of operations: 21757066 / tot_time(ms):   6492.831 / max_time(ms):      0.232 / 
-  slice 5383 / own_slice_wait 0
-find app id: 01 / number of operations: 156507 / tot_time(ms):  10761.048 / max_time(ms):      8.576 / 
-  slice 5378 / own_slice_wait 0
-insert app id: 00 / number of operations: 26535216 / tot_time(ms):    769.139 / max_time(ms):      0.083 / 
-  slice 5384 / own_slice_wait 0
-find app id: 01 / number of operations: 11855242 / tot_time(ms):   8576.098 / max_time(ms):      1.298 / 
-  slice 5383 / own_slice_wait 0
-insert app id: 00 / number of operations: 26545672 / tot_time(ms):    769.343 / max_time(ms):      0.052 / 
-  slice 5384 / own_slice_wait 0
+insert app id: 00 / number of operations: 26506439 / tot_time(ms):    768.435 / max_time(ms):      0.028 / 
+  slice 5391
+insert app id: 00 / number of operations: 26516734 / tot_time(ms):    769.124 / max_time(ms):      0.588 / 
+  slice 5391
+find app id: 00 / number of operations: 116966 / tot_time(ms):  10765.745 / max_time(ms):      8.692 / 
+  slice 5275
+insert app id: 01 / number of operations: 26568796 / tot_time(ms):    770.388 / max_time(ms):      0.055 / 
+  slice 5391
+find app id: 01 / number of operations: 76429 / tot_time(ms):  10771.276 / max_time(ms):      5.659 / 
+  slice 5160
+insert app id: 01 / number of operations: 26539814 / tot_time(ms):    769.701 / max_time(ms):      0.061 / 
+  slice 5391
+find app id: 01 / number of operations: 74551 / tot_time(ms):  10770.291 / max_time(ms):      1.508 / 
+  slice 5162
+insert app id: 00 / number of operations: 26511008 / tot_time(ms):    768.579 / max_time(ms):      0.110 / 
+  slice 5392

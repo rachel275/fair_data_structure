@@ -1,16 +1,16 @@
-find app id: 01 / number of operations: 122 / tot_time(ms):  11270.636 / max_time(ms):    802.547 / 
-  slice 77 / own_slice_wait 0
-insert app id: 00 / number of operations: 28133771 / tot_time(ms):    769.854 / max_time(ms):      0.049 / 
-  slice 5389 / own_slice_wait 0
-insert app id: 00 / number of operations: 28427130 / tot_time(ms):    770.279 / max_time(ms):      0.594 / 
-  slice 5390 / own_slice_wait 0
-insert app id: 00 / number of operations: 29219564 / tot_time(ms):    769.076 / max_time(ms):      0.066 / 
-  slice 5390 / own_slice_wait 0
-find app id: 00 / number of operations: 29124402 / tot_time(ms):   5588.442 / max_time(ms):      0.066 / 
-  slice 5390 / own_slice_wait 0
-find app id: 01 / number of operations: 1311 / tot_time(ms):  11471.722 / max_time(ms):    723.261 / 
-  slice 78 / own_slice_wait 190
-find app id: 01 / number of operations: 131 / tot_time(ms):  11701.639 / max_time(ms):    801.819 / 
-  slice 79 / own_slice_wait 0
-find app id: 01 / number of operations: 118 / tot_time(ms):  11717.422 / max_time(ms):    775.860 / 
-  slice 76 / own_slice_wait 0
+find app id: 01 / number of operations: 92 / tot_time(ms):  11356.529 / max_time(ms):    798.179 / 
+  slice 75
+find app id: 00 / number of operations: 200871 / tot_time(ms):  10613.729 / max_time(ms):      0.912 / 
+  slice 5374
+insert app id: 00 / number of operations: 28695530 / tot_time(ms):    766.815 / max_time(ms):      0.600 / 
+  slice 5380
+insert app id: 00 / number of operations: 28256020 / tot_time(ms):    767.005 / max_time(ms):      0.036 / 
+  slice 5380
+insert app id: 00 / number of operations: 28143945 / tot_time(ms):    765.786 / max_time(ms):      0.091 / 
+  slice 5380
+find app id: 01 / number of operations: 99 / tot_time(ms):  11360.251 / max_time(ms):    758.659 / 
+  slice 74
+find app id: 01 / number of operations: 94 / tot_time(ms):  11403.047 / max_time(ms):    904.855 / 
+  slice 73
+find app id: 01 / number of operations: 100 / tot_time(ms):  11883.794 / max_time(ms):    795.729 / 
+  slice 79

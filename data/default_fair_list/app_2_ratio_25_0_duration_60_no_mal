@@ -1,16 +1,16 @@
-find app id: 00 / number of operations: 28775950 / tot_time(ms):   5597.844 / max_time(ms):      6.740 / 
-  slice 5410 / own_slice_wait 0
-find app id: 00 / number of operations: 29488096 / tot_time(ms):   5545.791 / max_time(ms):      0.089 / 
-  slice 5411 / own_slice_wait 0
-insert app id: 00 / number of operations: 29005480 / tot_time(ms):    767.970 / max_time(ms):      0.541 / 
-  slice 5411 / own_slice_wait 0
-find app id: 00 / number of operations: 28793557 / tot_time(ms):   5579.738 / max_time(ms):      3.588 / 
-  slice 5411 / own_slice_wait 0
-find app id: 01 / number of operations: 299 / tot_time(ms):  10988.703 / max_time(ms):    295.102 / 
-  slice 183 / own_slice_wait 0
-find app id: 01 / number of operations: 318 / tot_time(ms):  11019.324 / max_time(ms):    298.331 / 
-  slice 183 / own_slice_wait 0
-find app id: 01 / number of operations: 259 / tot_time(ms):  11195.396 / max_time(ms):    305.412 / 
-  slice 179 / own_slice_wait 0
-find app id: 01 / number of operations: 313 / tot_time(ms):  11310.781 / max_time(ms):    302.970 / 
-  slice 186 / own_slice_wait 0
+find app id: 00 / number of operations: 207883 / tot_time(ms):  10636.578 / max_time(ms):      4.410 / 
+  slice 5357
+find app id: 00 / number of operations: 203567 / tot_time(ms):  10642.555 / max_time(ms):      0.716 / 
+  slice 5356
+insert app id: 00 / number of operations: 28632476 / tot_time(ms):    763.124 / max_time(ms):      0.112 / 
+  slice 5359
+find app id: 00 / number of operations: 208281 / tot_time(ms):  10638.700 / max_time(ms):      7.235 / 
+  slice 5355
+find app id: 01 / number of operations: 489 / tot_time(ms):  11055.073 / max_time(ms):    353.684 / 
+  slice 179
+find app id: 01 / number of operations: 326 / tot_time(ms):  11206.180 / max_time(ms):    297.400 / 
+  slice 184
+find app id: 01 / number of operations: 261 / tot_time(ms):  11138.375 / max_time(ms):    287.806 / 
+  slice 181
+find app id: 01 / number of operations: 255 / tot_time(ms):  11196.931 / max_time(ms):    299.119 / 
+  slice 183
