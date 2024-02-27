@@ -25,12 +25,12 @@ FLAGS=-I../ -g -lpthread -Wall ${OFLAG} -DCYCLE_PER_US=${CYCLE_PER_US}
 
 mutex:
 	#gcc main_hashtable.c -o hash_main ${FLAGS} -DSPIN
-	gcc linked_list_main.c -o list_fair_main ${FLAGS} -DFAIRLOCK
-	gcc linked_list_main.c -o list_spin_main ${FLAGS} -DSPIN
+	gcc linked_list_main.c -o list_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG
+	gcc linked_list_main.c -o list_spin_main ${FLAGS} -DSPIN 
 	gcc linked_list_main.c -o ns_c_list_spin_main ${FLAGS} -DSPIN -DNSC
-	gcc linked_list_main.c -o ns_c_list_fair_main ${FLAGS} -DFAIRLOCK -DNSC
+	gcc linked_list_main.c -o ns_c_list_fair_main ${FLAGS} -DFAIRLOCK -DNSC -DDEBUG
 	gcc linked_list_main.c -o ns_c_list_lock_spin_main ${FLAGS} -DSPIN -DNSCLOCK
-	gcc linked_list_main.c -o ns_c_list_lock_fair_main ${FLAGS} -DFAIRLOCK -DNSCLOCK
+	gcc linked_list_main.c -o ns_c_list_lock_fair_main ${FLAGS} -DFAIRLOCK -DNSCLOCK 
 # spin:
 # 	gcc main.c -o main ${FLAGS} -DSPIN
 

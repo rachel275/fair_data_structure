@@ -1,8 +1,8 @@
-create new head node	create new head node	find id: 01 / number of operations: 24281318 / number of entries: 0 / tot_time(ms):   5564.921 / max_time(ms):      0.039 / 
-insert id: 00 / number of operations: 25449958 / number of entries: 25449958 / tot_time(ms):   1011.612 / max_time(ms):      0.088 / 
-insert id: 00 / number of operations: 25232509 / number of entries: 25232509 / tot_time(ms):   1092.545 / max_time(ms):      0.087 / 
-find id: 00 / number of operations: 20683371 / number of entries: 0 / tot_time(ms):   4821.991 / max_time(ms):      1.992 / 
-insert id: 01 / number of operations: 25726847 / number of entries: 25726847 / tot_time(ms):    945.103 / max_time(ms):      0.027 / 
-insert id: 01 / number of operations: 25239293 / number of entries: 25239293 / tot_time(ms):    918.796 / max_time(ms):      0.059 / 
-insert id: 00 / number of operations: 25496831 / number of entries: 25496831 / tot_time(ms):   1013.778 / max_time(ms):      0.053 / 
-find id: 01 / number of operations: 24287327 / number of entries: 0 / tot_time(ms):   5565.989 / max_time(ms):      1.815 / 
+create new head node	create new head node	find app id: 00 / number of operations: 24267517 / tot_time(ms):   6056.883 / max_time(ms):      0.089 / 
+find app id: 01 / number of operations: 24494371 / tot_time(ms):   6012.595 / max_time(ms):      1.871 / 
+find app id: 01 / number of operations: 24538385 / tot_time(ms):   6000.659 / max_time(ms):      0.033 / 
+insert app id: 01 / number of operations: 25075170 / tot_time(ms):   1008.092 / max_time(ms):      0.078 / 
+insert app id: 00 / number of operations: 25294810 / tot_time(ms):   1084.032 / max_time(ms):      0.048 / 
+insert app id: 00 / number of operations: 25321548 / tot_time(ms):   1087.944 / max_time(ms):      0.111 / 
+insert app id: 00 / number of operations: 25293515 / tot_time(ms):   1083.771 / max_time(ms):      0.592 / 
+insert app id: 01 / number of operations: 25527039 / tot_time(ms):   1018.072 / max_time(ms):      0.061 / 

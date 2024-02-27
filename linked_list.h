@@ -50,14 +50,16 @@ void List_Init(list_t *list){
 void list_insert(list_t *list, int k, void *data, list_stat_t* stat, int pid){
     unsigned long long start, end;//, wait, release;
     unsigned int duration;
-lock_acquire(&list->mutexes);
-start = rdtsc();
+//lock_acquire(&list->mutexes);
+//start = rdtsc();
 
     /*add the thread id as the data of the Node*/
     Node *threadNode = (Node *)malloc(sizeof(Node));
     threadNode->value = data;
     threadNode->key = k;
 
+ lock_acquire(&list->mutexes);
+ start = rdtsc();
         threadNode->next = list->head;
         list->head = threadNode;
     end = rdtsc();
@@ -111,6 +113,7 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     Node *n = list->head;
        
         while (n){
+	//printf("Inside fine while");
         if (n->key == k) {
             end = rdtsc();            
             lock_release(&list->mutexes);

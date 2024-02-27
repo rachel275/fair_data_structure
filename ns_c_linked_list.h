@@ -80,7 +80,7 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
 
     /*if the thread id isn't found, create a new list at the bottom*/
     if (insert == FALSE){
-	printf("create new head node	");
+	//printf("create new head node	");
         /*create new head node*/
 	struct head_node_t *th_node = (struct head_node_t *)malloc(sizeof(struct head_node_t));
         th_node->thread_id = pid;
