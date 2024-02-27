@@ -60,9 +60,9 @@ def write_to_table(applications, ratio, duration, type):
     for i in ratio:
         ratio_string = ratio_string + str(i) + "_"
     print(ratio_string)
-    f = open("./tables/" + type + "_list_tables/applications_" + str(applications) + "_ratio_" + ratio_string + "duration_" + str(duration) + "_no_mal.csv", 'a+', newline="")
+    f = open("./tables/" + type + "_list_tables/applications_" + str(applications) + "_ratio_" + ratio_string + "duration_" + str(duration) + ".csv", 'a+', newline="")
     writer = csv.writer(f)
-    header = ["Type of thread", "Thread Id","Number of Operations", "Worst Case Time", "LHT Time"]#, "Lock Opportunity"]
+    header = ["Type of thread", "Thread Id","Number of Operations", "Worst Case Time", "LHT Time", "Lock Opportunity"]
     writer.writerow(header)
     writer.writerows(data)
     f.close()
@@ -109,12 +109,12 @@ def sort_again():
 
 rootdir = "./data/"
 for dir in os.listdir(rootdir):
-        if dir.split('_')[-2] == "spin":
+        if dir.split('_')[-2] == "fair":
             type = dir.split('_list')[0]
             for filename in os.listdir("./data/" + dir):
                 with open(os.path.join("./data/" + dir, filename), 'r') as file:
                     data = []
-                    if ((filename.endswith("_no_mal")) == False): # or (filename.endswith("_basecase_CLOUDLAB") == True )):
+                    if ((filename.endswith("_exp_0")) == False): # or (filename.endswith("_basecase_CLOUDLAB") == True )):
                         file.close()
                         continue
                     ratio = []
@@ -135,14 +135,14 @@ for dir in os.listdir(rootdir):
                         total_time = float(text[2].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
                         wc_time= float(text[3].split(':')[-1])
 
-                        # text_line = file.readline()
-                        # text = text_line.split('/')
-                        # print(text[0].split(' '))
+                        text_line = file.readline()
+                        text = text_line.split('/')
+                        print(text[0].split(' '))
 
-                        # lock_opportunity = float(text[0].split(' ')[3])
+                        lock_opportunity = float(text[0].split(' ')[3])
 
 
-                        data.append([thread_type, thread_id, no_ops, wc_time, total_time])#, lock_opportunity])
+                        data.append([thread_type, thread_id, no_ops, wc_time, total_time, lock_opportunity])
                         text_line = file.readline()
                     
                     sort_data()

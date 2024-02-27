@@ -173,12 +173,11 @@ for filename in os.listdir(path):
     #twin1 = ax.twinx()
     #twin2 = ax.twinx()
 
-    ax.plot(new_find_id, lock_opp, color='r', label = "lock opportunity")
+
     ax.bar(new_find_id, tot_time, width=0.09, color='b', align='center', label = "find")
-    ax.plot(new_insert_id, i_lock_opp,  color='r' )#, label = "insert")
     ax.bar(new_insert_id, i_tot_time, width=0.09, color='g', align='center', label = "insert")
-
-
+    ax.scatter(new_insert_id, i_lock_opp,  marker="_", color='r' )#, label = "insert")
+    ax.scatter(new_find_id, lock_opp, color='r', marker="_", label = "lock opportunity")
     handles, labels = ax.get_legend_handles_labels()
 
     # reverse the order
