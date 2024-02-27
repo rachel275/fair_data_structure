@@ -25,7 +25,7 @@
 typedef struct {
     volatile int *stop;
     pthread_t thread;
-//    int priority;
+    int priority;
     int app_id;
     int ncpu;
     list_stat_t stat;
@@ -41,12 +41,12 @@ void setup_worker(task_t *task) {
 	    perror("pthread_set_affinity_np");
 	    exit(-1);
 	}
-//    pid_t tid = gettid();
-//    ret = setpriority(PRIO_PROCESS, tid, task->priority);
-//    if (ret != 0) {
-//	perror("setpriority");
-//	exit(-1);
-   // }
+    pid_t tid = gettid();
+    ret = setpriority(PRIO_PROCESS, tid, task->priority);
+    if (ret != 0) {
+	perror("setpriority");
+	exit(-1);
+    }
 }
 
 #define RAND_MAX 0x7fffffff
@@ -88,11 +88,27 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
 #if defined(FAIRLOCK) && defined(DEBUG)
     flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
-    printf("  slice %llu / "
-		    "own_slice_wait %llu\n",
-		    task->stat.n_ops - info->stat.reenter,
-		    info->stat.own_slice_wait);
-#endif
+    printf("  slice %llu\n",
+          //  "  own_slice_wait %llu\n"
+           // "  prev_slice_wait %llu\n"
+           // "  runnable_wait %llu\n"
+            //"  next_runnable_wait %llu\n"
+            //"  succ_wait %llu\n"
+            //"  reenter %llu\n"
+            //"  banned(actual) %llu\n"
+            //"  banned %llu\n"
+            //"  elapse %llu\n",
+            task->stat.n_ops - info->stat.reenter);
+            //info->stat.own_slice_wait,
+            //info->stat.prev_slice_wait,
+            //info->stat.runnable_wait,
+           // info->stat.next_runnable_wait,
+            //info->stat.succ_wait,
+            //info->stat.reenter,
+           // info->stat.banned_time,
+           // info->banned_until-info->stat.start,
+            //info->start_ticks-info->stat.start);
+#endif		  
 }
 
 void *insertfunc(void *vargp)
@@ -104,8 +120,9 @@ void *insertfunc(void *vargp)
     // /*loop continuously*/
     while(!*task->stop){
       /*add to the linked list*/
-        entry = ((fast_rand() % (key_space / 10) * 10)  + task->app_id);
+        entry = ((fast_rand() % key_space * 10)  + task->app_id);
         list_insert(&list, entry, &entry+entry, &task->stat, task->app_id);
+//	printf("find ent: %llu   ", entry);
     }
     print_summary("insert", task);
     return NULL;
@@ -120,7 +137,8 @@ void *findfunc(void *vargp)
     // /*loop continuously*/
     while(!*task->stop){
     //  /*add to the linked list*/
-        entry = ((fast_rand() % (key_space / 10) * 10) + task->app_id);
+        entry = (((1000000 - fast_rand()) % key_space * 10) + task->app_id);
+//	printf("ins ent: %llu   ", entry); 
         list_find(&list, entry, &task->stat, task->app_id);
     }
     print_summary("find", task);
@@ -169,7 +187,7 @@ int main(int argc, char **argv)
     task_t *delete_tasks = malloc(sizeof(task_t) * (test_delete_ratio));
 
     int rc;
-    key_space = ((test_insert_ratio + test_find_ratio) * 50);
+    key_space = ((test_insert_ratio + test_find_ratio) * 500);
 
     List_Init(&list);
 
@@ -182,6 +200,7 @@ int main(int argc, char **argv)
 	for (h; h < ninserts; h++){
             insert_tasks[h].app_id = i;
     	    insert_tasks[h].ncpu = h + g;
+	    insert_tasks[h].priority = 0;
             insert_tasks[h].stop = &stop;
         }
 
@@ -189,6 +208,7 @@ int main(int argc, char **argv)
         for (g; g < nfinds; g++){
 	    find_tasks[g].app_id = i;
     	    find_tasks[g].ncpu = g + h;
+	    find_tasks[g].priority = 0;
             find_tasks[g].stop = &stop;
         }
     } 

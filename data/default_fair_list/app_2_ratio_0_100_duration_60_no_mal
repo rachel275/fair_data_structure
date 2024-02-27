@@ -1,16 +1,16 @@
-find app id: 00 / number of operations: 85 / tot_time(ms):  11638.859 / max_time(ms):   1192.315 / 
-  slice 59 / own_slice_wait 0
-insert app id: 01 / number of operations: 28360144 / tot_time(ms):    767.757 / max_time(ms):      0.083 / 
-  slice 5365 / own_slice_wait 0
-insert app id: 01 / number of operations: 28699387 / tot_time(ms):    771.570 / max_time(ms):      3.417 / 
-  slice 5365 / own_slice_wait 0
-insert app id: 01 / number of operations: 28744923 / tot_time(ms):    767.814 / max_time(ms):      0.060 / 
-  slice 5365 / own_slice_wait 0
-insert app id: 01 / number of operations: 28399970 / tot_time(ms):    770.315 / max_time(ms):      0.086 / 
-  slice 5366 / own_slice_wait 0
-find app id: 00 / number of operations: 91 / tot_time(ms):  11329.868 / max_time(ms):    975.320 / 
-  slice 58 / own_slice_wait 0
-find app id: 00 / number of operations: 76 / tot_time(ms):  11369.138 / max_time(ms):    831.400 / 
-  slice 58 / own_slice_wait 0
-find app id: 00 / number of operations: 89 / tot_time(ms):  12071.802 / max_time(ms):   1057.380 / 
-  slice 59 / own_slice_wait 0
+insert app id: 01 / number of operations: 27772538 / tot_time(ms):    764.361 / max_time(ms):      0.079 / 
+  slice 5350
+insert app id: 01 / number of operations: 28271667 / tot_time(ms):    764.094 / max_time(ms):      0.069 / 
+  slice 5350
+insert app id: 01 / number of operations: 28383713 / tot_time(ms):    763.603 / max_time(ms):      0.082 / 
+  slice 5351
+insert app id: 01 / number of operations: 28135294 / tot_time(ms):    769.132 / max_time(ms):      5.384 / 
+  slice 5351
+find app id: 00 / number of operations: 77 / tot_time(ms):  11738.220 / max_time(ms):   1057.985 / 
+  slice 59
+find app id: 00 / number of operations: 81 / tot_time(ms):  11889.773 / max_time(ms):    933.344 / 
+  slice 60
+find app id: 00 / number of operations: 79 / tot_time(ms):  11629.927 / max_time(ms):    942.070 / 
+  slice 61
+find app id: 00 / number of operations: 76 / tot_time(ms):  12211.513 / max_time(ms):   1051.141 / 
+  slice 58

@@ -1,16 +1,16 @@
-insert app id: 01 / number of operations: 26585358 / tot_time(ms):    772.985 / max_time(ms):      0.986 / 
-  slice 5392 / own_slice_wait 0
-find app id: 01 / number of operations: 26428536 / tot_time(ms):   5594.928 / max_time(ms):      3.653 / 
-  slice 5392 / own_slice_wait 0
-find app id: 01 / number of operations: 26430419 / tot_time(ms):   5588.758 / max_time(ms):      0.092 / 
-  slice 5392 / own_slice_wait 0
-insert app id: 00 / number of operations: 26569649 / tot_time(ms):    774.269 / max_time(ms):      0.611 / 
-  slice 5393 / own_slice_wait 107
-find app id: 00 / number of operations: 2162771 / tot_time(ms):  10354.656 / max_time(ms):      0.390 / 
-  slice 5392 / own_slice_wait 0
-find app id: 00 / number of operations: 12311764 / tot_time(ms):   8366.636 / max_time(ms):      0.649 / 
-  slice 5392 / own_slice_wait 0
-insert app id: 00 / number of operations: 26580695 / tot_time(ms):    770.859 / max_time(ms):      0.109 / 
-  slice 5393 / own_slice_wait 0
-insert app id: 01 / number of operations: 26633469 / tot_time(ms):    772.538 / max_time(ms):      0.083 / 
-  slice 5393 / own_slice_wait 0
+find app id: 01 / number of operations: 93263 / tot_time(ms):  10769.235 / max_time(ms):      2.247 / 
+  slice 5226
+find app id: 00 / number of operations: 95041 / tot_time(ms):  10766.733 / max_time(ms):      1.421 / 
+  slice 5231
+find app id: 01 / number of operations: 93794 / tot_time(ms):  10767.095 / max_time(ms):      2.626 / 
+  slice 5231
+insert app id: 01 / number of operations: 26487933 / tot_time(ms):    769.084 / max_time(ms):      0.067 / 
+  slice 5383
+insert app id: 00 / number of operations: 26455294 / tot_time(ms):    767.792 / max_time(ms):      0.596 / 
+  slice 5384
+find app id: 00 / number of operations: 93978 / tot_time(ms):  10768.956 / max_time(ms):      1.560 / 
+  slice 5231
+insert app id: 00 / number of operations: 26466558 / tot_time(ms):    767.268 / max_time(ms):      0.108 / 
+  slice 5384
+insert app id: 01 / number of operations: 26506622 / tot_time(ms):    768.193 / max_time(ms):      0.068 / 
+  slice 5384
