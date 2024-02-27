@@ -1,4 +1,0 @@
-create new head node	insert id: 00 / number of operations: 12079341 / number of entries: 12079341 / tot_time(ms):   1295.842 / max_time(ms):      0.027 / 
-insert id: 00 / number of operations: 11850425 / number of entries: 11850425 / tot_time(ms):   1770.896 / max_time(ms):      0.071 / 
-find id: 00 / number of operations: 73311031 / number of entries: 0 / tot_time(ms):   8508.355 / max_time(ms):      0.040 / 
-find id: 00 / number of operations: 77805010 / number of entries: 0 / tot_time(ms):   9344.326 / max_time(ms):      2.658 / 
