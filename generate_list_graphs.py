@@ -11,9 +11,9 @@ path = "./tables/default_fair_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
-        # if ((filename.split('_')[1] == str(2))):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
-        #     file.close()
-        #     continue
+        if ((filename.endswith("no_mal.csv") == True)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
+            file.close()
+            continue
         applications = int(filename.split('_')[1]) 
         ratio = []
         for i in range(applications):
@@ -173,11 +173,11 @@ for filename in os.listdir(path):
     #twin1 = ax.twinx()
     #twin2 = ax.twinx()
 
-
+    ax.plot(new_find_id, lock_opp, color='r', label = "lock opportunity")
     ax.bar(new_find_id, tot_time, width=0.09, color='b', align='center', label = "find")
-    ax.bar(new_find_id, lock_opp, width=0.09, color='r', align='center', label = "lock opportunity")
+    ax.plot(new_insert_id, i_lock_opp,  color='r' )#, label = "insert")
     ax.bar(new_insert_id, i_tot_time, width=0.09, color='g', align='center', label = "insert")
-    ax.bar(new_insert_id, i_lock_opp, width=0.09, color='r', align='center')#, label = "insert")
+
 
     handles, labels = ax.get_legend_handles_labels()
 

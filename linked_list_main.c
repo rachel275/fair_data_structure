@@ -78,14 +78,21 @@ pthread_attr_t attr;
 void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
     printf("%s "
 	    "app id: %02d / "
-        "number of entries: %i / "
+        "number of operations: %i / "
 	    "tot_time(ms): %10.3f / "
 	    "max_time(ms): %10.3f / \n",
 	    type,
 	    task->app_id,
-        (int)task->stat.op_entries,
+        (int)task->stat.n_ops,
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
+#if defined(FAIRLOCK) && defined(DEBUG)
+    flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
+    printf("  slice %llu / "
+		    "own_slice_wait %llu\n",
+		    task->stat.n_ops - info->stat.reenter,
+		    info->stat.own_slice_wait);
+#endif
 }
 
 void *insertfunc(void *vargp)

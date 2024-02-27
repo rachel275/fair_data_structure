@@ -33,18 +33,18 @@ build_my_hashtable
 
 for e  in 0 1
 do
-  for f in 25 50 75
+  for f in 0 25 50 75 100
   do
-    for t in 25 50 75
+    for t in 0 25 50 75 100
     do
-      #echo "./list_spin_main 1 $f 60 > ./data/default_spin_list/applications_1_ratio${f}_duration_60_exp_${e}"
-      #./list_spin_main 1 $f 60 > ./data/default_spin_list/app_1_ratio_${f}_duration_60_exp_${e}
-      #echo "./list_fair_main 1 $f 60 > ./data/default_fair_list/applications_1_ratio${f}_duration_60_exp_${e}"
-      #./list_fair_main 1 $f 60 > ./data/default_fair_list/app_1_ratio_${f}_duration_60_exp_${e}
-      #echo "./list_spin_main 2 $f $t 60 > ./data/default_spin_list/applications_2_ratio${f}_${t}_duration_60_exp_${e}"
-      #./list_spin_main 2 $f $t 60 > ./data/default_spin_list/app_2_ratio_${f}_${t}_duration_60_exp_${e}
-      #echo "./list_fair_main 2 $f $t 60 > ./data/default_fair_list/applications_2_ratio${f}_${t}_duration_60_exp_${e}"
-      #./list_fair_main 2 $f $t 60 > ./data/default_fair_list/app_2_ratio_${f}_${t}_duration_60_exp_${e}
+      echo "./list_spin_main 1 $f 60 > ./data/default_spin_list/applications_1_ratio${f}_duration_60_no_mal"
+      ./list_spin_main 1 $f 60 > ./data/default_spin_list/app_1_ratio_${f}_duration_60_no_mal
+      echo "./list_fair_main 1 $f 60 > ./data/default_fair_list/applications_1_ratio${f}_duration_60_exp_${e}"
+      ./list_fair_main 1 $f 60 > ./data/default_fair_list/app_1_ratio_${f}_duration_60_no_mal
+      echo "./list_spin_main 2 $f $t 60 > ./data/default_spin_list/applications_2_ratio${f}_${t}_duration_60_exp_${e}"
+      ./list_spin_main 2 $f $t 60 > ./data/default_spin_list/app_2_ratio_${f}_${t}_duration_60_no_mal
+      echo "./list_fair_main 2 $f $t 60 > ./data/default_fair_list/applications_2_ratio${f}_${t}_duration_60_exp_${e}"
+      ./list_fair_main 2 $f $t 60 > ./data/default_fair_list/app_2_ratio_${f}_${t}_duration_60_no_mal
       #echo "./list_spin_main 3 $f $f $t 60 > ./data/default_spin_list/applications_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}"
       #./list_spin_main 3 $f $f $t 60 > ./data/default_spin_list/app_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}
       #echo "./list_fair_main 3 $f $f $t 60 > ./data/default_fair_list/applications_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}"
@@ -54,22 +54,22 @@ do
       #echo "./list_fair_main 4 $f $f $f $t 60 > ./data/default_fair_list/applications_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}"
       #./list_fair_main 4 $f $f $f $t 60 > ./data/default_fair_list/app_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}
 
-      echo "./ns_c_list_spin_main 1 $f 60 > ./data/ns_c_spin_list/applications_1_ratio${f}_duration_60_exp_${e}"
-      ./ns_c_list_spin_main 1 $f 60 > ./data/ns_c_spin_list/app_1_ratio_${f}_duration_60_exp_${e}
-      echo "./ns_c_list_fair_main 1 $f 60 > ./data/ns_c_fair_list/applications_1_ratio${f}_duration_60_exp_${e}"
-      ./ns_c_list_fair_main 1 $f 60 > ./data/ns_c_fair_list/app_1_ratio_${f}_duration_60_exp_${e}
-      echo "./ns_c_list_spin_main 2 $f $t 60 > ./data/ns_c_spin_list/applications_2_ratio${f}_${t}_duration_60_exp_${e}"
-      ./ns_c_list_spin_main 2 $f $t 60 > ./data/ns_c_spin_list/app_2_ratio_${f}_${t}_duration_60_exp_${e}
-      echo "./ns_c_list_fair_main 2 $f $t 60 > ./data/ns_c_fair_list/applications_2_ratio${f}_${t}_duration_60_exp_${e}"
-      ./ns_c_list_fair_main 2 $f $t 60 > ./data/ns_c_fair_list/app_2_ratio_${f}_${t}_duration_60_exp_${e}
-      echo "./ns_c_list_spin_main 3 $f $f $t 60 > ./data/ns_c_spin_list/applications_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}"
-      ./ns_c_list_spin_main 3 $f $f $t 60 > ./data/ns_c_spin_list/app_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}
-      echo "./ns_c_list_fair_main 3 $f $f $t 60 > ./data/ns_c_fair_list/applications_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}"
-      ./ns_c_list_fair_main 3 $f $f $t 60 > ./data/ns_c_fair_list/app_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}
-        echo "./ns_c_list_spin_main 4 $f $f $f $t 60 > ./data/ns_c_spin_list/applications_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}"
-      ./ns_c_list_spin_main 4 $f $f $f $t 60 > ./data/ns_c_spin_list/app_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}
-      echo "./ns_c_fair_main 4 $f $f $f $t 60 > ./data/ns_c_fair_list/applications_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}"
-      ./ns_c_list_fair_main 4 $f $f $f $t 60 > ./data/ns_c_fair_list/app_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}
+      #echo "./ns_c_list_spin_main 1 $f 60 > ./data/ns_c_spin_list/applications_1_ratio${f}_duration_60_exp_${e}"
+      #./ns_c_list_spin_main 1 $f 60 > ./data/ns_c_spin_list/app_1_ratio_${f}_duration_60_exp_${e}
+      #echo "./ns_c_list_fair_main 1 $f 60 > ./data/ns_c_fair_list/applications_1_ratio${f}_duration_60_exp_${e}"
+      #./ns_c_list_fair_main 1 $f 60 > ./data/ns_c_fair_list/app_1_ratio_${f}_duration_60_exp_${e}
+      #echo "./ns_c_list_spin_main 2 $f $t 60 > ./data/ns_c_spin_list/applications_2_ratio${f}_${t}_duration_60_exp_${e}"
+      #./ns_c_list_spin_main 2 $f $t 60 > ./data/ns_c_spin_list/app_2_ratio_${f}_${t}_duration_60_exp_${e}
+      ##echo "./ns_c_list_fair_main 2 $f $t 60 > ./data/ns_c_fair_list/applications_2_ratio${f}_${t}_duration_60_exp_${e}"
+      #./ns_c_list_fair_main 2 $f $t 60 > ./data/ns_c_fair_list/app_2_ratio_${f}_${t}_duration_60_exp_${e}
+     # echo "./ns_c_list_spin_main 3 $f $f $t 60 > ./data/ns_c_spin_list/applications_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}"
+      #./ns_c_list_spin_main 3 $f $f $t 60 > ./data/ns_c_spin_list/app_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}
+      #echo "./ns_c_list_fair_main 3 $f $f $t 60 > ./data/ns_c_fair_list/applications_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}"
+      #./ns_c_list_fair_main 3 $f $f $t 60 > ./data/ns_c_fair_list/app_3_ratio_${f}_${f}_${t}_duration_60_exp_${e}
+      #  echo "./ns_c_list_spin_main 4 $f $f $f $t 60 > ./data/ns_c_spin_list/applications_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}"
+      #./ns_c_list_spin_main 4 $f $f $f $t 60 > ./data/ns_c_spin_list/app_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}
+      #echo "./ns_c_fair_main 4 $f $f $f $t 60 > ./data/ns_c_fair_list/applications_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}"
+      #./ns_c_list_fair_main 4 $f $f $f $t 60 > ./data/ns_c_fair_list/app_4_ratio_${f}_${f}_${f}_${t}_duration_60_exp_${e}
 
       #echo "./ns_c_list_lock_spin_main 1 $f 60 > ./data/ns_c_spin_lock_list/applications_1_ratio${f}_duration_60_exp_${e}"
       #./ns_c_list_lock_spin_main 1 $f 60 > ./data/ns_c_lock_spin_list/app_1_ratio_${f}_duration_60_exp_${e}

@@ -1,0 +1,16 @@
+find app id: 01 / number of operations: 18117581 / tot_time(ms):   7226.446 / max_time(ms):      5.368 / 
+  slice 5392 / own_slice_wait 0
+find app id: 01 / number of operations: 15940582 / tot_time(ms):   7656.374 / max_time(ms):      0.198 / 
+  slice 5393 / own_slice_wait 0
+insert app id: 00 / number of operations: 25953639 / tot_time(ms):    752.658 / max_time(ms):      0.052 / 
+  slice 5394 / own_slice_wait 0
+insert app id: 00 / number of operations: 26568805 / tot_time(ms):    770.544 / max_time(ms):      0.106 / 
+  slice 5394 / own_slice_wait 0
+find app id: 00 / number of operations: 26440906 / tot_time(ms):   5595.437 / max_time(ms):      0.087 / 
+  slice 5393 / own_slice_wait 0
+insert app id: 00 / number of operations: 26561022 / tot_time(ms):    770.538 / max_time(ms):      0.110 / 
+  slice 5394 / own_slice_wait 0
+insert app id: 01 / number of operations: 26614394 / tot_time(ms):    771.606 / max_time(ms):      0.061 / 
+  slice 5394 / own_slice_wait 0
+find app id: 01 / number of operations: 6172569 / tot_time(ms):   9578.603 / max_time(ms):      7.902 / 
+  slice 5387 / own_slice_wait 0
