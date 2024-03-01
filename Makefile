@@ -3,7 +3,7 @@
 #laptop CYCLE_PER_US=1800L - 1.8 GHz processor
 
 #CYCLE_PER_US=2400L
-CYCLE_PER_US=1800L
+CYCLE_PER_US=3300L
 ifndef CYCLE_PER_US
 $(error CYCLE_PER_US not set. Set CYCLE_PER_US according to your machine CPU-SPEED)
 endif

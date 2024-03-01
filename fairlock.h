@@ -30,6 +30,7 @@ typedef struct stats {
     ull runnable_wait;
     ull succ_wait;
     ull release_succ_wait;
+    ull total_time;
 } stats_t;
 #endif
 
@@ -96,6 +97,7 @@ static flthread_info_t *flthread_info_create(fairlock_t *lock, int weight) {
         weight = prio_to_weight[prio+20];
     }
     info->weight = weight;
+    //printf("thread weight: %i\n", info->weight);
     __sync_add_and_fetch(&lock->total_weight, weight);
     info->banned = 0;
     info->slice = 0;
@@ -134,9 +136,12 @@ void fairlock_acquire(fairlock_t *lock) {
 
     if (readvol(lock->slice_valid)) {
         ull curr_slice = lock->slice;
+	//printf("cuur_slice: %ull\n", (curr_slice / (CYCLE_PER_US)));
         // If owner of current slice, try to reenter at the beginning of the queue
         if (curr_slice == info->slice && (now = rdtsc()) < curr_slice) {
-            qnode_t *succ = readvol(lock->qnext);
+           ull start = curr_slice - now; 
+	   //printf("Slice: %llu\n", start / (CYCLE_PER_US * 1000));
+	    qnode_t *succ = readvol(lock->qnext);
             if (NULL == succ) {
                 if (__sync_bool_compare_and_swap(&lock->qtail, NULL, flqnode(lock)))
                     goto reenter;
@@ -217,6 +222,7 @@ begin:
             ull curr_slice;
             while ((slice_valid = readvol(lock->slice_valid)) && (now = rdtsc()) + SLEEP_GRANULARITY < (curr_slice = readvol(lock->slice))) {
                 ull slice_left = curr_slice - now;
+		//printf("	Slice left: %llu", slice_left);
                 struct timespec timeout = {
                     .tv_sec = 0, // slice will be less then 1 sec
                     .tv_nsec = (slice_left / (CYCLE_PER_US * SLEEP_GRANULARITY)) * SLEEP_GRANULARITY * 1000,
@@ -262,7 +268,10 @@ begin:
             now = rdtsc();
             info->start_ticks = now;
             info->slice = now + FAIRLOCK_GRANULARITY;
-            lock->slice = info->slice;
+#ifdef DEBUG
+	    info->stat.total_time += info->slice - lock->slice;
+#endif      
+	    lock->slice = info->slice;
             lock->slice_valid = 1;
             // wake up successor if necessary
             if (succ) {
@@ -300,6 +309,7 @@ accounting:
     info = (flthread_info_t *) pthread_getspecific(lock->flthread_info_key);
     now = rdtsc();
     cs = now - info->start_ticks;
+    //printf("Cs: %ull\n", cs);
     info->banned_until += cs * (__atomic_load_n(&lock->total_weight, __ATOMIC_RELAXED) / info->weight);
     info->banned = now < info->banned_until;
 

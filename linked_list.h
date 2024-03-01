@@ -53,13 +53,13 @@ void list_insert(list_t *list, int k, void *data, list_stat_t* stat, int pid){
 //lock_acquire(&list->mutexes);
 //start = rdtsc();
 
+    lock_acquire(&list->mutexes);
+    start = rdtsc();
     /*add the thread id as the data of the Node*/
     Node *threadNode = (Node *)malloc(sizeof(Node));
     threadNode->value = data;
     threadNode->key = k;
 
-lock_acquire(&list->mutexes);
-start = rdtsc();
         threadNode->next = list->head;
         list->head = threadNode;
     end = rdtsc();
@@ -69,7 +69,6 @@ start = rdtsc();
     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
     stat->tot_cs_time += duration;
     stat->n_ops++;
-
 }
 
 void list_insert_unique(list_t *list, void* data, list_stat_t* stat, int pid){
@@ -106,7 +105,6 @@ void list_insert_unique(list_t *list, void* data, list_stat_t* stat, int pid){
 Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     unsigned long long start, end;//, wait, release;
     unsigned int duration;
-     unsigned int counter = 0;
     lock_acquire(&list->mutexes); 
     start = rdtsc(); 
 
@@ -125,7 +123,6 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
             return n;
         }
         n = n->next;
-	counter++;
         }
     end = rdtsc();
     lock_release(&list->mutexes);
