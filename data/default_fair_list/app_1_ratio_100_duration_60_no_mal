@@ -1,8 +1,0 @@
-insert app id: 00 / number of operations: 53051851 / tot_time(ms):   1537.755 / max_time(ms):      0.114 / 
-  slice 10797
-insert app id: 00 / number of operations: 53079509 / tot_time(ms):   1538.100 / max_time(ms):      0.078 / 
-  slice 10797
-insert app id: 00 / number of operations: 53110358 / tot_time(ms):   1541.701 / max_time(ms):      1.891 / 
-  slice 10797
-insert app id: 00 / number of operations: 53053526 / tot_time(ms):   1542.868 / max_time(ms):      5.286 / 
-  slice 10798

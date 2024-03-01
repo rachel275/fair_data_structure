@@ -89,21 +89,21 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
 #if defined(FAIRLOCK) && defined(DEBUG)
     flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
     printf("  slice %llu	"
-           "  own_slice_wait %llu\n",
+           "  own_slice_wait %llu\n"
            //"  lock opportunity %llu\n"
-           // "  runnable_wait %llu\n"
-            //"  next_runnable_wait %llu\n"
-            //"  succ_wait %llu\n"
+           "  runnable_wait %10.3f\n"
+           "  total slice 1 %10.3f\n"
+           "  total slice 2  %llu\n",
             //"  reenter %llu\n"
             //"  banned(actual) %llu\n"
             //"  banned %llu\n"
             //"  elapse %llu\n",
             task->stat.n_ops - info->stat.reenter,
-            info->stat.own_slice_wait);
+            info->stat.own_slice_wait,
             //info->stat.prev_slice_wait,
-            //info->stat.runnable_wait,
-           // info->stat.next_runnable_wait,
-            //info->stat.succ_wait,
+            (float)info->stat.runnable_wait / CYCLE_PER_US,
+            task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000) + (float)info->stat.runnable_wait / CYCLE_PER_US + (float) info->stat.own_slice_wait / CYCLE_PER_US,
+            info->stat.total_time / (CYCLE_PER_US * 1000));
             //info->stat.reenter,
            // info->stat.banned_time,
            // info->banned_until-info->stat.start,

@@ -1,0 +1,9 @@
+insert app id: 00 / number of operations: 56835888 / tot_time(ms):   6462.172 / max_time(ms):      2.737 / 
+LH_Opp: 12598
+find app id: 00 / number of operations: 853028 / tot_time(ms):  12475.980 / max_time(ms):      0.221 / 
+LH_Opp: 12507
+find app id: 00 / number of operations: 856889 / tot_time(ms):  12475.455 / max_time(ms):      1.382 / 
+LH_Opp: 12601
+find app id: 00 / number of operations: 883816 / tot_time(ms):  12470.319 / max_time(ms):      1.749 / 
+LH_Opp: 12601
+lock_hold_opp(ms): 20117
