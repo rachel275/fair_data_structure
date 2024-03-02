@@ -1,8 +1,0 @@
-find app id: 01 / number of operations: 4025928 / tot_time(ms):  74086.234 / max_time(ms):      0.588 / 
-insert app id: 01 / number of operations: 94646 / tot_time(ms):      1.426 / max_time(ms):      0.001 / 
-find app id: 00 / number of operations: 494021 / tot_time(ms):  11597.749 / max_time(ms):      0.561 / 
-insert app id: 00 / number of operations: 83703 / tot_time(ms):      1.276 / max_time(ms):      0.003 / 
-insert app id: 01 / number of operations: 120178 / tot_time(ms):      1.783 / max_time(ms):      0.000 / 
-insert app id: 00 / number of operations: 86902 / tot_time(ms):      1.346 / max_time(ms):      0.023 / 
-insert app id: 00 / number of operations: 82695 / tot_time(ms):      1.194 / max_time(ms):      0.003 / 
-insert app id: 01 / number of operations: 121039 / tot_time(ms):      1.809 / max_time(ms):      0.003 / 
