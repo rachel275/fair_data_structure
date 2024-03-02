@@ -62,7 +62,7 @@ def write_to_table(applications, ratio, duration, type):
     print(ratio_string)
     f = open("./tables/" + type + "_list_tables/applications_" + str(applications) + "_ratio_" + ratio_string + "duration_" + str(duration) + ".csv", 'a+', newline="")
     writer = csv.writer(f)
-    header = ["Type of thread", "Thread Id","Number of Operations", "Number of Entries", "Total Time", "Worst Case Time"]
+    header = ["Type of thread", "Thread Id","Number of Operations", "Worst Case Time", "LHT Time", "Lock Opportunity"]
     writer.writerow(header)
     writer.writerows(data)
     f.close()
@@ -109,7 +109,7 @@ def sort_again():
 
 rootdir = "./data/"
 for dir in os.listdir(rootdir):
-        if dir.split('_')[-2] == "spin":
+        if dir.split('_')[-2] == "fair":
             type = dir.split('_list')[0]
             for filename in os.listdir("./data/" + dir):
                 with open(os.path.join("./data/" + dir, filename), 'r') as file:
@@ -122,29 +122,35 @@ for dir in os.listdir(rootdir):
                     for i in range(applications):
                         ratio.append(int(filename.split('_')[i + 3]))
                     duration = filename.split('_')[i + 5]
-                    print(ratio)
             #thread type, thread id, number of operations, number of entries, total cs time, worst case critical section time.
                     text_line = file.readline()
                     while text_line:
                         text = text_line.split('/')
-                        thread_type = text[0].split(' ')[1]
+                        thread_type = text[0].split(' ')[0]
+
                         if (thread_type == "id:"):
                             thread_type = text[0].split(' ')[0]
                         thread_id = int(text[0].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
                         no_ops = int(text[1].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
-                        no_entries= int(text[2].split(':')[-1])#(find_info(text, 1).lstrip().rstrip())
-                        total_time = float(text[3].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
-                        wc_time= float(text[4].split(':')[-1])
+                        total_time = float(text[2].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
+                        wc_time= float(text[3].split(':')[-1])
 
-                        data.append([thread_type, thread_id, no_ops, no_entries, wc_time, total_time])
+                        text_line = file.readline()
+                        text = text_line.split('/')
+                        print(text[0].split(' '))
+
+                        lock_opportunity = float(text[0].split(' ')[3])
+
+
+                        data.append([thread_type, thread_id, no_ops, wc_time, total_time, lock_opportunity])
                         text_line = file.readline()
                     
                     sort_data()
                     write_to_table(applications, ratio, duration, type)
                     file.close()
-                #print("close this file ")
-            # sort_data()
-            # sort_again()
-            #write_to_table()
-            #print("There are " + str(why) + " files!")	
+        #print("close this file ")
+        # sort_data()
+        # sort_again()
+        #write_to_table()
+        #print("There are " + str(why) + " files!")	
         #print("next directory ")

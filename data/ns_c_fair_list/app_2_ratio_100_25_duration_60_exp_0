@@ -1,8 +1,0 @@
-create new head node	create new head node	insert app id: 00 / number of operations: 25286148 / tot_time(ms):   1084.622 / max_time(ms):      0.595 / 
-insert app id: 00 / number of operations: 25312895 / tot_time(ms):   1089.917 / max_time(ms):      5.066 / 
-insert app id: 01 / number of operations: 25114858 / tot_time(ms):   1004.099 / max_time(ms):      2.755 / 
-insert app id: 00 / number of operations: 25308486 / tot_time(ms):   1085.295 / max_time(ms):      0.049 / 
-find app id: 01 / number of operations: 24523002 / tot_time(ms):   5999.931 / max_time(ms):      0.084 / 
-find app id: 01 / number of operations: 24533081 / tot_time(ms):   6004.835 / max_time(ms):      0.181 / 
-insert app id: 00 / number of operations: 25337585 / tot_time(ms):   1090.782 / max_time(ms):      0.064 / 
-find app id: 01 / number of operations: 24560207 / tot_time(ms):   6000.294 / max_time(ms):      0.035 / 

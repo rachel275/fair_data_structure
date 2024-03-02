@@ -9,31 +9,15 @@
 #include <limits.h>
 #include <math.h>
 #include <stdbool.h>
-//#include "rdtsc.h"
-//#include "lock.h"
 #include "linked_list.h"
 
 #define MIN_M 10
 #define MAX_M 1000
 
-//What do you make this...
-
-// typedef struct Node{
-//     unsigned long long key;
-//     void *value;
-//     struct Node* next;
-// }Node;
-
-// typedef struct _list_t {
-//     Node *head;
-//     lock_t mutexes __attribute__ ((aligned (64)));
-// } list_t;
-
 typedef struct hash_table
 {
-    //lock_t mutexes __attribute__ ((aligned (64)));
+    lock_t mutexes __attribute__ ((aligned (64)));
     size_t size;
-    //struct Node *table;
     struct list_t *table;
 }hash_table;
 
@@ -42,14 +26,11 @@ typedef struct bucket_stat {
     unsigned long long wc_cs_time;
     unsigned long long tot_cs_time;
     size_t n_ops;
-    unsigned long long op_entries;
 } bucket_stat;
 
 typedef struct hash_table_stat {
     unsigned int bucket_id;
-    //unsigned int nentries[MAX_M];
     struct list_stat stats[100];
-    //struct bucket_stat b_stats[100];
     unsigned long long wc_cs_time;
     unsigned long long cs_time;
     unsigned long long tot_cs_time;
@@ -70,13 +51,11 @@ void clear_hash_stats(hash_table *hp);
 
 HashTable* hash_init(size_t N, int tot_weight)
 {
-    // allocate space as big as table
     HashTable *new_table;
     new_table = (HashTable *) malloc(sizeof( HashTable ));
     // initialize members
     new_table->size = N;
     new_table->table = calloc(N, sizeof(struct list_t));
-    //new_table->buckets = (struct hash_bucket*) calloc(N, sizeof(struct hash_bucket)); /*create N versions of the buckets in an array*/
 
     // init all mutex locks
     for (int i = 0; i < N; i++){
@@ -85,7 +64,7 @@ HashTable* hash_init(size_t N, int tot_weight)
 // #ifdef FAIRLOCK
 //     lock_init(&new_table->mutexes, tot_weight);
 // #else
-//     //lock_init(&new_table->mutexes);
+//     lock_init(&new_table->mutexes);
 // #endif
     return (new_table);
 }
@@ -93,12 +72,10 @@ HashTable* hash_init(size_t N, int tot_weight)
 // Function inserting to hp hash table, key k and v value of k.
 int hash_insert (hash_table *hp, unsigned int k, void *v, hash_table_stat *stat, int pid)
 {
-    
     size_t bucket_idx = k % hp->size;
     int insert;
     struct list_t* bucket = &hp->table[bucket_idx];
     insert = 1;
-
 
     list_insert(bucket, k, v, &stat->stats[bucket_idx], pid);
 
@@ -149,7 +126,6 @@ int hash_get (hash_table *hp, unsigned int k, void **vptr, hash_table_stat *stat
     // finding the correct bucket
     size_t bucket_idx = k % hp->size;
 
-    //lock_acquire&hp->mutexes);
     struct list_t* bucket = &hp->table[bucket_idx];
 
     *vptr = list_find(bucket, k, &stat->stats[bucket_idx], pid)->value;
