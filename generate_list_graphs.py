@@ -7,13 +7,10 @@ import sys
 
 
 
-path = "./tables/default_fair_list_tables/"  #FILL THIS IN HERE
+path = "./tables/default_spin_list_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     with open(os.path.join(path, filename), 'r') as file:
-        if ((filename.endswith("no_mal.csv") == True)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
-            file.close()
-            continue
         applications = int(filename.split('_')[1]) 
         ratio = []
         for i in range(applications):
@@ -173,21 +170,30 @@ for filename in os.listdir(path):
     #twin1 = ax.twinx()
     #twin2 = ax.twinx()
 
-
+    #ax.bar([0, 1], [0, 0], label = "applications")
+    ax.bar(new_insert_id, i_lock_opp, align='center', width=0.09, color='r', alpha=0.25)#, label = "insert")
+    ax.bar(new_find_id, lock_opp,  width=0.09, color='r', align='center', alpha=0.25, label = "lock opportunity")
     ax.bar(new_find_id, tot_time, width=0.09, color='b', align='center', label = "find")
     ax.bar(new_insert_id, i_tot_time, width=0.09, color='g', align='center', label = "insert")
-    ax.scatter(new_insert_id, i_lock_opp,  marker="_", color='r' )#, label = "insert")
-    ax.scatter(new_find_id, lock_opp, color='r', marker="_", label = "lock opportunity")
     handles, labels = ax.get_legend_handles_labels()
 
     # reverse the order
-    ax.set(xlabel="Threads", ylabel="Time (ms)",  yscale = "log")    
+    ax.set(xlabel="Threads", ylabel="Time (ms)",  yscale = "log") 
+
+
+    if (applications == 2):
+        plt.xticks([0, 1]) 
+        other_labels = ["Application 1", "Application 2"]
+    else:
+        plt.xticks([0]) 
+        other_labels = ["Application 1"]
+
+    ax.set_xticklabels(other_labels) 
 
     #twin1.plot(range(len(total_entries)), total_entries, linestyle='-', color='k')
     #twin1.set(ylabel="Total number of entries", yscale = "log")
     #ax.set_ylim(bottom = 0)
     #plt.text(new_insert_id[0], total_entries[0], 'No. entries', ha='left')
-    plt.xticks([]) 
     # Annotating a point
 
     # # Add a colorbar to the plot to represent the 'z' variable
@@ -199,7 +205,7 @@ for filename in os.listdir(path):
     ratio_string = ""
     for i in ratio:
         ratio_string = ratio_string + str(i) + "_"
-    figName = "./graphs/default_fair_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
+    figName = "./graphs/default_spin_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
     plt.savefig(figName)          
     plt.close()
 

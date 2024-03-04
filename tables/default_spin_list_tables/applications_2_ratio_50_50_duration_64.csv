@@ -1,0 +1,9 @@
+Type of thread,Thread Id,Number of Operations,Worst Case Time,LHT Time,Lock Opportunity
+find,0,364616,0.201,4163.581,14007
+find,0,1381902,0.308,15638.737,14007
+find,1,2040928,0.288,21815.512,14007
+find,1,791574,0.168,8351.643,14007
+insert,0,100555,0.027,7.965,14007
+insert,0,40950,0.043,4.202,14007
+insert,1,75204,0.037,5.92,14007
+insert,1,74638,0.053,6.17,14007
