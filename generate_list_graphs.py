@@ -49,164 +49,109 @@ for filename in os.listdir(path):
                     n_ops.append(int(row[int(2)]))
                     lock_opp.append(float(row[int(5)])) 
 
-    print(lock_opp)
-# we want to group by application i.e thread ID
-    #but we want to distingusih between insert and find threads
+
+            counter_one = 0
+            counter_two = 0
+            counter_three = 0
+            counter_four = 0
+            new_insert_id = []
+            new_find_id = []
+
+            new_i_lock_opp = []
+            new_f_find_opp = []
+
+            for i in insert_id:
+                if i == 0:
+                    if counter_one == 0:
+                        new_insert_id.append(i - (counter_one + 0.05))
+                        counter_one = counter_one + 0.05
+                    else:
+                        new_insert_id.append(i - (counter_one + 0.1))
+                        counter_one = counter_one + 0.1
+                elif i == 1:
+                    if counter_two == 0:
+                        new_insert_id.append(i - (counter_two + 0.05))
+                        counter_two = counter_two + 0.05
+                    else:
+                        new_insert_id.append(i - (counter_two + 0.1))
+                        counter_two = counter_two + 0.1
+                elif i == 2:
+                    new_insert_id.append(i - (counter_three + 0.1))
+                    counter_three = counter_three + 0.1
+                elif i == 3:
+                    new_insert_id.append(i - (counter_four + 0.1))
+                    counter_four = counter_four + 0.1
+
+            count_one = 0
+            count_two = 0
+            count_three = 0
+            count_four = 0
+
+            for i in genuine_id:
+                if i == 0:
+                    if count_one == 0:
+                        new_find_id.append(i + (count_one + 0.05))
+                        count_one = count_one + 0.05
+                    else:
+                        new_find_id.append(i + (count_one + 0.1))
+                        count_one = count_one + 0.1
+                elif i == 1:
+                    if count_two == 0:
+                        new_find_id.append(i + (count_two + 0.05))
+                        count_two = count_two + 0.05
+                    else:
+                        new_find_id.append(i + (count_two + 0.1))
+                        count_two = count_two + 0.1
+                elif i == 2:
+                    new_find_id.append(i + (count_three + 0.1))
+                    count_three = count_three + 0.1
+                elif i == 3:
+                    new_find_id.append(i + (count_four + 0.1))
+                    count_four = count_four + 0.1
 
 
-#for the insert thread, make it slightly less then the id
-#for the find threads, make it more than the id
+            fig, ax = plt.subplots()
 
-    # new_insert_id = []
-    # for i in insert_id:
-    #     new_insert_id.append(i - len(genuine_id))
+            #twin1 = ax.twinx()
+            #twin2 = ax.twinx()
 
-    # print(insert_id)
-    # print(new_insert_id)
-    # print("\n")
+            #ax.bar([0, 1], [0, 0], label = "applications")
+            ax.bar(new_insert_id, i_lock_opp, align='center', width=0.09, color='r', alpha=0.25)#, label = "insert")
+            ax.bar(new_find_id, lock_opp,  width=0.09, color='r', align='center', alpha=0.25, label = "lock opportunity")
+            ax.bar(new_find_id, tot_time, width=0.09, color='b', align='center', label = "find")
+            ax.bar(new_insert_id, i_tot_time, width=0.09, color='g', align='center', label = "insert")
+            handles, labels = ax.get_legend_handles_labels()
 
-    # tot_n_ops = []
-    # tot_id = []
-    # for i in range(len(new_insert_id) * 2):
-    #     if (i % 2 == 0):
-    #         tot_n_ops.append(n_ops[int(i/2)])
-    #     else:
-    #         tot_n_ops.append(i_n_ops[int((i-1)/2)])
-    
+            # reverse the order
+            ax.set(xlabel="Threads", ylabel="Time (ms)",  yscale = "log") 
 
-    # for i in new_insert_id:
-    #     tot_id.extend([i - 0.2, i + 0.2])
-    counter_one = 0
-    counter_two = 0
-    counter_three = 0
-    counter_four = 0
-    new_insert_id = []
-    new_find_id = []
 
-    new_i_lock_opp = []
-    new_f_find_opp = []
-
-    for i in insert_id:
-        if i == 0:
-            if counter_one == 0:
-                new_insert_id.append(i - (counter_one + 0.05))
-                counter_one = counter_one + 0.05
+            if (applications == 2):
+                plt.xticks([0, 1]) 
+                other_labels = ["Application 1", "Application 2"]
             else:
-                new_insert_id.append(i - (counter_one + 0.1))
-                counter_one = counter_one + 0.1
-        elif i == 1:
-            if counter_two == 0:
-                new_insert_id.append(i - (counter_two + 0.05))
-                counter_two = counter_two + 0.05
-            else:
-                new_insert_id.append(i - (counter_two + 0.1))
-                counter_two = counter_two + 0.1
-        elif i == 2:
-            new_insert_id.append(i - (counter_three + 0.1))
-            counter_three = counter_three + 0.1
-        elif i == 3:
-            new_insert_id.append(i - (counter_four + 0.1))
-            counter_four = counter_four + 0.1
+                plt.xticks([0]) 
+                other_labels = ["Application 1"]
 
-    count_one = 0
-    count_two = 0
-    count_three = 0
-    count_four = 0
+            ax.set_xticklabels(other_labels) 
 
-    for i in genuine_id:
-        if i == 0:
-            if count_one == 0:
-                new_find_id.append(i + (count_one + 0.05))
-                count_one = count_one + 0.05
-            else:
-                new_find_id.append(i + (count_one + 0.1))
-                count_one = count_one + 0.1
-        elif i == 1:
-            if count_two == 0:
-                new_find_id.append(i + (count_two + 0.05))
-                count_two = count_two + 0.05
-            else:
-                new_find_id.append(i + (count_two + 0.1))
-                count_two = count_two + 0.1
-        elif i == 2:
-            new_find_id.append(i + (count_three + 0.1))
-            count_three = count_three + 0.1
-        elif i == 3:
-            new_find_id.append(i + (count_four + 0.1))
-            count_four = count_four + 0.1
+            #twin1.plot(range(len(total_entries)), total_entries, linestyle='-', color='k')
+            #twin1.set(ylabel="Total number of entries", yscale = "log")
+            #ax.set_ylim(bottom = 0)
+            #plt.text(new_insert_id[0], total_entries[0], 'No. entries', ha='left')
+            # Annotating a point
 
-
-    # total_entries_one = 0
-    # total_entries_two = 0
-    # total_entries_three = 0
-    # total_entries_four = 0
-    # for i in range(len(insert_id)):
-    #     if insert_id[i] == 0:
-    #         total_entries_one = total_entries_one + i_n_entries[i]
-    #     if insert_id[i] == 1:
-    #         total_entries_two = total_entries_two + i_n_entries[i]
-    #     if insert_id[i] == 2:
-    #         total_entries_three = total_entries_three + i_n_entries[i]
-    #     if insert_id[i] == 3:
-    #         total_entries_four = total_entries_four + i_n_entries[i]
-
-    # total_entries = []
-
-    # if total_entries_one != 0:
-    #     total_entries.append(total_entries_one)
-    # if total_entries_two!= 0:
-    #     total_entries.append(total_entries_two)
-    # if total_entries_three != 0:
-    #     total_entries.append(total_entries_three)
-    # if total_entries_four != 0:
-    #     total_entries.append(total_entries_four)
-    # f_threads = [x - 0.2 for x in genuine_id]
-    # i_threads = [x + 0.2 for x in new_insert_id]
-
-
-
-    fig, ax = plt.subplots()
-
-    #twin1 = ax.twinx()
-    #twin2 = ax.twinx()
-
-    #ax.bar([0, 1], [0, 0], label = "applications")
-    ax.bar(new_insert_id, i_lock_opp, align='center', width=0.09, color='r', alpha=0.25)#, label = "insert")
-    ax.bar(new_find_id, lock_opp,  width=0.09, color='r', align='center', alpha=0.25, label = "lock opportunity")
-    ax.bar(new_find_id, tot_time, width=0.09, color='b', align='center', label = "find")
-    ax.bar(new_insert_id, i_tot_time, width=0.09, color='g', align='center', label = "insert")
-    handles, labels = ax.get_legend_handles_labels()
-
-    # reverse the order
-    ax.set(xlabel="Threads", ylabel="Time (ms)",  yscale = "log") 
-
-
-    if (applications == 2):
-        plt.xticks([0, 1]) 
-        other_labels = ["Application 1", "Application 2"]
-    else:
-        plt.xticks([0]) 
-        other_labels = ["Application 1"]
-
-    ax.set_xticklabels(other_labels) 
-
-    #twin1.plot(range(len(total_entries)), total_entries, linestyle='-', color='k')
-    #twin1.set(ylabel="Total number of entries", yscale = "log")
-    #ax.set_ylim(bottom = 0)
-    #plt.text(new_insert_id[0], total_entries[0], 'No. entries', ha='left')
-    # Annotating a point
-
-    # # Add a colorbar to the plot to represent the 'z' variable
-    # plt.colorbar(label='Color Variable (z)')
-    plt.legend(handles[::-1], labels[::-1])
-    #plt.plot(genuine_id, wc_time)
-    n = len(filename)
-    plt.title("Total lock hold per thread") 
-    ratio_string = ""
-    for i in ratio:
-        ratio_string = ratio_string + str(i) + "_"
-    figName = "./graphs/default_spin_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
-    plt.savefig(figName)          
-    plt.close()
+            # # Add a colorbar to the plot to represent the 'z' variable
+            # plt.colorbar(label='Color Variable (z)')
+            plt.legend(handles[::-1], labels[::-1])
+            #plt.plot(genuine_id, wc_time)
+            n = len(filename)
+            plt.title("Total lock hold per thread") 
+            ratio_string = ""
+            for i in ratio:
+                ratio_string = ratio_string + str(i) + "_"
+            figName = "./graphs/default_spin_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
+            plt.savefig(figName)          
+            plt.close()
 
 

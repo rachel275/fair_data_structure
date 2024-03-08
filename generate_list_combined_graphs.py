@@ -6,214 +6,181 @@ import csv
 import sys
 
 
-rootdir = "./tables/"
-for dir in os.listdir(rootdir):
-        if dir.split('_')[-2] == "list":
-            type = dir.split('_list')[0]
-            for filename in os.listdir("./tables/" + dir):
-                with open(os.path.join("./tables/" + dir, filename), 'r') as file:
-                    if ((filename.endswith("_lock_CLOUDLAB.csv") == False) and ("ns_c_list" in dir)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
-                        ithreads = int(filename.split('_')[1]) 
-                        fthreads = int(filename.split('_')[3]) 
-                        duration = filename.split('_')[5]
-                        if(int(ithreads) == 4 and int(fthreads) == 4 and int(duration) == 60):
-                            print ("ns c  - got here")
-                            reader = csv.reader(file)
-                            i = -1
-                            thread_type = []
-                            genuine_id = []
-                            insert_id = []
-                            tot_time = []
-                            i_tot_time = []
-                            n_ops = []
-                            i_n_ops = []
+for n_apps in [2]:
+    for ratio_a in [0, 25, 50, 75, 100]:
+        for ratio_b in [0, 25, 50, 75, 100]:
+            n_count = 0
+            #fig, ax = plt.subplots()
+            rootdir = "./tables/"
+            fair_no_threads = []
+            fair_thread_type = []
+            fari_genuine_id = []
+            fair_insert_id = []
+            fair_wc_time = []
+            i_fair_wc_time = []
+            fairtot_time = []
+            fair_i_tot_time = []
+            fair_n_ops = []
+            fair_i_n_ops = []
+            fair_lock_opp = []
+            fair_i_lock_opp = []
+            new_fair_insert_id = []
+            new_find_id = []
+            new_fair_i_lock_opp = []
+            new_fair_f_find_opp = []
+            n_count_sum = []
+            n_i_count_sum = []
+            for dir in os.listdir(rootdir):
+                    if dir.split('_')[-2] == "list":
+                        type = dir.split('_list')[0]
+                        for filename in os.listdir("./tables/" + dir):
+                            with open(os.path.join("./tables/" + dir, filename), 'r') as file:
+                                if (("default" in dir)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
+                                    applications = int(filename.split('_')[1]) 
+                                    ratio = []
+                                    for i in range(applications):
+                                        ratio.append(int(filename.split('_')[i + 3]))
+                                    duration = filename.split('_')[i + 5].split('.csv')[0]
+                                    if(int(applications) == 2 and int(ratio[0]) == ratio_a and int(ratio[1]) == ratio_b and int(duration) == 64):
+                                        print(filename)
+                                        n_count = n_count + 1
+                                        i = -1
+                                        reader = csv.reader(file)
+                                        for row in reader:
+                                            if i == -1:
+                                                i = 1
+                                            else:
+                                                #need to ignore the first line!
+                                                fair_thread_type.append(row[int(0)])
+                                                if (row[int(0)] == "insert"):
+                                                    fair_insert_id.append(int(row[int(1)]))
+                                                    i_fair_wc_time.append(float(row[int(3)]))
+                                                    fair_i_tot_time.append(float(row[int(4)]))
+                                                    fair_i_n_ops.append(int(row[int(2)]))  
+                                                    fair_i_lock_opp.append(float(row[int(5)]))
+                                                    n_i_count_sum.append(n_count + ((1/2) * int(row[int(1)])))
 
-                            for row in reader:
-                                if i == -1:
-                                    i = 1
-                                else:
-                                    #need to ignore the first line!
-                                    thread_type.append(row[int(0)])
-                                    if (row[int(0)] == "insert"):
-                                        insert_id.append(int(row[int(1)]))
-                                        i_tot_time.append(float(row[int(5)]))
-                                        i_n_ops.append(int(row[int(2)]))  
-                                    else:
-                                        genuine_id.append(int(row[int(1)]))
-                                        tot_time.append(float(row[int(5)]))
-                                        n_ops.append(int(row[int(2)]))
+                                                else:
+                                                    fari_genuine_id.append(int(row[int(1)]))
+                                                    fair_wc_time.append(float(row[int(3)]))
+                                                    fairtot_time.append(float(row[int(4)]))
+                                                    fair_n_ops.append(int(row[int(2)]))
+                                                    fair_lock_opp.append(float(row[int(5)]))
+                                                    n_count_sum.append(n_count + ((1/2) * int(row[int(1)])))
+                                        n_count = n_count + 1
+                                    
+            counter_one = 0
+            counter_two = 0
+            counter_three = 0
+            counter_four = 0
+            counter_five = 0
 
-                    if ((filename.endswith("_sepCPU_CLOUDLAB.csv") == True) and ("default_list" in dir)):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
-                        ithreads = int(filename.split('_')[1]) 
-                        fthreads = int(filename.split('_')[3]) 
-                        duration = filename.split('_')[5]
-                        if (int(ithreads) == 4 and int(fthreads) == 4 and int(duration) == 60):
-                            print ("default - got here")
-                            reader = csv.reader(file)
-                            i = -1
+            for i in n_i_count_sum:
+                if i == 1:
+                    if counter_one == 0:
+                        new_fair_insert_id.append((i*2 - (counter_one + 0.1) + n_count))
+                        counter_one = counter_one + 0.1
+                    else:
+                        new_fair_insert_id.append((i*2 - (counter_one + 0.1)) + n_count)
+                        counter_one = counter_one + 0.1
+                elif i == 1.5:
+                    if counter_two == 0:
+                        new_fair_insert_id.append((i*2 - (counter_two + 0.1)) + n_count)
+                        counter_two = counter_two + 0.1
+                    else:
+                        new_fair_insert_id.append((i*2 - (counter_two + 0.1)) + n_count)
+                        counter_two = counter_two + 0.1
+                elif i == 3:
+                    if counter_three == 0:
+                        new_fair_insert_id.append((i*2 - (counter_three + 0.1)) + n_count)
+                        counter_three = counter_three + 0.1
+                    else:
+                        new_fair_insert_id.append((i*2 - (counter_three + 0.1)) + n_count)
+                        counter_three = counter_three + 0.1
+                elif i == 3.5:
+                    if counter_four == 0:
+                        new_fair_insert_id.append((i*2 - (counter_four + 0.1)) + n_count)
+                        counter_four = counter_four + 0.1
+                    else:
+                        new_fair_insert_id.append((i*2 - (counter_four + 0.1)) + n_count)
+                        counter_four = counter_four + 0.1
+                elif i == 4:
+                    if counter_five == 0:
+                        new_fair_insert_id.append((i*2 - (counter_five + 0.05)) + n_count)
+                        counter_five = counter_five + 0.05
+                    else:
+                        new_fair_insert_id.append((i*2 - (counter_five + 0.1)) + n_count)
+                        counter_five = counter_five + 0.1
 
-                            def_thread_type = []
-                            def_genuine_id = []
-                            def_insert_id = []
-                            def_tot_time = []
-                            def_i_tot_time = []
-                            def_n_ops = []
-                            def_i_n_ops = []
+            count_one = 0
+            count_two = 0
+            count_three = 0
+            count_four = 0
+            count_five = 0
 
-                            for row in reader:
-                                if i == -1:
-                                    i = 1
-                                else:
-                                    #need to ignore the first line!
-                                    def_thread_type.append(row[int(0)])
-                                    if (row[int(0)] == "insert"):
-                                        def_insert_id.append(int(row[int(1)]))
-                                        def_i_tot_time.append(float(row[int(5)]))
-                                        def_i_n_ops.append(int(row[int(2)]))  
-                                    else:
-                                        def_genuine_id.append(int(row[int(1)]))
-                                        def_tot_time.append(float(row[int(5)]))
-                                        def_n_ops.append(int(row[int(2)]))
+            for i in n_count_sum:
+                if i == 1:
+                    if count_one == 0:
+                        new_find_id.append((i*2 + (count_one + 0.1)) + n_count)
+                        count_one = count_one + 0.1
+                    else:
+                        new_find_id.append((i*2 + (count_one + 0.1)) + n_count)
+                        count_one = count_one + 0.1
+                elif i == 1.5:
+                    if count_two == 0:
+                        new_find_id.append((i*2 + (count_two + 0.1)) + n_count)
+                        count_two = count_two + 0.1
+                    else:
+                        new_find_id.append((i*2 + (count_two + 0.1)) + n_count)
+                        count_two = count_two + 0.1
+                elif i == 3:
+                    if count_three == 0:
+                        new_find_id.append((i*2 + (count_three + 0.1)) + n_count)
+                        count_three = count_three + 0.1
+                    else:
+                        new_find_id.append((i*2 + (count_three + 0.1)) + n_count)
+                        count_three = count_three + 0.1
+                elif i == 3.5:
+                    if count_four == 0:
+                        new_find_id.append((i*2 + (count_four + 0.1)) + n_count)
+                        count_four = count_four + 0.1
+                    else:
+                        new_find_id.append((i*2 + (count_four + 0.1)) + n_count)
+                        count_four = count_four + 0.1
+                elif i == 4:
+                    if count_five == 0:
+                        new_find_id.append((i*2 + (count_five + 0.05)) + n_count)
+                        count_five = count_five + 0.05
+                    else:
+                        new_find_id.append((i*2 + (count_five + 0.1)) + n_count)
+                        count_five = count_five + 0.1
+            
+            #print(new_find_id)
 
+            print(n_i_count_sum)
+            print(new_fair_insert_id)
+            print(n_count_sum)
+            print(new_find_id)
+            print(fair_lock_opp)
+            plt.bar(new_fair_insert_id, fair_i_lock_opp, align='center', width=0.09, color='r', alpha=0.25)#, label = "insert")
+            plt.bar(new_find_id, fair_lock_opp,  width=0.09, color='r', align='center', alpha=0.25, label = "lock opportunity")
+            plt.bar(new_find_id, fairtot_time, width=0.09, color='b', align='center', label = "find")
+            plt.bar(new_fair_insert_id, fair_i_tot_time, width=0.09, color='g', align='center', label = "insert")
+                    #handles, labels = plt.set_legend_handles_labels()
 
-                    if (((filename.endswith("_lock_CLOUDLAB.csv")) and ("ns_c_list" in dir))):# or (filename.endswith("_basecase_CLOUDLAB.csv") == True )):
-                        ithreads = int(filename.split('_')[1]) 
-                        fthreads = int(filename.split('_')[3]) 
-                        duration = int(filename.split('_')[5])
-                        if (int(ithreads) == 4 and int(fthreads) == 4 and int(duration) == 60):
-
-                            print ("lock - got here")
-                            reader = csv.reader(file)
-                            i = -1
-
-                            lck_thread_type = []
-                            lck_genuine_id = []
-                            lck_insert_id = []
-                            lck_tot_time = []
-                            lck_i_tot_time = []
-                            lck_n_ops = []
-                            lck_i_n_ops = []
-
-                            for row in reader:
-                                if i == -1:
-                                    i = 1
-                                    print (" i is 1")
-                                else:
-                                    lck_thread_type.append(row[int(0)])
-                                    print ("we have reached here")
-                                    if (row[int(0)] == "insert"):
-                                        lck_insert_id.append(int(row[int(1)]))
-                                        lck_i_tot_time.append(float(row[int(5)]))
-                                        lck_i_n_ops.append(int(row[int(2)]))  
-                                    else:
-                                        print("we are here doing something")
-                                        lck_genuine_id.append(int(row[int(1)]))
-                                        lck_tot_time.append(float(row[int(5)]))
-                                        lck_n_ops.append(int(row[int(2)]))
-
-
-new_insert_id = []
-for i in insert_id:
-    new_insert_id.append(i - len(genuine_id))
-
-tot_n_ops = []
-tot_id = []
-# for i in range(len(new_insert_id) * 2):
-#     if (i % 2 == 0):
-#         tot_n_ops.append(n_ops[int(i/2)])
-#     else:
-#         tot_n_ops.append(i_n_ops[int((i-1)/2)])
-
-
-#f_threads = [x - 0.2 for x in genuine_id]
-#i_threads = [x - 0.15 for x in new_insert_id]
-
-#default list
-def_new_insert_id = []
-for i in def_insert_id:
-    def_new_insert_id.append(i - len(def_genuine_id))
-
-def_tot_n_ops = []
-def_tot_id = []
-for i in range(len(def_new_insert_id) * 2):
-    if (i % 2 == 0):
-        def_tot_n_ops.append(def_n_ops[int(i/2)])
-    else:
-        def_tot_n_ops.append(def_i_n_ops[int((i-1)/2)])
-
-
-for i in range(24):
-    tot_id.append(i)
-
-tot_n_ops = def_n_ops + def_i_n_ops + n_ops + i_n_ops + lck_n_ops + lck_i_n_ops
-
-#def_f_threads = [x + 0.15 for x in def_genuine_id]
-#def_i_threads = [x + 0.2 for x in def_new_insert_id]
-
-#lock list
-lck_new_insert_id = []
-for i in lck_insert_id:
-    lck_new_insert_id.append(i - len(lck_genuine_id))
-
-lck_tot_n_ops = []
-lck_tot_id = []
-for i in range(len(lck_new_insert_id) * 2):
-    if (i % 2 == 0):
-        lck_tot_n_ops.append(lck_n_ops[int(i/2)])
-    else:
-        lck_tot_n_ops.append(lck_i_n_ops[int((i-1)/2)])
-
-
-for i in lck_new_insert_id:
-    lck_tot_id.extend([i - 0.05, i + 0.1])
-
-#lck_f_threads = [x - 0.025 for x in lck_genuine_id]
-#lck_i_threads = [x + 0.025 for x in lck_new_insert_id]
-
-for i in range(len(genuine_id)):
-    genuine_id[i] += 8
-
-for i in range(len(insert_id)):
-    insert_id[i] += 8
-
-for i in range(len(lck_genuine_id)):
-    lck_genuine_id[i] += 16
-
-for i in range(len(lck_insert_id)):
-    lck_insert_id[i] += 16
-
-print (lck_insert_id)
-fig, ax = plt.subplots()
-
-twin1 = ax.twinx()
-#twin2 = ax.twinx()
-
-ax.bar(genuine_id, tot_time, width=0.5, color='b', align='center', label = "find (ns c)")
-ax.bar(insert_id, i_tot_time, width=0.5, color='c', align='center', label = "insert (ns c)")
-
-ax.bar(lck_genuine_id, lck_tot_time, width=0.5, color='r', align='center', label = "find (ns c lock)")
-ax.bar(lck_insert_id, lck_i_tot_time, width=0.5, color='m', align='center', label = "insert (ns c lock)")
-
-ax.bar(def_genuine_id, def_tot_time, width=0.5, color='y', align='center', label = "find (default)")
-ax.bar(def_insert_id, def_i_tot_time, width=0.5, color='g', align='center', label = "insert (default)")
-
-handles, labels = ax.get_legend_handles_labels()
-
-# reverse the order
-ax.set(xlabel="Thread id", ylabel="Time (ms)",  yscale = "log")    
-
-twin1.plot(tot_id, tot_n_ops, linestyle='-', color='k')
-twin1.set(ylabel="Number of operations", yscale = "log")
-plt.text(tot_id[0], tot_n_ops[0], 'Throughput', ha='left')
-plt.xticks(np.arange(min(def_genuine_id), max(insert_id)+1, 4)) 
-# Annotating a point
-
-# # Add a colorbar to the plot to represent the 'z' variable
-# plt.colorbar(label='Color Variable (z)')
-plt.legend(handles[::-1], labels[::-1])
-#plt.plot(genuine_id, wc_time)
-n = len(filename)
-plt.title("Total lock hold per thread (CLOUDLAB," + str(duration) + "s)") 
-figName = "./graphs/ns_c_list_graphs/threads" + str(ithreads) + "_" + str(fthreads)  + "_duration " + str(duration) + "_combined.png"
-plt.savefig(figName)          
-plt.close()
+            plt.xlabel("Experiment Types") 
+            plt.ylabel("Time (ms)") 
+            plt.yscale("log") 
+            x = np.arange(5,12,1)
+            x_ticks_labels = [ '', '','Spin lock','','Fair lock', '', '']
+            plt.xticks(ticks=x, labels=x_ticks_labels)
+            plt.legend()
+            #plt.plot(genuine_id, wc_time)
+            n = len(filename)
+            plt.title("Total lock hold per thread") 
+            ratio_string = ""
+            for i in ratio:
+                ratio_string = ratio_string + str(i) + "_"
+            figName = "./graphs/default_spin_list_graphs/applications" + str(applications) + "_ratio_" + str(ratio_a) + "_" + str(ratio_b) + "_duration_" + str(duration) + "_combined.png"
+            plt.savefig(figName)          
+            plt.close()
