@@ -50,8 +50,6 @@ void List_Init(list_t *list){
 void list_insert(list_t *list, int k, void *data, list_stat_t* stat, int pid){
     unsigned long long start, end;//, wait, release;
     unsigned int duration;
-//lock_acquire(&list->mutexes);
-//start = rdtsc();
 
     lock_acquire(&list->mutexes);
     start = rdtsc();
@@ -66,6 +64,8 @@ void list_insert(list_t *list, int k, void *data, list_stat_t* stat, int pid){
     lock_release(&list->mutexes);
 
     duration = end - start;
+    stat->cs_time = duration;
+    //printf("	%i	", duration);
     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
     stat->tot_cs_time += duration;
     stat->n_ops++;
@@ -116,6 +116,7 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
             end = rdtsc();            
             lock_release(&list->mutexes);
             duration = end - start;
+	    stat->cs_time = duration;
             if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
             stat->tot_cs_time += duration;
             stat->n_ops++;
@@ -128,6 +129,7 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     lock_release(&list->mutexes);
 
     duration = end - start;
+    stat->cs_time = duration;
     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
     stat->tot_cs_time += duration;
     stat->n_ops++;

@@ -43,7 +43,7 @@ typedef struct hash_table HashTable;
 HashTable* hash_init (size_t N, int totweight);
 int hash_insert (HashTable *hp, unsigned int k, void *v, hash_table_stat *stat, int pid);
 int hash_delete (HashTable *hp, unsigned int k, hash_table_stat *stat, int pid);
-int hash_get (HashTable *hp, unsigned int k, void **vptr, hash_table_stat *stat, int pid);
+Node* hash_get (HashTable *hp, unsigned int k, hash_table_stat *stat, int pid);
 void print_hash_stats(hash_table *hp);
 void clear_hash_stats(hash_table *hp);
 
@@ -60,9 +60,9 @@ HashTable* hash_init(size_t N, int tot_weight)
     // init all mutex locks
     for (int i = 0; i < N; i++){
         List_Init(&new_table->table[i]);
-    }
-// #ifdef FAIRLOCK
-//     lock_init(&new_table->mutexes, tot_weight);
+    }    
+ //#ifdef FAIRLOCK
+ //    lock_init(&new_table->mutexes, tot_weight);
 // #else
 //     lock_init(&new_table->mutexes);
 // #endif
@@ -72,11 +72,10 @@ HashTable* hash_init(size_t N, int tot_weight)
 // Function inserting to hp hash table, key k and v value of k.
 int hash_insert (hash_table *hp, unsigned int k, void *v, hash_table_stat *stat, int pid)
 {
-    size_t bucket_idx = k % hp->size;
+    size_t bucket_idx = (k) % hp->size;
     int insert;
     struct list_t* bucket = &hp->table[bucket_idx];
     insert = 1;
-
     list_insert(bucket, k, v, &stat->stats[bucket_idx], pid);
 
 
@@ -92,6 +91,7 @@ int hash_insert (hash_table *hp, unsigned int k, void *v, hash_table_stat *stat,
     }
     stat->op_entries++;
     stat->n_ops++;
+   // printf("%.3f	", stat->stats[bucket_idx].cs_time);
     return insert;
 }
 
@@ -102,7 +102,7 @@ int hash_delete (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
     size_t bucket_idx = k % hp->size;
     int found = 0;
     struct list_t* bucket = &hp->table[bucket_idx];
-
+    
     found = list_delete(bucket, k, &stat->stats[bucket_idx], pid);
 
     if (found == 1){
@@ -121,15 +121,15 @@ int hash_delete (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
 
 // Function returning 0 on success, -1 on fail
 // Retrieves key k's value into vptr from hash table hp
-int hash_get (hash_table *hp, unsigned int k, void **vptr, hash_table_stat *stat, int pid)
+Node* hash_get (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
 {
     // finding the correct bucket
-    size_t bucket_idx = k % hp->size;
-
+    size_t bucket_idx = (k) % hp->size;
+    //printf(" %i 	", bucket_idx);
     struct list_t* bucket = &hp->table[bucket_idx];
-
-    *vptr = list_find(bucket, k, &stat->stats[bucket_idx], pid)->value;
-
+    Node* result;
+    result = list_find(bucket, k, &stat->stats[bucket_idx], pid);
+    
     stat->n_ops++;
 
     stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
@@ -137,12 +137,9 @@ int hash_get (hash_table *hp, unsigned int k, void **vptr, hash_table_stat *stat
         stat->wc_cs_time = stat->stats->wc_cs_time;
         stat->bucket_id = bucket_idx;
     }
-
-    if (*vptr != NULL){
-        return 0;
-    } else {
-        return -1;
-    }
+    
+   return result;
+    
 }
 
 #endif /* __HASH_H__ */

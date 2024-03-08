@@ -28,7 +28,7 @@ typedef struct {
     volatile int *stop;
     pthread_t thread;
     int priority;
-    int id;
+    int app_id;
     double cs;
     int ncpu;
     // output
@@ -66,8 +66,7 @@ uint fast_rand() {
 
 /********************************** Global Variables *****************************************/
 int test_threads = DEFAULT_THREADS;  /*=to some input, set this one when it is first run*/
-list_t list;                         /*global linked list*/
-
+int nbuckets;
 unsigned int test_duration = DEFAULT_DURATION;
 unsigned int test_wait_duration = DEFAULT_WAIT;
 unsigned int test_delete_ratio = 0;
@@ -128,7 +127,7 @@ void *insertfunc(void *vargp)
     while(!*task->stop){
       /*add to the linked list*/
         entry = ((fast_rand() % key_space * 10)  + task->app_id);
-	    hash_insert(ht, entry, &entry+entry, &task->stat, task->id);
+	hash_insert(ht, entry, &entry+entry, &task->stat, task->app_id);
     }
     print_summary("insert", task);
     return NULL;
@@ -137,15 +136,18 @@ void *insertfunc(void *vargp)
 void *findfunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
+//    printf("nowwwww reaches here\n");
     setup_worker(task);
+//    printf("but does it reach here\n");
     int entry = task->app_id;
-
+    void* result;
+    int yup;
     // /*loop continuously*/
     while(!*task->stop){
     //  /*add to the linked list*/
         entry = (((1000000 - fast_rand()) % key_space * 10) + task->app_id);
 //	printf("ins ent: %llu   ", entry); 
-        hash_find(ht, entry, &task->stat, task->app_id);
+        hash_get(ht, entry, &task->stat, task->app_id);
     }
     print_summary("find", task);
     return NULL;
@@ -169,13 +171,13 @@ void *deletefunc(void *vargp)
 
 int main(int argc, char **argv)
 {
-    if (argc < 3) {
+    if (argc < 4) {
 	printf("usage: %s <napplications> <ratio1> <ratio2> <...> <duration> \n", argv[0]);
 	return 1;
     }
-    int nbuckets = atoi(argv[1]);
+    nbuckets = atoi(argv[1]);
     napplications = atoi(argv[2]);
-    if (argc < 2 + napplications) {
+    if (argc < 3 + napplications) {
 	printf("usage: %s <napplications> <ratio1> <ratio2> <...> <duration> \n", argv[0]);
 	return 1;
     }
@@ -197,7 +199,7 @@ int main(int argc, char **argv)
     key_space = ((test_insert_ratio + test_find_ratio) * 500);
 
     ht = hash_init(nbuckets, 0);
-
+    //printf("reaches here \n");
     int h = 0; 
     int g = 0; 
     int ninserts = 0; 
@@ -210,7 +212,7 @@ int main(int argc, char **argv)
 	    insert_tasks[h].priority = 0;
             insert_tasks[h].stop = &stop;
         }
-
+//	printf("now reaches here \n");
 	    nfinds += (((100 - nratio[i]) * THREADS_PER_APP) / 100);
         for (g; g < nfinds; g++){
 	    find_tasks[g].app_id = i;
@@ -231,6 +233,7 @@ int main(int argc, char **argv)
     }
 
 
+    //printf("now here\n");
     for (int k = 0; k < test_find_ratio; k++){
         rc = pthread_create(&find_tasks[k].thread, NULL, findfunc, &find_tasks[k]);
 	if (rc){
@@ -239,7 +242,7 @@ int main(int argc, char **argv)
         }
     }
 
-
+    //printf("aand now here \n");
     for (int k = 0; k < test_delete_ratio; k++){
         rc = pthread_create(&delete_tasks[k].thread, NULL, deletefunc, &delete_tasks[k]);
         if (rc){
