@@ -24,7 +24,8 @@ FLAGS=-I../ -g -lpthread -Wall ${OFLAG} -DCYCLE_PER_US=${CYCLE_PER_US}
 # 	gcc main.c -o main ${FLAGS} -DFAIRLOCK
 
 mutex:
-	#gcc main_hashtable.c -o hash_main ${FLAGS} -DSPIN
+	gcc main_hashtable.c -o hash_spin_main ${FLAGS} -DSPIN
+	gcc main_hashtable.c -o hash_fair_main ${FLAGS} -DFAIRLOCK -DEBUG
 	gcc linked_list_main.c -o list_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG
 	gcc linked_list_main.c -o list_spin_main ${FLAGS} -DSPIN 
 	gcc linked_list_main.c -o ns_c_list_spin_main ${FLAGS} -DSPIN -DNSC
