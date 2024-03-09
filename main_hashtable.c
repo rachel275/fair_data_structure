@@ -81,10 +81,43 @@ pthread_attr_t attr;
 
 
 /********************************* Main Functions *******************************************/
+
 void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
     printf("%s "
 	    "app id: %02d / "
         "number of operations: %i / "
+	    "tot_time(ms): %10.3f / "
+	    "max_time(ms): %10.3f / \n",
+	    type,
+	    task->app_id,
+        (int)task->stat.n_ops);
+    for (int i = 0; i < nbuckets; i++){
+        printf("tot_time_bucket_%i(ms): %10.3f / "
+                "max_time_bucker_%i(ms): %10.f / ", 
+        i,
+        task->stats[i].tot_cs_time / (float) (CYCLE_PER_US * 1000),
+        i,
+        task->stats[i].wc_cs_time / (float) (CYCLE_PER_US * 1000));
+//#if defined(FAIRLOCK) && defined(DEBUG)
+    flthread_info_t *info = pthread_getspecific(ht->table[i].flthread_info_key);
+    printf("  LH_Opp_bucket_%i: %10.3f /\n",
+            //"  reenter %llu\n"
+            //"  banned(actual) %llu\n"
+            //"  banned %llu\n"
+            //"  elapse %llu\n",
+            i,
+            info->stat.total_time / (CYCLE_PER_US * 1000));
+            //info->stat.reenter,
+           // info->stat.banned_time,
+           // info->banned_until-info->stat.start,
+            //info->start_ticks-info->stat.start);
+//#endif	
+    }	  
+}
+void print_buckets_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
+    printf("%s "
+	    "bucket id: %02d / "
+        "number of entries: %i / "
 	    "tot_time(ms): %10.3f / "
 	    "max_time(ms): %10.3f / \n",
 	    type,
@@ -255,8 +288,14 @@ int main(int argc, char **argv)
 
     stop = 1;
 
+    total_left[100];
+
     for (int p = 0; p < (test_insert_ratio); p++){
+        for (int j = 0; j < nbuckets; j++){
+            total_left[j] += insert_tasks[p].stat.stats[i].tot_cs_time;
+        }
         pthread_join(insert_tasks[p].thread, NULL);
+
     }
 
 
@@ -267,6 +306,14 @@ int main(int argc, char **argv)
     for (int p = 0; p < (test_delete_ratio); p++){
         pthread_join(delete_tasks[p].thread, NULL);
     }
+
+
+    for (int i = 0; i < nbuckets; i++){
+        printf("Lock_Opp_bucket_%i : %10.3f",
+        i,
+        test_duration - total_left[i]);
+    }
+
 
     return 0;
 }
