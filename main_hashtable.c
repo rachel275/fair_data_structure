@@ -77,77 +77,45 @@ unsigned int napplications = 0;
 unsigned int nratio[100];
 
 pthread_attr_t attr;
-
+pthread_mutex_t print_lock;
 
 
 /********************************* Main Functions *******************************************/
 
 void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
+    pthread_mutex_lock(&print_lock);
     printf("%s "
 	    "app id: %02d / "
-        "number of operations: %i / "
-	    "tot_time(ms): %10.3f / "
-	    "max_time(ms): %10.3f / \n",
-	    type,
-	    task->app_id,
-        (int)task->stat.n_ops);
-    for (int i = 0; i < nbuckets; i++){
-        printf("tot_time_bucket_%i(ms): %10.3f / "
-                "max_time_bucker_%i(ms): %10.f / ", 
-        i,
-        task->stats[i].tot_cs_time / (float) (CYCLE_PER_US * 1000),
-        i,
-        task->stats[i].wc_cs_time / (float) (CYCLE_PER_US * 1000));
-//#if defined(FAIRLOCK) && defined(DEBUG)
-    flthread_info_t *info = pthread_getspecific(ht->table[i].flthread_info_key);
-    printf("  LH_Opp_bucket_%i: %10.3f /\n",
-            //"  reenter %llu\n"
-            //"  banned(actual) %llu\n"
-            //"  banned %llu\n"
-            //"  elapse %llu\n",
-            i,
-            info->stat.total_time / (CYCLE_PER_US * 1000));
-            //info->stat.reenter,
-           // info->stat.banned_time,
-           // info->banned_until-info->stat.start,
-            //info->start_ticks-info->stat.start);
-//#endif	
-    }	  
-}
-void print_buckets_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
-    printf("%s "
-	    "bucket id: %02d / "
-        "number of entries: %i / "
-	    "tot_time(ms): %10.3f / "
-	    "max_time(ms): %10.3f / \n",
+        "no ops: %i / "
+	    "tot_time(ms): %10.3f / ",
+	    //"max_time(ms): %10.3f / ",
 	    type,
 	    task->app_id,
         (int)task->stat.n_ops,
-	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
-	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
+	task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000));
+    for (int i = 0; i < nbuckets; i++){
+        printf("tot_b_%i(ms): %10.3f / "
+                "max_b_%i(ms): %10.3f / ", 
+        i,
+        task->stat.stats[i].tot_cs_time / (float) (CYCLE_PER_US * 1000),
+        i,
+        task->stat.stats[i].wc_cs_time / (float) (CYCLE_PER_US * 1000));
 #if defined(FAIRLOCK) && defined(DEBUG)
-    flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
-    printf("  slice %llu	"
-           "  own_slice_wait %llu\n"
-           //"  lock opportunity %llu\n"
-           "  runnable_wait %10.3f\n"
-           "  total slice 1 %10.3f\n"
-           "  total slice 2  %llu\n",
-            //"  reenter %llu\n"
-            //"  banned(actual) %llu\n"
-            //"  banned %llu\n"
-            //"  elapse %llu\n",
-            task->stat.n_ops - info->stat.reenter,
-            info->stat.own_slice_wait,
-            //info->stat.prev_slice_wait,
-            (float)info->stat.runnable_wait / CYCLE_PER_US,
-            task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000) + (float)info->stat.runnable_wait / CYCLE_PER_US + (float) info->stat.own_slice_wait / CYCLE_PER_US,
-            info->stat.total_time / (CYCLE_PER_US * 1000));
-            //info->stat.reenter,
-           // info->stat.banned_time,
-           // info->banned_until-info->stat.start,
-            //info->start_ticks-info->stat.start);
-#endif		  
+    flthread_info_t *info = pthread_getspecific(ht->table[i].mutexes.flthread_info_key);
+    if (info == NULL){
+     printf("LHO_b_%i: %10.3f / ",
+            i,
+            -1.00);
+
+    } else {
+    	printf("LHO_b_%i: %10.3f / ",
+        	    i,
+            	info->stat.total_time / (float)(CYCLE_PER_US * 1000));
+	}
+#endif	
+    }	  
+    printf("\n");
+    pthread_mutex_unlock(&print_lock);
 }
 
 void *insertfunc(void *vargp)
@@ -204,6 +172,7 @@ void *deletefunc(void *vargp)
 
 int main(int argc, char **argv)
 {
+    pthread_mutex_init(&print_lock, NULL);
     if (argc < 4) {
 	printf("usage: %s <napplications> <ratio1> <ratio2> <...> <duration> \n", argv[0]);
 	return 1;
@@ -288,11 +257,11 @@ int main(int argc, char **argv)
 
     stop = 1;
 
-    total_left[100];
+    float total_left[100];
 
     for (int p = 0; p < (test_insert_ratio); p++){
         for (int j = 0; j < nbuckets; j++){
-            total_left[j] += insert_tasks[p].stat.stats[i].tot_cs_time;
+            total_left[j] += insert_tasks[p].stat.stats[j].tot_cs_time;
         }
         pthread_join(insert_tasks[p].thread, NULL);
 
@@ -300,6 +269,10 @@ int main(int argc, char **argv)
 
 
     for (int p = 0; p < (test_find_ratio); p++){
+	for (int j = 0; j < nbuckets; j++){
+            total_left[j] += find_tasks[p].stat.stats[j].tot_cs_time;
+        }
+
         pthread_join(find_tasks[p].thread, NULL);
     }
 
@@ -309,9 +282,9 @@ int main(int argc, char **argv)
 
 
     for (int i = 0; i < nbuckets; i++){
-        printf("Lock_Opp_bucket_%i : %10.3f",
+        printf("Lock_Opp_b_%i: %10.3f / ",
         i,
-        test_duration - total_left[i]);
+       (float) (test_duration * 1000) - (total_left[i] / (CYCLE_PER_US * 1000)));
     }
 
 

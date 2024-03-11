@@ -105,6 +105,7 @@ static flthread_info_t *flthread_info_create(fairlock_t *lock, int weight) {
 #ifdef DEBUG
     memset(&info->stat, 0, sizeof(stats_t));
     info->stat.start = info->banned_until;
+    info->stat.total_time = 0;
 #endif
     return info;
 }
@@ -132,6 +133,7 @@ void fairlock_acquire(fairlock_t *lock) {
     if (NULL == info) {
         info = flthread_info_create(lock, 0);
         pthread_setspecific(lock->flthread_info_key, info);
+	lock->slice = rdtsc();
     }
 
     if (readvol(lock->slice_valid)) {

@@ -72,7 +72,7 @@ HashTable* hash_init(size_t N, int tot_weight)
 // Function inserting to hp hash table, key k and v value of k.
 int hash_insert (hash_table *hp, unsigned int k, void *v, hash_table_stat *stat, int pid)
 {
-    size_t bucket_idx = (k) % hp->size;
+    size_t bucket_idx = k % hp->size;
     int insert;
     struct list_t* bucket = &hp->table[bucket_idx];
     insert = 1;
@@ -124,8 +124,7 @@ int hash_delete (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
 Node* hash_get (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
 {
     // finding the correct bucket
-    size_t bucket_idx = (k) % hp->size;
-    //printf(" %i 	", bucket_idx);
+    size_t bucket_idx = k % hp->size;
     struct list_t* bucket = &hp->table[bucket_idx];
     Node* result;
     result = list_find(bucket, k, &stat->stats[bucket_idx], pid);

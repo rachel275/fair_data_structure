@@ -31,16 +31,20 @@ build_my_hashtable
 # fi
 
 
-for a in 8 16 64
+for b in 4 7
 do
-  for d in 30
+  for d in 0 25 50 75 100
   do
-    for t in 4 8
+    for a in 0 25 50 75 100
     do
-      b=1
-      g=1
-      echo "./hash_main $a $b $d $t $g > ./data/futex_hashtable_example/bucket_nfutex${a}_ninsert${b}_duration${d}_buckets${t}_ncpu${g}_CLOUDLAB"
-      ./hash_main $a $b $d $t $g > ./data/futex_hashtable_example/bucket_nfutex${a}_ninsert${b}_duration${d}_buckets${t}_ncpu${g}_CLOUDLAB
+    	echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
+    	./hash_fair_main $b 2 $d $a 64 > ./data/default_fair_hash/buckets${b}_applications2_ratio{$d}_{$a}_duration64
+    	echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
+    	./hash_spin_main $b 2 $d $a 64 > ./data/default_spin_hash/buckets${b}_applications2_ratio{$d}_{$a}_duration64
+    	echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
+    	./hash_fair_main $b 4 $d $a 100 25 64 > ./data/default_fair_hash/buckets${b}_applications4_ratio{$d}_{$a}_100_25_duration64
+    	./hash_spin_main $b 4 $d $a 100 25 64 > ./data/default_spin_hash/buckets${b}_applications4_ratio{$d}_{$a}_100_25_duration64
+  
     done
   done
 done
