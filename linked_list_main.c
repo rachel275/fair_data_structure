@@ -88,21 +88,21 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
 #if defined(FAIRLOCK) && defined(DEBUG)
     flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
-    printf("  slice %llu	"
-           "  own_slice_wait %llu\n"
+    printf("  LHT: %llu	\n",
+          // "  own_slice_wait %llu\n"
            //"  lock opportunity %llu\n"
-           "  runnable_wait %10.3f\n"
-           "  total slice 1 %10.3f\n"
-           "  total slice 2  %llu\n",
+           //"  runnable_wait %10.3f\n"
+           //"  total slice 1 %10.3f\n"
+           //"  total slice 2  %llu\n",
             //"  reenter %llu\n"
             //"  banned(actual) %llu\n"
             //"  banned %llu\n"
             //"  elapse %llu\n",
-            task->stat.n_ops - info->stat.reenter,
-            info->stat.own_slice_wait,
+           // task->stat.n_ops - info->stat.reenter,
+            //info->stat.own_slice_wait,
             //info->stat.prev_slice_wait,
-            (float)info->stat.runnable_wait / CYCLE_PER_US,
-            task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000) + (float)info->stat.runnable_wait / CYCLE_PER_US + (float) info->stat.own_slice_wait / CYCLE_PER_US,
+            //(float)info->stat.runnable_wait / CYCLE_PER_US,
+            //task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000) + (float)info->stat.runnable_wait / CYCLE_PER_US + (float) info->stat.own_slice_wait / CYCLE_PER_US,
             info->stat.total_time / (CYCLE_PER_US * 1000));
             //info->stat.reenter,
            // info->stat.banned_time,
@@ -244,19 +244,27 @@ int main(int argc, char **argv)
     sleep(test_duration); 
 
     stop = 1;
-
+	
+    unsigned long long total_time = 0;
     for (int p = 0; p < (test_insert_ratio); p++){
-        pthread_join(insert_tasks[p].thread, NULL);
+         total_time += insert_tasks[p].stat.tot_cs_time;
+	 pthread_join(insert_tasks[p].thread, NULL);
     }
 
 
     for (int p = 0; p < (test_find_ratio); p++){
+	total_time += find_tasks[p].stat.tot_cs_time;
         pthread_join(find_tasks[p].thread, NULL);
     }
 
     for (int p = 0; p < (test_delete_ratio); p++){
         pthread_join(delete_tasks[p].thread, NULL);
     }
+
+    printf("\nSpin_Lock_Opp: %10.3f \n ",
+       (float)/* (test_duration * 1000) -*/ (total_time / (CYCLE_PER_US * 1000)));
+
+
 
     return 0;
 }

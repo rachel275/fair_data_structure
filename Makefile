@@ -31,12 +31,15 @@ mutex:
 	gcc linked_list_main.c -o ns_c_list_spin_main ${FLAGS} -DSPIN -DNSC
 	gcc linked_list_main.c -o ns_c_list_fair_main ${FLAGS} -DFAIRLOCK -DNSC -DDEBUG
 	gcc linked_list_main.c -o ns_c_list_lock_spin_main ${FLAGS} -DSPIN -DNSCLOCK
-	gcc linked_list_main.c -o ns_c_list_lock_fair_main ${FLAGS} -DFAIRLOCK -DNSCLOCK 
+	gcc linked_list_main.c -o ns_c_list_lock_fair_main ${FLAGS} -DFAIRLOCK -DNSCLOCK -DDEBUG 
 # spin:
 # 	gcc main.c -o main ${FLAGS} -DSPIN
 
 clean:
-	rm hash_main
-	rm list_main
-	rm ns_c_list_main
-	rm ns_c_list_lock_main
+	rm list_spin_main
+	rm ns_c_list_spin_main
+	rm ns_c_list_lock_spin_main
+	rm list_fair_main
+	rm ns_c_list_fair_main
+	rm ns_c_list_lock_fair_main
+

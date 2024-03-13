@@ -54,13 +54,14 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
     unsigned long long start, end;//, wait, release;
     unsigned int duration;
 
+    lock_acquire(&list->mutexes);
+    start = rdtsc();
+
     /*create the node to add*/
     struct node_t *thread_node = (struct node_t *)malloc(sizeof(struct node_t));
     thread_node->value = data;
     thread_node->key = k;
     int insert = FALSE;
-    lock_acquire(&list->mutexes);
-    start = rdtsc();
     /*use thread id to index in to the linked list of that thread*/
     struct head_node_t *n = list->head;
 
