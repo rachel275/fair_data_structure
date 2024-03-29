@@ -1,19 +1,19 @@
-find app id: 00 / number of operations: 52894098 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6292	
-find app id: 00 / number of operations: 52875664 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6290	
-find app id: 01 / number of operations: 52901347 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6288	
-find app id: 01 / number of operations: 52895811 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6290	
-find app id: 00 / number of operations: 51355615 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6289	
-find app id: 00 / number of operations: 52960352 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6291	
-find app id: 01 / number of operations: 52848749 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6291	
-find app id: 01 / number of operations: 52939674 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6289	
+find app id: 01 / number of operations: 140787086 / tot_time(ms): 123354947584.000 / max_time(ms):    876.181 / 
+  LHT: 42646910 
+find app id: 01 / number of operations: 198576981 / tot_time(ms): 173989347328.000 / max_time(ms):    876.181 / 
+  LHT: 0 
+find app id: 01 / number of operations: 160701385 / tot_time(ms): 140803473408.000 / max_time(ms):    876.181 / 
+  LHT: 0 
+find app id: 00 / number of operations: 114064335 / tot_time(ms): 99940982784.000 / max_time(ms):    876.181 / 
+  LHT: 42646910 
+find app id: 00 / number of operations: 279569664 / tot_time(ms): 244953546752.000 / max_time(ms):    876.181 / 
+  LHT: 42646910 
+find app id: 00 / number of operations: 163889873 / tot_time(ms): 143597158400.000 / max_time(ms):    876.181 / 
+  LHT: 42646910 
+find app id: 00 / number of operations: 173973722 / tot_time(ms): 152432427008.000 / max_time(ms):    876.181 / 
+  LHT: 42646910 
+find app id: 01 / number of operations: 130440699 / tot_time(ms): 114289639424.000 / max_time(ms):    876.181 / 
+  LHT: 42646910 
 
-Spin_Lock_Opp:      0.000 
+Spin_Lock_Opp: 1193361539072.000 
  

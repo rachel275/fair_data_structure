@@ -70,7 +70,7 @@ static inline qnode_t *flqnode(fairlock_t *lock) {
     return (qnode_t *) ((char *) &lock->qnext - offsetof(qnode_t, next));
 }
 
-static inline int futex(int *uaddr, int futex_op, int val, const struct timespec *timeout) {
+static inline int ffutex(int *uaddr, int futex_op, int val, const struct timespec *timeout) {
     return syscall(SYS_futex, uaddr, futex_op, val, timeout, NULL, 0);
 }
 
@@ -210,7 +210,7 @@ begin:
                     now = rdtsc();
 #endif
                     do {
-                        futex(&n.state, FUTEX_WAIT_PRIVATE, INIT, NULL);
+                        ffutex(&n.state, FUTEX_WAIT_PRIVATE, INIT, NULL);
                     } while (INIT == readvol(n.state));
 #ifdef DEBUG
                     info->stat.next_runnable_wait += rdtsc() - now;
@@ -229,7 +229,7 @@ begin:
                     .tv_sec = 0, // slice will be less then 1 sec
                     .tv_nsec = (slice_left / (CYCLE_PER_US * SLEEP_GRANULARITY)) * SLEEP_GRANULARITY * 1000,
                 };
-                futex(&lock->slice_valid, FUTEX_WAIT_PRIVATE, 0, &timeout);
+                ffutex(&lock->slice_valid, FUTEX_WAIT_PRIVATE, 0, &timeout);
 #ifdef DEBUG
                 info->stat.prev_slice_wait += rdtsc() - now;
 #endif
@@ -278,7 +278,7 @@ begin:
             // wake up successor if necessary
             if (succ) {
                 succ->state = NEXT;
-                futex(&succ->state, FUTEX_WAKE_PRIVATE, 1, NULL);
+                ffutex(&succ->state, FUTEX_WAKE_PRIVATE, 1, NULL);
             }
             return;
         }
@@ -317,7 +317,7 @@ accounting:
 
     if (info->banned) {
         if (__sync_bool_compare_and_swap(&lock->slice_valid, 1, 0)) {
-            futex(&lock->slice_valid, FUTEX_WAKE_PRIVATE, 1, NULL);
+            ffutex(&lock->slice_valid, FUTEX_WAKE_PRIVATE, 1, NULL);
         }
     }
 #ifdef DEBUG

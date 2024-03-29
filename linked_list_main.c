@@ -8,6 +8,9 @@
 #include <sys/resource.h>
 #include <sys/syscall.h>
 #include <inttypes.h>
+#define _LGPL_SOURCE
+#include <urcu.h>
+
 #define gettid() syscall(SYS_gettid)
 /*simple linked list with insert and find functions*/
 #include "rdtsc.h"
@@ -86,7 +89,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
         (int)task->stat.n_ops,
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
-#if defined(FAIRLOCK) && defined(DEBUG)
+#if defined(FAIRLOCK) && defined(DEBUG) && defined(NSC)
     flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
     printf("  LHT: %llu	\n",
           // "  own_slice_wait %llu\n"
@@ -109,6 +112,38 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
            // info->banned_until-info->stat.start,
             //info->start_ticks-info->stat.start);
 #endif		  
+#if defined(FAIRLOCK) && defined(DEBUG) && defined(NSCLOCK)
+    struct head_node_t *thread_node = list.head;    
+    flthread_info_t *info;
+    while(thread_node != NULL){
+         if(thread_node->thread_id == task->app_id){
+	      info = pthread_getspecific(thread_node->mutexes.flthread_info_key);
+	 }
+	 thread_node = thread_node->th_next;
+    }
+    printf("  LHT: %llu \n",
+          // "  own_slice_wait %llu\n"
+           //"  lock opportunity %llu\n"
+           //"  runnable_wait %10.3f\n"
+           //"  total slice 1 %10.3f\n"
+           //"  total slice 2  %llu\n",
+            //"  reenter %llu\n"
+            //"  banned(actual) %llu\n"
+            //"  banned %llu\n"
+            //"  elapse %llu\n",
+           // task->stat.n_ops - info->stat.reenter,
+            //info->stat.own_slice_wait,
+            //info->stat.prev_slice_wait,
+            //(float)info->stat.runnable_wait / CYCLE_PER_US,
+            //task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000) + (float)info->stat.runnable_wait / CYCLE_PER_US + (float) info->stat.own_slice_wait / CYCLE_PER_US,
+            info->stat.total_time / (CYCLE_PER_US * 1000));
+            //info->stat.reenter,
+           // info->stat.banned_time,
+           // info->banned_until-info->stat.start,
+            //info->start_ticks-info->stat.start);
+#endif
+
+
 }
 
 void *insertfunc(void *vargp)
@@ -117,7 +152,10 @@ void *insertfunc(void *vargp)
     setup_worker(task);
     int entry = task->app_id;
 
-    // /*loop continuously*/
+#ifdef NSCLOCK
+  void rcu_register_thread(void);
+#endif  
+  // /*loop continuously*/
     while(!*task->stop){
       /*add to the linked list*/
         entry = ((fast_rand() % key_space * 10)  + task->app_id);
@@ -133,6 +171,10 @@ void *findfunc(void *vargp)
     task_t *task = (task_t *) vargp;
     setup_worker(task);
     int entry = task->app_id;
+
+#ifdef NSCLOCK
+  void rcu_register_thread(void);
+#endif
 
     // /*loop continuously*/
     while(!*task->stop){
