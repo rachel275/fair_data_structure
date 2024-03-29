@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #ifndef NS_C_LINKED_LIST_H
 #define NS_C_LINKED_LIST_H
 /*simple linked list with insert and find functions*/
@@ -228,5 +229,4 @@ int list_delete(list_t *list, int k, list_stat_t* stat, int pid){
     stat->n_ops++;
     return 0;
 }
-
-#endif /*LINKED_LIST_H*/
+#endif /*LINKED_LIST_H*

@@ -15,5 +15,4 @@ insert app id: 01 / number of operations: 28498620 / tot_time(ms):   3232.344 / 
 insert app id: 00 / number of operations: 28441185 / tot_time(ms):   3231.849 / max_time(ms):      0.317 / 
   LHT: 6304	
 
-Spin_Lock_Opp:  44088.000 
- 
+Spin_Lock_Opp:  44088.000
