@@ -8,7 +8,7 @@ import sys
 
 rratio = [0, 25, 50, 75, 100]
 colour_list = ["g", "b","g", "b","g", "b","g", "b"]
-fig, ax = plt.subplots(figsize=(10,3))
+fig, ax = plt.subplots(figsize=(6,3))
 count = 0
 final_ratio = []
 v = 0
@@ -32,6 +32,7 @@ for dir in os.listdir(rootdir):
                 #print(applications)
                 #print(ratio)
                 if(applications == 1 and ratio[0]== 50):
+                    print(ratio)
                     reader = csv.reader(file)
                     no_threads = []
                     thread_type = []
@@ -70,15 +71,17 @@ for dir in os.listdir(rootdir):
                     print(new_n_ops)
                     count = count + 1
                     ax.plot(rratio, new_n_ops, label = "ideal linked list")
-                    #v = v + 1
-new_n_ops = []
-for sarah in rratio:
-    for dir in os.listdir(rootdir):
-        type = dir.split('_list_tables')[0]
-        #print(type)
-        if type == "ns_c_fair" or type == "default_fair":
+                    
+default_fair_index = []
+ns_c_fair_index = []
+dbl_rratio = [0, 1, 25, 26, 50, 51, 75, 76, 100, 101]
+for dir in os.listdir(rootdir):
+    type = dir.split('_list_tables')[0]
+    if type == "ns_c_fair" or type == "default_fair":
+        new_n_ops = []
+        for sarah in rratio:
             for filename in os.listdir("./tables/" + dir):
-                #print(filename)
+            #print(filename)
                 with open(os.path.join("./tables/" + dir, filename), 'r') as file:
                     applications = int(filename.split('_')[1]) 
                     ratio = []
@@ -90,6 +93,7 @@ for sarah in rratio:
                     #print(applications)
                     #print(ratio)
                     if(applications == 2 and ratio[0] == 50 and ratio[1] == sarah):
+                        print(ratio)
                         reader = csv.reader(file)
                         no_threads = []
                         thread_type = []
@@ -120,25 +124,24 @@ for sarah in rratio:
                                     tot_time.append(float(row[int(4)]))
                                     n_ops.append(int(row[int(2)]))
                                     lock_opp.append(float(row[int(5)])) 
-                        new_n_ops = []
                         for i in range(len(genuine_id)):
                             if genuine_id[i] == 0:
                                 new_n_ops.append(n_ops[i])
-    print(new_n_ops)
-    #ax.plot(rratio, new_n_ops, label = str(type) + "linked list")
-                        #v = v + 1
+        print(new_n_ops)
+        ax.plot(dbl_rratio, new_n_ops, label = str(type) + " linked list")
 
-                    # reverse the order
-ax.set(ylabel="Time (ms)",  yscale = "log")#, #ylim=[1, 10**6])
+
+ax.set(ylabel="Throughput of Application 1")#,  yscale = "log")#, #ylim=[1, 10**6])
+ax.set(xlabel = "Insert:Find Ratio of Application 2")
+
+ax.set_xticks([0, 25, 50, 75, 100])
+x_label = ["100:0", "75:25", "50:50", "25:75", "0:100"]
+#ax.set_xticklabels(x_label, fontsize=15)
+
 handles, labels = ax.get_legend_handles_labels()
 
-                        # if (applications == 2):
-# ax.set_xticks([0.7, 3.3, 5.8])
-# xlabels = ["Ideal linked list", "Default linked list ", "Fair linked list"]
-# ax.set_xticklabels(xlabels, fontsize=15)
 by_label = dict(zip(labels, handles))
-# .legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(0.8, 0.2),
-#        fancybox=True, shadow=True, fontsize=15, ncol=8)
+
 ax.legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(0.5, 0.2),
             fancybox=True, shadow=True, fontsize=10, ncol=6)
 #plt.title("Total lock hold per thread")
