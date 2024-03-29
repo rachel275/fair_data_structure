@@ -100,7 +100,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
         task->stat.stats[i].tot_cs_time / (float) (CYCLE_PER_US * 1000),
         i,
         task->stat.stats[i].wc_cs_time / (float) (CYCLE_PER_US * 1000));
-#if defined(FAIRLOCK) && defined(DEBUG)
+#if defined(FAIRLOCK) && defined(DEBUG) && defined(NSC)
     flthread_info_t *info = pthread_getspecific(ht->table[i].mutexes.flthread_info_key);
     if (info == NULL){
      printf("LHO_b_%i: %10.3f / ",
@@ -112,7 +112,32 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
         	    i,
             	info->stat.total_time / (float)(CYCLE_PER_US * 1000));
 	}
-#endif	
+#endif
+#if defined(FAIRLOCK) && defined(DEBUG) && defined(NSCLOCK)
+    size_t bucket_idx = task->app_id % ht->size;
+    struct list_t* bucket = &ht->table[bucket_idx];
+    struct head_node_t* thread_node = bucket->head;
+    flthread_info_t *info;
+    while(thread_node != NULL){
+         if(thread_node->thread_id == task->app_id){
+              info = pthread_getspecific(thread_node->mutexes.flthread_info_key);
+         }
+         thread_node = thread_node->th_next;
+    }
+
+   // flthread_info_t *info = pthread_getspecific(ht->table[i].mutexes.flthread_info_key);
+    if (info == NULL){
+     printf("LHO_b_%i: %10.3f / ",
+            i,
+            -1.00);
+
+    } else {
+        printf("LHO_b_%i: %10.3f / ",
+                    i,
+                info->stat.total_time / (float)(CYCLE_PER_US * 1000));
+        }
+#endif
+
     }	  
     printf("\n");
     pthread_mutex_unlock(&print_lock);

@@ -19,16 +19,16 @@
 
 typedef unsigned long long ull;
 
-typedef struct node_t {
+typedef struct Node {
     unsigned long long key;
     void* value;
-    struct node_t *next;
-} node_t;
+    struct Node *next;
+} Node;
 
 typedef struct head_node_t {
     int thread_id;
     struct head_node_t *th_next;
-    struct node_t *next;
+    struct Node *next;
 } head_node_t;
 
 typedef struct list_t {
@@ -58,7 +58,7 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
     start = rdtsc();
 
     /*create the node to add*/
-    struct node_t *thread_node = (struct node_t *)malloc(sizeof(struct node_t));
+    struct Node *thread_node = (struct Node *)malloc(sizeof(struct Node));
     thread_node->value = data;
     thread_node->key = k;
     int insert = FALSE;
@@ -105,7 +105,7 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
 }
 
 /*opportunity here for multiple locks*/
-node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
+Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     
     unsigned long long start, end;//, wait, release;
     unsigned int duration;
@@ -117,7 +117,7 @@ node_t *list_find(list_t *list, int k, list_stat_t* stat, int pid){
         while(thread_node != NULL){
             if(thread_node->thread_id == pid){
       //          printf("in list %llu	", thread_node->thread_id);
-		struct node_t *n = thread_node->next;
+		struct Node *n = thread_node->next;
                 while (n != NULL){
                 if (n->key == k) {
                     end = rdtsc();
@@ -152,7 +152,7 @@ int list_delete(list_t *list, int k, list_stat_t* stat, int pid){
     unsigned int duration;
 
     
-    struct node_t* toDelete;
+    struct Node* toDelete;
     lock_acquire(&list->mutexes); 
     start = rdtsc();
 
@@ -160,7 +160,7 @@ int list_delete(list_t *list, int k, list_stat_t* stat, int pid){
 
     while(thread_node){
         if(thread_node->thread_id == pid){
-            struct node_t *n = thread_node->next;
+            struct Node *n = thread_node->next;
             // If head node itself holds the key to be deleted 
             if (n != NULL && n->key == k) { 
                 thread_node->next = n->next; // Changed head 

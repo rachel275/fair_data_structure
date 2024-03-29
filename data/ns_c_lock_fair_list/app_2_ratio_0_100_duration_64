@@ -1,19 +1,19 @@
-find app id: 00 / number of operations: 53459307 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6291	
-insert app id: 01 / number of operations: 20748205 / tot_time(ms):   2454.286 / max_time(ms):      1.780 / 
-  LHT: 6287	
-insert app id: 01 / number of operations: 20803829 / tot_time(ms):   2457.170 / max_time(ms):      2.688 / 
-  LHT: 6290	
-find app id: 00 / number of operations: 53317101 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6293	
-find app id: 00 / number of operations: 53406205 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6298	
-insert app id: 01 / number of operations: 20788358 / tot_time(ms):   2445.502 / max_time(ms):      0.058 / 
-  LHT: 6288	
-find app id: 00 / number of operations: 53467500 / tot_time(ms):      0.000 / max_time(ms):      0.000 / 
-  LHT: 6288	
-insert app id: 01 / number of operations: 20826322 / tot_time(ms):   2448.438 / max_time(ms):      1.221 / 
-  LHT: 6290	
+find app id: 00 / number of operations: 248474863 / tot_time(ms): 319910051840.000 / max_time(ms):   1287.495 / 
+  LHT: 0 
+find app id: 00 / number of operations: 259922750 / tot_time(ms): 334649163776.000 / max_time(ms):   1287.495 / 
+  LHT: 0 
+insert app id: 01 / number of operations: 15080260 / tot_time(ms):   2701.865 / max_time(ms):      0.785 / 
+  LHT: 10668 
+find app id: 00 / number of operations: 203215989 / tot_time(ms): 261639471104.000 / max_time(ms):   1287.495 / 
+  LHT: 42645828 
+find app id: 00 / number of operations: 198166540 / tot_time(ms): 255138349056.000 / max_time(ms):   1287.495 / 
+  LHT: 42645828 
+insert app id: 01 / number of operations: 15522237 / tot_time(ms):   2781.410 / max_time(ms):      1.770 / 
+  LHT: 10674 
+insert app id: 01 / number of operations: 15266826 / tot_time(ms):   2729.989 / max_time(ms):      0.970 / 
+  LHT: 10668 
+insert app id: 01 / number of operations: 15118220 / tot_time(ms):   2713.639 / max_time(ms):      1.335 / 
+  LHT: 10664 
 
-Spin_Lock_Opp:   9805.000 
+Spin_Lock_Opp: 1171336986624.000 
  

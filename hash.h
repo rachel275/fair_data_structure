@@ -9,7 +9,15 @@
 #include <limits.h>
 #include <math.h>
 #include <stdbool.h>
+
+#ifdef NSC
+#include "ns_c_linked_list.h"
+#elif NSCLOCK
+#include "ns_c_linked_list_lock.h"
+#else
 #include "linked_list.h"
+#endif
+
 
 #define MIN_M 10
 #define MAX_M 1000
