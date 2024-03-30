@@ -1,0 +1,7 @@
+insert app id: 00 / number of operations: 21659767 / tot_time(ms):   4580.514 / max_time(ms):      4.010 / 
+insert app id: 00 / number of operations: 21609774 / tot_time(ms):   4586.962 / max_time(ms):      4.353 / 
+insert app id: 00 / number of operations: 21658838 / tot_time(ms):   4572.466 / max_time(ms):      1.749 / 
+insert app id: 00 / number of operations: 21406758 / tot_time(ms):   4530.314 / max_time(ms):      3.520 / 
+
+Spin_Lock_Opp:  18270.000 
+ 

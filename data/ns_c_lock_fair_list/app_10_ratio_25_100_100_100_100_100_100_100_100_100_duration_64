@@ -1,0 +1,43 @@
+insert app id: 05 / number of operations: 1596783 / tot_time(ms):    854.070 / max_time(ms):     10.587 / 
+insert app id: 08 / number of operations: 1469352 / tot_time(ms):    892.841 / max_time(ms):      3.927 / 
+insert app id: 04 / number of operations: 1507913 / tot_time(ms):   1029.848 / max_time(ms):      3.913 / 
+insert app id: 03 / number of operations: 1021397 / tot_time(ms):   1295.506 / max_time(ms):      4.639 / 
+insert app id: 01 / number of operations: 1383709 / tot_time(ms):    933.999 / max_time(ms):      3.947 / 
+insert app id: 06 / number of operations: 1540621 / tot_time(ms):    770.918 / max_time(ms):      3.821 / 
+insert app id: 09 / number of operations: 1471450 / tot_time(ms):    857.257 / max_time(ms):      3.954 / 
+insert app id: 07 / number of operations: 1914607 / tot_time(ms):    588.158 / max_time(ms):      3.816 / 
+insert app id: 03 / number of operations: 1038037 / tot_time(ms):   1628.096 / max_time(ms):      1.442 / 
+insert app id: 02 / number of operations: 1357400 / tot_time(ms):    962.958 / max_time(ms):      3.830 / 
+find app id: 00 / number of operations: 71013 / tot_time(ms):  10206.056 / max_time(ms):      3.507 / 
+insert app id: 00 / number of operations: 1095236 / tot_time(ms):    702.556 / max_time(ms):      4.811 / 
+insert app id: 02 / number of operations: 1095473 / tot_time(ms):   1055.660 / max_time(ms):      4.658 / 
+insert app id: 04 / number of operations: 1717803 / tot_time(ms):   1052.087 / max_time(ms):      4.783 / 
+insert app id: 01 / number of operations: 1547691 / tot_time(ms):    716.097 / max_time(ms):     14.501 / 
+insert app id: 07 / number of operations: 1357166 / tot_time(ms):    883.961 / max_time(ms):      4.674 / 
+insert app id: 06 / number of operations: 1463491 / tot_time(ms):    800.305 / max_time(ms):      4.775 / 
+insert app id: 09 / number of operations: 1628088 / tot_time(ms):    956.983 / max_time(ms):      4.802 / 
+insert app id: 05 / number of operations: 1495016 / tot_time(ms):    986.285 / max_time(ms):      4.707 / 
+insert app id: 08 / number of operations: 1392766 / tot_time(ms):    767.928 / max_time(ms):      4.655 / 
+insert app id: 03 / number of operations: 1351309 / tot_time(ms):   1064.352 / max_time(ms):      3.701 / 
+find app id: 00 / number of operations: 70122 / tot_time(ms):  10245.204 / max_time(ms):      5.341 / 
+insert app id: 02 / number of operations: 1924925 / tot_time(ms):   1133.890 / max_time(ms):      1.273 / 
+insert app id: 04 / number of operations: 1546071 / tot_time(ms):    899.277 / max_time(ms):      0.073 / 
+insert app id: 01 / number of operations: 1178658 / tot_time(ms):    900.610 / max_time(ms):      0.080 / 
+insert app id: 09 / number of operations: 1652784 / tot_time(ms):   1008.040 / max_time(ms):      1.080 / 
+insert app id: 07 / number of operations: 1408887 / tot_time(ms):    739.764 / max_time(ms):      1.555 / 
+insert app id: 06 / number of operations: 1222132 / tot_time(ms):    861.770 / max_time(ms):      1.875 / 
+insert app id: 05 / number of operations: 1514674 / tot_time(ms):    755.547 / max_time(ms):      0.055 / 
+insert app id: 08 / number of operations: 1948681 / tot_time(ms):    892.947 / max_time(ms):      1.568 / 
+insert app id: 03 / number of operations: 1154554 / tot_time(ms):    906.186 / max_time(ms):      1.580 / 
+insert app id: 02 / number of operations: 1463447 / tot_time(ms):    849.441 / max_time(ms):     10.567 / 
+find app id: 00 / number of operations: 68299 / tot_time(ms):  10299.128 / max_time(ms):      3.902 / 
+insert app id: 04 / number of operations: 1287174 / tot_time(ms):   1035.968 / max_time(ms):      4.581 / 
+insert app id: 01 / number of operations: 1363241 / tot_time(ms):    860.030 / max_time(ms):      4.590 / 
+insert app id: 09 / number of operations: 1705517 / tot_time(ms):   1583.552 / max_time(ms):      1.411 / 
+insert app id: 07 / number of operations: 1166430 / tot_time(ms):   1147.955 / max_time(ms):      2.022 / 
+insert app id: 06 / number of operations: 1520139 / tot_time(ms):    817.532 / max_time(ms):      3.715 / 
+insert app id: 05 / number of operations: 1439231 / tot_time(ms):   1198.077 / max_time(ms):      2.007 / 
+insert app id: 08 / number of operations: 1237125 / tot_time(ms):    883.140 / max_time(ms):      3.672 / 
+
+Spin_Lock_Opp:  66023.000 
+ 
