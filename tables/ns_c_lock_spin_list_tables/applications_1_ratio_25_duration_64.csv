@@ -3,3 +3,8 @@ find,0,13710148,0.087,47766.699,
 find,0,14039665,0.083,47721.977,
 find,0,14065325,0.105,47726.672,
 insert,0,29613,0.024,22.981,
+Type of thread,Thread Id,Number of Operations,Worst Case Time,LHT Time,Lock Opportunity
+find,0,13710148,0.087,47766.699,
+find,0,14039665,0.083,47721.977,
+find,0,14065325,0.105,47726.672,
+insert,0,29613,0.024,22.981,
