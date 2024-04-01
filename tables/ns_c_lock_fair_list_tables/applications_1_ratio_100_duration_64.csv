@@ -1,1 +1,5 @@
-Type of thread,Thread Id,Number of Operations,Worst Case Time,LHT Time,Lock Opportunity
+Type of thread,Thread Id,Number of Operations,Worst Case Time,LHT Time
+insert,0,21659767,4.01,4580.514
+insert,0,21609774,4.353,4586.962
+insert,0,21658838,1.749,4572.466
+insert,0,21406758,3.52,4530.314

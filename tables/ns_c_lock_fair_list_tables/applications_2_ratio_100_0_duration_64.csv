@@ -1,0 +1,9 @@
+Type of thread,Thread Id,Number of Operations,Worst Case Time,LHT Time
+find,1,42899282,0.04,291.566
+find,1,42759961,0.083,290.228
+find,1,45392187,1.099,308.954
+find,1,39724916,0.089,270.444
+insert,0,3974230,0.2,836.961
+insert,0,4019928,0.579,850.991
+insert,0,3996133,0.124,842.064
+insert,0,4013825,0.192,844.556
