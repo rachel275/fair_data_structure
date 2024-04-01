@@ -20,15 +20,17 @@ for filename in os.listdir(path):
             reader = csv.reader(file)
             i = -1
             for row in reader:
+                stage_1_throughput = []
+                stage_2 = []
+                stage_3 = []
                 app_thoughput = 0
                 if i == -1:
                     i = 1
                 else:
                     count = count + 1
                     type = row[int(0)]
-                    for i in range(applications):
-                        app_thoughput += int(row[int(i + 1)])
-
+                    for i in range(16):
+                        stage_1_throughput.append(int(row[int(i + 1)]))
                     time_1 = [0, 32, 64, 86]
                     time_2 = [32, 64]
                     time_3 = [0, 32, 64]
