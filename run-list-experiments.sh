@@ -33,7 +33,7 @@ build_my_hashtable
 
 for e in 64
 do
-  for f in 0 25 50 75 100
+  for f in 75 100
   do
     for t in 0 25 50 75 100
     do

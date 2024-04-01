@@ -31,47 +31,47 @@ build_my_hashtable
 # fi
 
 echo "./list_fair_main 4 25 25 25 64 > ./data/default_fair_list/applications_4_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 4 25 25 25 25 64 > ./data/ns_c_fair_list/app_4_ratio_25_25_25_25_duration_64
+./ns_c_list_lock_fair_main 4 25 25 25 25 64 > ./data/ns_c_lock_fair_list/app_4_ratio_25_25_25_25_duration_64
 echo "./list_fair_main 4 25 25 100 64 > ./data/default_fair_list/applications_4_ratio_25_25_25_100_duration_64"
-./ns_c_list_fair_main 4 25 25 25 100 64 > ./data/ns_c_fair_list/app_4_ratio_25_25_25_100_duration_64
+./ns_c_list_lock_fair_main 4 25 25 25 100 64 > ./data/ns_c_lock_fair_list/app_4_ratio_25_25_25_100_duration_64
 echo "./list_fair_main 4 25 100 100 64 > ./data/default_fair_list/applications_4_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 4 25 100 100 100 64 > ./data/ns_c_fair_list/app_4_ratio_25_100_100_100_duration_64
+./ns_c_list_lock_fair_main 4 25 100 100 100 64 > ./data/ns_c_lock_fair_list/app_4_ratio_25_100_100_100_duration_64
 echo "./list_fair_main 4 25 25 25 64 > ./data/default_fair_list/applications_4_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 4 25 25 100 100 64 > ./data/ns_c_fair_list/app_4_ratio_25_25_100_100_duration_64
+./ns_c_list_lock_fair_main 4 25 25 100 100 64 > ./data/ns_c_lock_fair_list/app_4_ratio_25_25_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 8 25 25 25 25 25 25 25 25 64 > ./data/ns_c_fair_list/app_8_ratio_25_25_25_25_25_25_25_25_duration_64
+./ns_c_list_lock_fair_main 8 25 25 25 25 25 25 25 25 64 > ./data/ns_c_lock_fair_list/app_8_ratio_25_25_25_25_25_25_25_25_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 8 25 25 25 25 25 25 25 100 64 > ./data/ns_c_fair_list/app_8_ratio_25_25_25_25_25_25_25_100_duration_64
+./ns_c_list_lock_fair_main 8 25 25 25 25 25 25 25 100 64 > ./data/ns_c_lock_fair_list/app_8_ratio_25_25_25_25_25_25_25_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 8 25 25 25 25 25 25 100 100 64 > ./data/ns_c_fair_list/app_8_ratio_25_25_25_25_25_25_100_100_duration_64
+./ns_c_list_lock_fair_main 8 25 25 25 25 25 25 100 100 64 > ./data/ns_c_lock_fair_list/app_8_ratio_25_25_25_25_25_25_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 8 25 25 25 25 25 100 100 100 64 > ./data/ns_c_fair_list/app_8_ratio_25_25_25_25_25_100_100_100_duration_64
+./ns_c_list_lock_fair_main 8 25 25 25 25 25 100 100 100 64 > ./data/ns_c_lock_fair_list/app_8_ratio_25_25_25_25_25_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 8 25 25 25 25 100 100 100 100 64 > ./data/ns_c_fair_list/app_8_ratio_25_25_25_25_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 8 25 25 25 25 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_8_ratio_25_25_25_25_100_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 8 25 25 25 100 100 100 100 100 64 > ./data/ns_c_fair_list/app_8_ratio_25_25_25_100_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 8 25 25 25 100 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_8_ratio_25_25_25_100_100_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 8 25 25 100 100 100 100 100 100 64 > ./data/ns_c_fair_list/app_8_ratio_25_25_100_100_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 8 25 25 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_8_ratio_25_25_100_100_100_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_C_list_fair_main 8 25 100 100 100 100 100 100 100 64 > ./data/ns_c_fair_list/app_8_ratio_25_100_100_100_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 8 25 100 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_8_ratio_25_100_100_100_100_100_100_100_duration_64
 
 echo "./list_fair_main 10 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25 25 25 25 25 25 25 25 25 64 > ./data/ns_c_fair_list/app_10_ratio_25_25_25_25_25_25_25_25_25_25_duration_64
+./ns_c_list_lock_fair_main 10 25 25 25 25 25 25 25 25 25 25 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_25_25_25_25_25_25_25_25_25_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25 25 25 25 25 25 25 25 100 64 > ./data/ns_c_fair_list/app_10_ratio_25_25_25_25_25_25_25_25_25_100_duration_64
+./ns_c_list_lock_fair_main 10 25 25 25 25 25 25 25 25 25 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_25_25_25_25_25_25_25_25_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25  25 25 25 25 25 25 100 100 64 > ./data/ns_c_fair_list/app_10_ratio25_25_25_25_25_25_25_25_100_100_duration_64
+./ns_c_list_lock_fair_main 10 25 25  25 25 25 25 25 25 100 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio25_25_25_25_25_25_25_25_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25 25 25 25 25 25 100 100 100 64 > ./data/ns_c_fair_list/app_10_ratio_25_25_25_25_25_25_25_100_100_100_duration_64
+./ns_c_list_lock_fair_main 10 25 25 25 25 25 25 25 100 100 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_25_25_25_25_25_25_100_100_100_duration_64
 echo "./list_fair_main 10 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25 25 25 25 25 100 100 100 100 64 > ./data/ns_c_fair_list/app_10_ratio_25_25_25_25_25_25_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 10 25 25 25 25 25 25 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_25_25_25_25_25_100_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25 25 25 25 100 100 100 100 100 64 > ./data/ns_c_fair_list/app_10_ratio_25_25_25_25_25_100_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 10 25 25 25 25 25 100 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_25_25_25_25_100_100_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25 25 25 100 100 100 100 100 100 64 > ./data/ns_c_fair_list/app_10_ratio_25_25_25_25_100_100_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 10 25 25 25 25 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_25_25_25_100_100_100_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25 25 100 100 100 100 100 100 100 64 > ./data/ns_c_fair_list/app_10_ratio_25_25_25_100_100_100_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 10 25 25 25 100 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_25_25_100_100_100_100_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 25 100 100 100 100 100 100 100 100 64 > ./data/ns_c_fair_list/app_10_ratio_25_25_100_100_100_100_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 10 25 25 100 100 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_25_100_100_100_100_100_100_100_100_duration_64
 echo "./list_fair_main 8 25 25 25 64 > ./data/default_fair_list/applications_8_ratio_25_25_25_25_duration_64"
-./ns_c_list_fair_main 10 25 100 100 100 100 100 100 100 100 100 64 > ./data/ns_c_fair_list/app_10_ratio_25_100_100_100_100_100_100_100_100_100_duration_64
+./ns_c_list_lock_fair_main 10 25 100 100 100 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_list/app_10_ratio_25_100_100_100_100_100_100_100_100_100_duration_64
