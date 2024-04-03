@@ -1,0 +1,17 @@
+find app id: 01 / no ops: 9427 / tot_time(ms):   1924.384 / 
+insert app id: 00 / no ops: 108137 / tot_time(ms):     22.150 / 
+find app id: 01 / no ops: 8866 / tot_time(ms):   1890.919 / 
+insert app id: 02 / no ops: 110119 / tot_time(ms):     22.993 / 
+insert app id: 03 / no ops: 125814 / tot_time(ms):     25.513 / 
+find app id: 00 / no ops: 10497 / tot_time(ms):   1964.431 / 
+insert app id: 01 / no ops: 121953 / tot_time(ms):     24.596 / 
+insert app id: 02 / no ops: 108837 / tot_time(ms):     23.653 / 
+insert app id: 03 / no ops: 130976 / tot_time(ms):     27.166 / 
+insert app id: 02 / no ops: 109567 / tot_time(ms):     22.253 / 
+find app id: 01 / no ops: 9617 / tot_time(ms):   1936.851 / 
+insert app id: 02 / no ops: 118131 / tot_time(ms):     23.368 / 
+insert app id: 03 / no ops: 134178 / tot_time(ms):     27.951 / 
+find app id: 00 / no ops: 8869 / tot_time(ms):   1799.338 / 
+insert app id: 03 / no ops: 129339 / tot_time(ms):     24.413 / 
+find app id: 00 / no ops: 10607 / tot_time(ms):   1864.236 / 
+Lock_Opp_b_0:  61253.328 / Lock_Opp_b_1:  60986.387 / Lock_Opp_b_2:  61004.461 / Lock_Opp_b_3:  61131.824 / 

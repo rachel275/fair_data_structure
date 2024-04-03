@@ -93,23 +93,24 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
 	    task->app_id,
         (int)task->stat.n_ops,
 	task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000));
-    for (int i = 0; i < nbuckets; i++){
-        printf("tot_b_%i(ms): %10.3f / "
-                "max_b_%i(ms): %10.3f / ", 
-        i,
-        task->stat.stats[i].tot_cs_time / (float) (CYCLE_PER_US * 1000),
-        i,
-        task->stat.stats[i].wc_cs_time / (float) (CYCLE_PER_US * 1000));
+   // for (int i = 0; i < nbuckets; i++){
+    //    printf("tot_b_%i(ms): %10.3f / "
+    //            "max_b_%i(ms): %10.3f / ", 
+    //    i,
+   //     task->stat.stats[i].tot_cs_time / (float) (CYCLE_PER_US * 1000),
+   //     i,
+   //     task->stat.stats[i].wc_cs_time / (float) (CYCLE_PER_US * 1000));
 #if defined(FAIRLOCK) && defined(DEBUG) && defined(NSC)
-    flthread_info_t *info = pthread_getspecific(ht->table[i].mutexes.flthread_info_key);
+    size_t bucket_idx = task->app_id % ht->size;
+    flthread_info_t *info = pthread_getspecific(ht->table[bucket_idx].mutexes.flthread_info_key);
     if (info == NULL){
-     printf("LHO_b_%i: %10.3f / ",
-            i,
-            -1.00);
+     //printf("LHO_b_%i: %10.3f / ",
+     //       i,
+     //       -1.00);
 
     } else {
     	printf("LHO_b_%i: %10.3f / ",
-        	    i,
+        	    bucket_idx,
             	info->stat.total_time / (float)(CYCLE_PER_US * 1000));
 	}
 #endif
@@ -127,18 +128,17 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
 
    // flthread_info_t *info = pthread_getspecific(ht->table[i].mutexes.flthread_info_key);
     if (info == NULL){
-     printf("LHO_b_%i: %10.3f / ",
-            i,
-            -1.00);
+    // printf("LHO_b_%i: %10.3f / ",
+    //        i,
+    //        -1.00);
 
     } else {
         printf("LHO_b_%i: %10.3f / ",
-                    i,
+                    bucket_idx,
                 info->stat.total_time / (float)(CYCLE_PER_US * 1000));
-        }
+     }
 #endif
-
-    }	  
+	  
     printf("\n");
     pthread_mutex_unlock(&print_lock);
 }

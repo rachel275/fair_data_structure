@@ -26,7 +26,8 @@ FLAGS=-I../ -g -lpthread -Wall -lurcu ${OFLAG} -DCYCLE_PER_US=${CYCLE_PER_US}
 mutex:
 	#gcc main_hashtable.c -o hash_spin_main ${FLAGS} -DSPIN
 	gcc main_hashtable.c -o hash_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG
-	gcc main_hashtable.c -o ns_c_hash_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSCLOCK	
+	gcc main_hashtable.c -o ns_c_hash_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSC
+	gcc main_hashtable.c -o ns_c_hash_lock_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSCLOCK	
 	gcc linked_list_main.c -o list_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG
 	gcc linked_list_main.c -o list_spiin_main ${FLAGS} -DSPIN 
 	gcc linked_list_main.c -o ns_c_list_spin_main ${FLAGS} -DSPIN -DNSC
