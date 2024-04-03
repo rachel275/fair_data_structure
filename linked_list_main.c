@@ -29,6 +29,8 @@ typedef struct {
     int priority;
     int app_id;
     int ncpu;
+    int reset;
+    int time;
     list_stat_t stat;
 } task_t __attribute__ ((aligned (64)));
 
@@ -87,6 +89,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/){
         (int)task->stat.n_ops,
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
+/**
 #if defined(FAIRLOCK) && defined(DEBUG) && defined(NSC)
     flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
     printf("  LHT: %llu	\n",
@@ -110,7 +113,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/){
            // info->banned_until-info->stat.start,
             //info->start_ticks-info->stat.start);
 #endif
-/**
+
 #if defined(FAIRLOCK) && defined(DEBUG) && defined(NSCLOCK)
     struct head_node_t *thread_node = list.head;   
     flthread_info_t *info = pthread_getspecific(thread_node->mutexes.flthread_info_key);
@@ -151,6 +154,11 @@ void *insertfunc(void *vargp)
     int entry = task->app_id; 
   // /*loop continuously*/
     while(!*task->stop){
+	if(task->reset == 1){
+		print_summary("insert", task);
+		task->stat.n_ops = 0;
+		task->reset = 0;
+	} 
       /*add to the linked list*/
         entry = ((fast_rand() % key_space * 10)  + task->app_id);
         list_insert(&list, entry, &entry+entry, &task->stat, task->app_id);
@@ -168,6 +176,12 @@ void *findfunc(void *vargp)
 
     // /*loop continuously*/
     while(!*task->stop){
+	 if(task->reset == 1){
+                print_summary("find", task);
+                task->stat.n_ops = 0;
+		task->reset = 0;
+
+        }
     //  /*add to the linked list*/
         entry = (((1000000 - fast_rand()) % key_space * 10) + task->app_id);
 //	printf("ins ent: %llu   ", entry); 
@@ -284,6 +298,15 @@ int main(int argc, char **argv)
 
     sleep(32); 
 
+    for (int k = 0; k < part_one_i_ratio; k++){
+          insert_tasks[k].reset = 1;
+    }
+
+
+    for (int k = 0; k < part_one_f_ratio; k++){
+           find_tasks[k].reset= 1;
+    }
+
     int part_two_i_ratio = 10;
     int part_two_f_ratio = 6;
     for (int k = part_one_i_ratio; k < test_insert_ratio; k++){
@@ -307,8 +330,22 @@ int main(int argc, char **argv)
 
     sleep(32);
 
+
     stop_two = 1;
   
+   for (int k = 0; k < part_one_i_ratio; k++){
+        if (k > 2){
+                insert_tasks[k].reset = 1;
+        }
+    }
+
+
+    for (int k = 0; k < part_one_f_ratio; k++){
+        if (k > 4){
+                find_tasks[k].reset= 1;
+        }
+    }
+
     sleep(32);
 	
     stop = 1;
@@ -327,10 +364,6 @@ int main(int argc, char **argv)
     for (int p = 0; p < (test_delete_ratio); p++){
         pthread_join(delete_tasks[p].thread, NULL);
     }
-
-    printf("\nSpin_Lock_Opp: %10.3f \n ",
-       (float)/* (test_duration * 1000) -*/ (total_time / (CYCLE_PER_US * 1000)));
-
 
 
     return 0;
