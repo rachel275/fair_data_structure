@@ -1,0 +1,17 @@
+Type of thread,Thread Id,Number of Operations,LHT Time,Lock Opportunity
+find,0,10984,639.04
+find,0,9909,636.848
+find,0,7970,478.131
+find,1,8053,456.61
+find,1,7817,422.112
+find,1,7688,456.144
+find,2,7147,321.333
+find,2,9312,450.138
+find,2,9286,439.692
+find,3,9025,641.117
+find,3,7804,587.719
+find,3,7508,541.726
+insert,0,25029,6.469
+insert,1,75820,15.574
+insert,2,26719,6.895
+insert,3,63466,14.047

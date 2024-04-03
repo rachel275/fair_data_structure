@@ -14,7 +14,7 @@ ratios = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 throughput = [[[], []], [[], [], [], []], [[], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []]]
 data = []
 def write_to_table(applications, ratio, duration, type):
-    f = open("./tables/ns_c_lock_fair_list_tables/performance.csv", 'a+', newline="")
+    f = open("./tables/default_fair_hash_tables/performance.csv", 'a+', newline="")
     writer = csv.writer(f)
     for i in range(len(no_applications)):
         temp = []
@@ -51,16 +51,16 @@ def write_to_table(applications, ratio, duration, type):
 
 rootdir = "./data/"
 for dir in os.listdir(rootdir):
-    type = dir.split('_list')[0]
-    if type == "ns_c_lock_fair":
+    type = dir.split('_hash')[0]
+    if type == "default_fair":
         for filename in os.listdir("./data/" + dir):
             with open(os.path.join("./data/" + dir, filename), 'r') as file:
                 ratio = []
                 no_ops = 0
                 count = 0
-                applications = int(filename.split('_')[1])
+                applications = int(filename.split('_')[3])
                 for i in range(applications):
-                    ratio_val = int(filename.split('_')[i + 3])
+                    ratio_val = int(filename.split('_')[i + 5])
                     if (ratio_val == 100):
                         count += 1
                     ratio.append(ratio_val)
@@ -69,13 +69,13 @@ for dir in os.listdir(rootdir):
                 elif(applications == 2):
                     print("2 apps but no")
                 else:
-                    duration = filename.split('_')[i + 5]
+                    duration = filename.split('_')[i + 7]
                     #print(ratio)
                     text_line = file.readline()
                     no_ops = []
                     while text_line:
                         #print(text_line.split(' '))
-                        if ((text_line.split(' ')[0] == "Spin_Lock_Opp:") or (not text_line) or (text_line == " ")or (text_line == "\n")):
+                        if ((text_line.split(' ')[0] == "Lock_Opp_b_0:") or (not text_line) or (text_line == " ")or (text_line == "\n")):
                             print("ignore")
                             #do nothing with this line
                         else:
