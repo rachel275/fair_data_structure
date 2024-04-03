@@ -24,7 +24,7 @@
 
 typedef struct hash_table
 {
-    lock_t mutexes __attribute__ ((aligned (64)));
+   // lock_t mutexes i__attribute__ ((aligned (64)));
     size_t size;
     struct list_t *table;
 }hash_table;
@@ -80,24 +80,17 @@ HashTable* hash_init(size_t N, int tot_weight)
 // Function inserting to hp hash table, key k and v value of k.
 int hash_insert (hash_table *hp, unsigned int k, void *v, hash_table_stat *stat, int pid)
 {
-    size_t bucket_idx = k % hp->size;
+    int bucket_idx = pid % hp->size; // k  % hp->size;
     int insert;
     struct list_t* bucket = &hp->table[bucket_idx];
     insert = 1;
     list_insert(bucket, k, v, &stat->stats[bucket_idx], pid);
-
-
-#ifdef CS_DIST
-    if (stat->n_ops < stat->op_durations_size)
-        stat->op_durations[stat->n_ops++] = release - end;
-#endif
 
     stat->tot_cs_time += stat->stats[bucket_idx].cs_time;
     if (stat->wc_cs_time < stat->stats[bucket_idx].cs_time){
         stat->wc_cs_time = stat->stats[bucket_idx].cs_time;
         stat->bucket_id = bucket_idx;
     }
-    stat->op_entries++;
     stat->n_ops++;
    // printf("%.3f	", stat->stats[bucket_idx].cs_time);
     return insert;
@@ -132,7 +125,7 @@ int hash_delete (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
 Node* hash_get (hash_table *hp, unsigned int k, hash_table_stat *stat, int pid)
 {
     // finding the correct bucket
-    size_t bucket_idx = k % hp->size;
+    int bucket_idx = pid % hp->size;// k % hp->size;
     struct list_t* bucket = &hp->table[bucket_idx];
     Node* result;
     result = list_find(bucket, k, &stat->stats[bucket_idx], pid);

@@ -36,34 +36,34 @@ do
     	#echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
     	#./hash_fair_main $b 2 $d $a 64 > ./data/default_fair_hash/buckets_${b}_applications_2_ratio_{$d}_{$a}_duration_64
         echo "./hash_fair_main $a 4 25 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
-        ./hash_fair_main $b 4 25 25 25 25 64 > ./data/default_fair_hash/buckets_${b}_applications_4_ratio_25_25_25_25_duration_64
-        ./hash_fair_main $b 4 25 25 25 100 64 > ./data/default_fair_hash/buckets_${b}_applications_4_ratio_25_25_25_100_duration_64
-        ./hash_fair_main $b 4 25 25 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_4_ratio_25_25_100_100_duration_64
-        ./hash_fair_main $b 4 25 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_4_ratio_25_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 4 25 25 25 25 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_4_ratio_25_25_25_25_duration_64
+        ./ns_c_hash_lock_fair_main $b 4 25 25 25 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_4_ratio_25_25_25_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 4 25 25 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_4_ratio_25_25_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 4 25 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_4_ratio_25_100_100_100_duration_64
 
 	echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
-        ./hash_fair_main $b 8 25 25 25 25 25 25 25 25 64 > ./data/default_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_25_25_25_25_duration_64
-        ./hash_fair_main $b 8 25 25 25 25 25 25 25 100 64 > ./data/default_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_25_25_25_100_duration_64
-        ./hash_fair_main $b 8 25 25 25 25 25 25 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_25_25_100_100_duration_64
-        ./hash_fair_main $b 8 25 25 25 25 25 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_25_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 8 25 25 25 25 25 25 25 25 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_25_25_25_25_duration_64
+        ./ns_c_hash_lock_fair_main $b 8 25 25 25 25 25 25 25 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_25_25_25_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 8 25 25 25 25 25 25 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_25_25_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 8 25 25 25 25 25 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_25_100_100_100_duration_64
         echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
-        ./hash_fair_main $b 8 25 25 25 25 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_100_100_100_100_duration_64
-        ./hash_fair_main $b 8 25 25 25 100 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_100_100_100_100_100_duration_64
-        ./hash_fair_main $b 8 25 25 100 100 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_8_ratio_25_25_100_100_100_100_100_100_duration_64
-        ./hash_fair_main $b 8 25 100 100 100 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_8_ratio_25_100_100_100_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 8 25 25 25 25 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_25_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 8 25 25 25 100 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_8_ratio_25_25_25_100_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 8 25 25 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_8_ratio_25_25_100_100_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 8 25 100 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_8_ratio_25_100_100_100_100_100_100_100_duration_64
 
 	echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
-        ./hash_fair_main $b 10 25 25 25 25 25 25 25 25 25 25 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_25_25_25_25_duration_64
-        ./hash_fair_main $b 10 25 25 25 25 25 25 25 25 25 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_25_25_25_100_duration_64
-        ./hash_fair_main $b 10 25 25 25 25 25 25 25 25 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_25_25_100_100_duration_64
-        ./hash_fair_main $b 10 25 25 25 25 25 25 25 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_25_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 25 25 25 25 25 25 25 25 25 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_25_25_25_25_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 25 25 25 25 25 25 25 25 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_25_25_25_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 25 25 25 25 25 25 25 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_25_25_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 25 25 25 25 25 25 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_25_100_100_100_duration_64
         echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
-        ./hash_fair_main $b 10 25 25 25 25 25 25 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_100_100_100_100_duration_64
-        ./hash_fair_main $b 10 25 25 25 25 25 100 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_100_100_100_100_100_duration_64
-        ./hash_fair_main $b 10 25 25 25 25 100 100 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_100_100_100_100_100_100_duration_64
-        ./hash_fair_main $b 10 25 25 25 100 100 100 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_100_100_100_100_100_100_100_duration_64
-        ./hash_fair_main $b 10 25 25 100 100 100 100 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_25_100_100_100_100_100_100_100_100_duration_64
-        ./hash_fair_main $b 10 25 100 100 100 100 100 100 100 100 100 64 > ./data/default_fair_hash/buckets_${b}_applications_10_ratio_25_100_100_100_100_100_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 25 25 25 25 25 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_25_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 25 25 25 25 100 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_25_100_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 25 25 25 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_25_100_100_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 25 25 100 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_25_100_100_100_100_100_100_100_duration_64
+	./ns_c_hash_lock_fair_main $b 10 25 25 100 100 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_25_100_100_100_100_100_100_100_100_duration_64
+        ./ns_c_hash_lock_fair_main $b 10 25 100 100 100 100 100 100 100 100 100 64 > ./data/ns_c_lock_fair_hash/buckets_${b}_applications_10_ratio_25_100_100_100_100_100_100_100_100_100_duration_64
 
 
     	#echo "./hash_fair_main $a $b $d 64 > ./data/default_fair_hash/bucket_${a}_applications${b}_ratio{c}_duration64"
