@@ -7,7 +7,7 @@ import sys
 
 
 
-path = "./tables/ns_c_lock_fair_list_tables/"  #FILL THIS IN HERE
+path = "./tables/default_fair_hash_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     print(filename)
@@ -17,7 +17,7 @@ for filename in os.listdir(path):
         #print("reached here     ")
         for i in range(applications):
             ratio.append(int(filename.split('_')[i + 3]))
-        if applications == 2:
+        if applications == 4:
             duration = filename.split('_')[i + 5]
             i = -1
             reader = csv.reader(file)
@@ -41,18 +41,18 @@ for filename in os.listdir(path):
                     thread_type.append(row[int(0)])
                     if (row[int(0)] == "insert"):
                         insert_id.append(int(row[int(1)]))
-                        i_wc_time.append(float(row[int(3)]))
-                        i_tot_time.append(float(row[int(4)]))
+                        #i_wc_time.append(float(row[int(3)]))
+                        i_tot_time.append(float(row[int(3)]))
                         i_n_ops.append(int(row[int(2)]))  
                         #i_lock_opp.append(float(row[int(5)]))
-                        i_lock_opp.append(10500)
+                        i_lock_opp.append(10715)
                     else:
                         genuine_id.append(int(row[int(1)]))
-                        wc_time.append(float(row[int(3)]))
-                        tot_time.append(float(row[int(4)]))
+                        #wc_time.append(float(row[int(3)]))
+                        tot_time.append(float(row[int(3)]))
                         n_ops.append(int(row[int(2)]))
                         #lock_opp.append(float(row[int(5)])) 
-                        lock_opp.append(10500)
+                        lock_opp.append(10715)
 
 
                 counter_one = 0
@@ -187,7 +187,7 @@ for filename in os.listdir(path):
                 ratio_string = ""
                 for i in ratio:
                     ratio_string = ratio_string + str(i) + "_"
-                figName = "./graphs/ns_c_lock_fair_list_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
+                figName = "./graphs/default_fair_hash_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
                 plt.savefig(figName)          
                 plt.close()
 

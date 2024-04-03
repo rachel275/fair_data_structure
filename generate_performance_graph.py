@@ -70,6 +70,7 @@ difference_4 = max_4 / min_4
 diff_8 = max_8 / min_8
 diff_10 = max_10 / min_10
 diff = [difference_4, diff_8, diff_10]
+maxx = [max_4, max_8, max_10]
 print(diff)
 #ax.axhspan(max_4, min_4, facecolor='b', alpha=0.5)
 #ax.axhspan(min_8, max_8, facecolor='r', alpha=0.5)
@@ -222,29 +223,29 @@ print([i_min_4, i_min_8, i_min_10])
 print([i_max_4,i_max_8, i_max_10])
 
 
-ax.set_ylabel("Max-min throughput ratio", fontsize=15)
+ax.set_ylabel("Max throughput", fontsize=15)
 ax.set_xlabel("Number of applications running", fontsize=15)
 x_val= [0.66, 1.66, 2.66]
 #x_val = [0.75, 1.75, 2.75]
 #ax.set_yscale('log')
 o_x_val = [1, 2, 3]
 i_x_val = [1.33, 2.33, 3.33]
-ax.bar(x_val, diff, width=0.3, color='b', label = "Default linked list")
-ax.bar(o_x_val, o_diff, width=0.3, color='r', label="Fair linked list")
-ax.bar(i_x_val, i_diff, width=0.3, color='g', label="Performance fair linked list")
+ax.bar(x_val, maxx, width=0.3, color='b', label = "Default linked list")
+ax.bar(o_x_val, o_max, width=0.3, color='r', label="Fair linked list")
+ax.bar(i_x_val, i_max, width=0.3, color='g', label="Performance fair linked list")
 #ax.set_yscale('log')
-ax.set_ylim([1, max(diff) + 1])
+ax.set_ylim([1, max(maxx) + 3000])
 ax.set_xticks([1, 2, 3])
 xlabels = ["4", "8", "10"]
 #xlabels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 ax.set_xticklabels(xlabels)
 handles, labels = plt.gca().get_legend_handles_labels()
 by_label = dict(zip(labels, handles))
-plt.legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(0.5, 1),
+plt.legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(0.5, 0.09),
        fancybox=True, shadow=True, fontsize=15, ncol=3)
 #plt.tight_layout()
 ratio_string = ""
-figName = "./graphs/ns_c_fair_hash_graphs/performance_combined.png"
+figName = "./graphs/ns_c_fair_hash_graphs/max_combined.png"
 plt.savefig(figName)          
 plt.close()
 

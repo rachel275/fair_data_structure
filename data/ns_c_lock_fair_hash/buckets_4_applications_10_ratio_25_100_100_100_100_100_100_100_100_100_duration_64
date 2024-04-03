@@ -1,5 +1,5 @@
 insert app id: 07 / no ops: 4828027 / tot_time(ms):   4434.431 / LHO_b_3:  10673.883 / 
-insert app id: 01 / no ops: 4123234 / tot_time(ms):   6374.303 / 
+insert app id: 01 / no ops: 4123234 / tot_time(ms):   6374.303 / LHO_b_1:  10666.853 /
 insert app id: 02 / no ops: 5085359 / tot_time(ms):   4467.537 / LHO_b_2:  10674.524 / 
 insert app id: 06 / no ops: 5626780 / tot_time(ms):   3437.794 / LHO_b_2:  10666.221 / 
 insert app id: 08 / no ops: 3117520 / tot_time(ms):   7296.071 / LHO_b_0:  10663.604 / 
@@ -11,7 +11,7 @@ insert app id: 05 / no ops: 3916253 / tot_time(ms):   6026.653 / LHO_b_1:  10666
 find app id: 00 / no ops: 103580 / tot_time(ms):  10640.757 / LHO_b_0:  10589.007 / 
 insert app id: 02 / no ops: 4164691 / tot_time(ms):   5290.061 / LHO_b_2:  10661.031 / 
 insert app id: 07 / no ops: 3226098 / tot_time(ms):   5925.367 / LHO_b_3:  10658.784 / 
-insert app id: 01 / no ops: 3558864 / tot_time(ms):   6297.082 / 
+insert app id: 01 / no ops: 3558864 / tot_time(ms):   6297.082 / LHO_b_1:  10666.853 /
 insert app id: 08 / no ops: 3246688 / tot_time(ms):   7159.709 / LHO_b_0:  10668.613 / 
 insert app id: 00 / no ops: 6656444 / tot_time(ms):   3509.308 / LHO_b_0:  10821.467 / 
 insert app id: 04 / no ops: 7086700 / tot_time(ms):   4948.146 / LHO_b_0:  10664.254 / 
@@ -21,20 +21,20 @@ insert app id: 09 / no ops: 3975627 / tot_time(ms):   4638.334 / LHO_b_1:  10675
 insert app id: 06 / no ops: 7102732 / tot_time(ms):   4408.536 / LHO_b_2:  10679.273 / 
 insert app id: 02 / no ops: 5517953 / tot_time(ms):   4332.478 / LHO_b_2:  10674.385 / 
 insert app id: 07 / no ops: 3992716 / tot_time(ms):   6075.821 / LHO_b_3:  10670.088 / 
-insert app id: 01 / no ops: 3559011 / tot_time(ms):   5905.527 / LHO_b_1:      2.000 / 
+insert app id: 01 / no ops: 3559011 / tot_time(ms):   5905.527 / LHO_b_1:  10666.853 / 
 insert app id: 08 / no ops: 3390518 / tot_time(ms):   6989.342 / LHO_b_0:  10673.863 / 
 insert app id: 04 / no ops: 7774235 / tot_time(ms):   5464.270 / LHO_b_0:  10680.650 / 
 insert app id: 03 / no ops: 3858328 / tot_time(ms):   6131.322 / LHO_b_3:  10663.642 / 
 insert app id: 05 / no ops: 4319321 / tot_time(ms):   4885.062 / LHO_b_1:  10665.911 / 
 insert app id: 09 / no ops: 4624888 / tot_time(ms):   4734.002 / LHO_b_1:  10662.243 / 
-find app id: 00 / no ops: 104361 / tot_time(ms):  10641.033 / LHO_b_0:  10636.560 / 
+find app id: 00 / no ops: 104361 / tot_time(ms):  10641.033 / LHO_b_0:  10636.560 /
 insert app id: 06 / no ops: 5748647 / tot_time(ms):   4000.717 / LHO_b_2:  10665.451 / 
 insert app id: 02 / no ops: 4001369 / tot_time(ms):   5907.939 / LHO_b_2:  10670.704 / 
 insert app id: 07 / no ops: 3942707 / tot_time(ms):   5491.668 / LHO_b_3:  10676.727 / 
-insert app id: 01 / no ops: 5602616 / tot_time(ms):   3408.038 / 
+insert app id: 01 / no ops: 5602616 / tot_time(ms):   3408.038 / LHO_b_1:  10666.853 /
 insert app id: 08 / no ops: 5022561 / tot_time(ms):   5030.507 / LHO_b_0:  10673.656 / 
 insert app id: 04 / no ops: 5414034 / tot_time(ms):   4875.146 / LHO_b_0:  10680.781 / 
 insert app id: 03 / no ops: 4383993 / tot_time(ms):   5272.913 / LHO_b_3:  10672.737 / 
 insert app id: 05 / no ops: 3753438 / tot_time(ms):   6123.425 / LHO_b_1:  10663.219 / 
 insert app id: 09 / no ops: 5018460 / tot_time(ms):   4244.822 / LHO_b_1:  10674.101 / 
-find app id: 00 / no ops: 99994 / tot_time(ms):  10643.231 / LHO_b_0:  10634.356 / 
+find app id: 00 / no ops: 99994 / tot_time(ms):  10643.231 / LHO_b_0: 10634.356 /

@@ -69,13 +69,14 @@ for dir in os.listdir(rootdir):
                         #do nothing with this line
                     else:
                         text = text_line.split('/')
+                        print(text)
                         thread_type = text[0].split(' ')[0]
                         if (thread_type == "id:"):
                             thread_type = text[0].split(' ')[0]
                         thread_id = int(text[0].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
                         no_ops = int(text[1].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
                         total_time = float(text[2].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
-                        #wc_time= float(text[3].split(':')[-1])
+                        lock_opp= float(text[3].split(':')[-1])
 
 
 
@@ -85,7 +86,7 @@ for dir in os.listdir(rootdir):
 
                         #lock_opportunity = float(text[0].split(' ')[1])
 
-                        data.append([thread_type, thread_id, no_ops, total_time])
+                        data.append([thread_type, thread_id, no_ops, total_time, lock_opp])
                     text_line = file.readline()
                 
             sort_data()

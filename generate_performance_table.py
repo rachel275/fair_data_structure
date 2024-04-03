@@ -14,7 +14,7 @@ ratios = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 throughput = [[[], []], [[], [], [], []], [[], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], []]]
 data = []
 def write_to_table(applications, ratio, duration, type):
-    f = open("./tables/default_fair_hash_tables/performance.csv", 'a+', newline="")
+    f = open("./tables/ns_c_lock_fair_hash_tables/performance.csv", 'a+', newline="")
     writer = csv.writer(f)
     for i in range(len(no_applications)):
         temp = []
@@ -52,7 +52,7 @@ def write_to_table(applications, ratio, duration, type):
 rootdir = "./data/"
 for dir in os.listdir(rootdir):
     type = dir.split('_hash')[0]
-    if type == "default_fair":
+    if type == "ns_c_lock_fair":
         for filename in os.listdir("./data/" + dir):
             with open(os.path.join("./data/" + dir, filename), 'r') as file:
                 ratio = []
