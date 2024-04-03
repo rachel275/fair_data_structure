@@ -166,12 +166,11 @@ void *findfunc(void *vargp)
     setup_worker(task);
 //    printf("but does it reach here\n");
     int entry = task->app_id;
-    void* result;
-    int yup;
     // /*loop continuously*/
     while(!*task->stop){
     //  /*add to the linked list*/
         entry = (((1000000 - fast_rand()) % key_space * 10) + task->app_id);
+      // entry = (((1000000 - fast_rand()) % key_space * 10) + task->app_id);
 //	printf("ins ent: %llu   ", entry); 
         hash_get(ht, entry, &task->stat, task->app_id);
     }
@@ -282,21 +281,21 @@ int main(int argc, char **argv)
 
     stop = 1;
 
-    float total_left[100];
+ //   float total_left[100];
 
     for (int p = 0; p < (test_insert_ratio); p++){
-        for (int j = 0; j < nbuckets; j++){
-            total_left[j] += insert_tasks[p].stat.stats[j].tot_cs_time;
-        }
+ //       for (int j = 0; j < nbuckets; j++){
+ //           total_left[j] += insert_tasks[p].stat.stats[j].tot_cs_time;
+ //       }
         pthread_join(insert_tasks[p].thread, NULL);
 
     }
 
 
     for (int p = 0; p < (test_find_ratio); p++){
-	for (int j = 0; j < nbuckets; j++){
-            total_left[j] += find_tasks[p].stat.stats[j].tot_cs_time;
-        }
+//	for (int j = 0; j < nbuckets; j++){
+ //           total_left[j] += find_tasks[p].stat.stats[j].tot_cs_time;
+ //       }
 
         pthread_join(find_tasks[p].thread, NULL);
     }
@@ -306,11 +305,11 @@ int main(int argc, char **argv)
     }
 
 
-    for (int i = 0; i < nbuckets; i++){
-        printf("Lock_Opp_b_%i: %10.3f / ",
-        i,
-       (float) (test_duration * 1000) - (total_left[i] / (CYCLE_PER_US * 1000)));
-    }
+//    for (int i = 0; i < nbuckets; i++){
+//        printf("Lock_Opp_b_%i: %10.3f / ",
+//        i,
+//       (float) (test_duration * 1000) - (total_left[i] / (CYCLE_PER_US * 1000)));
+//    }
 
 
     return 0;
