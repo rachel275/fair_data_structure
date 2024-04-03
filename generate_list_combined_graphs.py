@@ -6,12 +6,12 @@ import csv
 import sys
 
 
-colour_list = ["g", "b","g", "b","g", "b","g", "b"]
+colour_list = ["g", "b","g", "b","g", "b","g", "b","g", "b"]
 fig, ax = plt.subplots(figsize=(10,3))
 count = 0
 final_ratio = []
 v = 0
-jane = 25
+jane = 0
 fileCount = 0;
 rootdir = "./tables/"
 for dir in os.listdir(rootdir):
@@ -145,7 +145,6 @@ for dir in os.listdir(rootdir):
                     v = v + 1
                     ax.bar(new_insert_id, i_tot_time, width=0.09, color=colour_list[v], align='center', label = "insert")
                     v = v + 1
-
 for dir in os.listdir(rootdir):
     type = dir.split('_list_tables')[0]
     #print(type)
@@ -414,7 +413,7 @@ for dir in os.listdir(rootdir):
                     final_ratio = ratio
 
                     # reverse the order
-ax.set(ylabel="Time (ms)",  yscale = "log", ylim=[1, 10**6])
+ax.set(ylabel="Lock hold time (ms)",  yscale = "log", ylim=[1, 10**6])
 handles, labels = ax.get_legend_handles_labels()
 
                         # if (applications == 2):

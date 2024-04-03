@@ -1,9 +1,9 @@
-Type of thread,Thread Id,Number of Operations,Worst Case Time,LHT Time,Lock Opportunity
-find,0,51815587,0.0,0.0,6292.0
-find,0,53368590,0.0,0.0,6295.0
-find,0,53514572,0.0,0.0,6291.0
-find,0,53475730,0.0,0.0,6290.0
-find,1,210231,1.972,6324.928,6288.0
-find,1,211874,2.246,6327.937,6289.0
-insert,1,20826116,0.048,2449.403,6288.0
-insert,1,20797006,1.796,2449.275,6290.0
+Type of thread,Thread Id,Number of Operations,Worst Case Time,LHT Time
+find,0,46905271,0.146,315.949
+find,0,44946136,0.117,303.499
+find,0,43448376,0.02,292.512
+find,0,45206244,0.026,304.978
+find,1,506043,0.64,9315.957
+find,1,508580,0.814,9300.194
+insert,1,3904026,0.309,824.616
+insert,1,3766992,0.114,796.395

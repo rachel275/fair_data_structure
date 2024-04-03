@@ -1,0 +1,4 @@
+Type,throughput 1,throughput 1,throughput 1,throughput 1,throughput 1,throughput 1,throughput 1,throughput 1,time 1,time 1,time 1,time 1,time 1,time 1,time 1,time 1
+"['ns_c_lock_fair', 5034339, 11313839, 40144338, 65654117, 1995223, 3491951, 5473644, 8954542, 0, 0, 0, 0, 0, 0, 0, 0]",
+"['ns_c_fair', 5073642, 10542695, 26111643, 36129151, 1786521, 3685727, 5400840, 7194212, 0, 0, 0, 0, 0, 0, 0, 0]",
+"['default_fair', 5402857, 10830325, 26954483, 36384912, 1928765, 3610158, 5409878, 7424381, 0, 0, 0, 0, 0, 0, 0, 0]"
