@@ -11,7 +11,7 @@ fig, ax = plt.subplots(figsize=(10,3))
 count = 0
 final_ratio = []
 v = 0
-jane = 0
+jane = 100
 fileCount = 0;
 rootdir = "./tables/"
 for dir in os.listdir(rootdir):
@@ -130,14 +130,14 @@ for dir in os.listdir(rootdir):
                     #[plt.text(i, 200000000, f'{int(j  / 1000)}K', rotation=45, fontsize=15) for (i, j) in zip(new_find_id, n_ops)]
                     for (i, j) in zip(new_find_id, n_ops):
                         if (j > 1000000):
-                            ax.text(i, max(lock_opp) + 10000, f'{round(float(j  / 2000000), 1)}M', rotation=80, fontsize=10)
+                            ax.text(i, max(lock_opp) + 10000, f'{round(float(j  / 1000000), 1)}M', rotation=80, fontsize=10)
                         else:
-                            ax.text(i, max(lock_opp) + 10000, f'{round(float(j  / 2000), 1)}K', rotation=80, fontsize=10)
+                            ax.text(i, max(lock_opp) + 10000, f'{round(float(j  / 1000), 1)}K', rotation=80, fontsize=10)
                     for (i, j) in zip(new_insert_id, i_n_ops):
                         if (j > 1000000):
-                            ax.text(i, max(i_lock_opp) + 10000, f'{round(float(j  / 2000000), 1)}M', rotation=80, fontsize=10)
+                            ax.text(i, max(i_lock_opp) + 10000, f'{round(float(j  / 1000000), 1)}M', rotation=80, fontsize=10)
                         else:
-                            ax.text(i, max(i_lock_opp) + 10000, f'{round(float(j  / 2000), 1)}K', rotation=80, fontsize=10)
+                            ax.text(i, max(i_lock_opp) + 10000, f'{round(float(j  / 1000), 1)}K', rotation=80, fontsize=10)
 
                     pps1 = ax.bar(new_insert_id, i_lock_opp, align='center', width=0.09, color='r', alpha=0.25)#, label = "insert")
                     pps2 = ax.bar(new_find_id, lock_opp,  width=0.09, color='r', align='center', alpha=0.25, label = "lock opp")
@@ -261,14 +261,14 @@ for dir in os.listdir(rootdir):
                     #[plt.text(i, 200000000, f'{int(j  / 1000)}K', rotation=45, fontsize=15) for (i, j) in zip(new_find_id, n_ops)]
                     for (i, j) in zip(new_find_id, n_ops):
                         if (j > 1000000):
-                            ax.text(i, max(lock_opp) + 10000, f'{round(float(j  / 2000000), 1)}M', rotation=80, fontsize=10)
+                            ax.text(i, max(lock_opp) + 10000, f'{round(float(j  / 1000000), 1)}M', rotation=80, fontsize=10)
                         else:
-                            ax.text(i, max(lock_opp) + 10000, f'{round(float(j  / 2000), 1)}K', rotation=80, fontsize=10)
+                            ax.text(i, max(lock_opp) + 10000, f'{round(float(j  / 1000), 1)}K', rotation=80, fontsize=10)
                     for (i, j) in zip(new_insert_id, i_n_ops):
                         if (j > 1000000):
-                            ax.text(i, max(i_lock_opp) + 10000, f'{round(float(j  / 2000000), 1)}M', rotation=80, fontsize=10)
+                            ax.text(i, max(i_lock_opp) + 10000, f'{round(float(j  / 1000000), 1)}M', rotation=80, fontsize=10)
                         else:
-                            ax.text(i, max(i_lock_opp) + 10000, f'{round(float(j  / 2000), 1)}K', rotation=80, fontsize=10)
+                            ax.text(i, max(i_lock_opp) + 10000, f'{round(float(j  / 1000), 1)}K', rotation=80, fontsize=10)
 
                     pps1 = ax.bar(new_insert_id, i_lock_opp, align='center', width=0.09, color='r', alpha=0.25)#, label = "insert")
                     pps2 = ax.bar(new_find_id, lock_opp,  width=0.09, color='r', align='center', alpha=0.25, label = "lock opp")

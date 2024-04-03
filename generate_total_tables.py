@@ -63,7 +63,6 @@ for dir in os.listdir(rootdir):
                         no_ops = int(text[1].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
                         total_time = float(text[2].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
                         stage_2_throughput[thread_id] += no_ops
-                        print(stage_2_throughput)
                 for t in range(8):
                     text_line = file.readline()
                     # if ((text_line.split(' ')[0] == "Spin_Lock_Opp:") or (not text_line) or (text_line == " ")or (text_line == "\n")):
@@ -80,10 +79,6 @@ for dir in os.listdir(rootdir):
                         total_time = float(text[2].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
                         stage_3_throughput[thread_id] += no_ops
                     
-                    
-                #print(stage_1_throughput)
-                #print(stage_2_throughput)
-                #print(stage_3_throughput)  
                 final_data.append([type] + stage_1_throughput + stage_2_throughput + stage_3_throughput)
 
         

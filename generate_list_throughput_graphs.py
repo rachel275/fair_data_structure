@@ -65,9 +65,9 @@ for dir in os.listdir(rootdir):
                                 lock_opp.append(float(row[int(5)])) 
                     new_n_ops = []
                     for i in n_ops:
-                        new_n_ops.append(i/2)
-                        new_n_ops.append(i/2)
-                    new_n_ops.append(n_ops[0]/2)
+                        new_n_ops.append(i)
+                        new_n_ops.append(i)
+                    new_n_ops.append(n_ops[0])
                     print(new_n_ops)
                     count = count + 1
                     ax.plot(rratio, new_n_ops, label = "ideal linked list")
@@ -196,7 +196,7 @@ handles, labels = ax.get_legend_handles_labels()
 
 by_label = dict(zip(labels, handles))
 
-ax.legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(0.2, 0.3),
+ax.legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(0.2, 0.5),
             fancybox=True, shadow=True, fontsize=15)
 #plt.title("Total lock hold per thread")
 plt.tight_layout()

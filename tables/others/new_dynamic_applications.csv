@@ -1,0 +1,4 @@
+Type,throughput 1,throughput 1,throughput 1,throughput 1,throughput 1,throughput 1,throughput 1,throughput 1,time 1,time 1,time 1,time 1,time 1,time 1,time 1,time 1
+'ns_c_lock_fair', 213881, 142551, 69941, 0, 163025, 154614, 81171, 0, 151415, 98579, 76683, 0, 0, 0, 68420, 0
+'ns_c_fair', 53496, 35001, 16790, 0, 25904, 17123, 8326, 0, 27185, 17789, 8559, 0, 0, 0, 7640, 0
+'default_fair', 4576, 6285, 4397, 0, 1017, 1511, 954, 0, 625, 1168, 947, 0, 0, 0, 3087, 0

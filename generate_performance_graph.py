@@ -141,82 +141,82 @@ o_max = [o_max_4, o_max_8, o_max_10]
 print(o_diff)
 
 
-#ax.axhspan(max_4, min_4, facecolor='b', alpha=0.5)
-#ax.axhspan(min_8, max_8, facecolor='r', alpha=0.5)
-#ax.axhspan(min_10, max_10, facecolor='g', alpha=0.5)
-colours = ['b', 'r', 'g']
-count = 0
-i_max_4 = 0
-i_min_4 = 10000000000000
-i_max_8 = 0
-i_min_8 = 10000000000000
-i_max_10 = 0
-i_min_10 = 10000000000000
-path = "./tables/ns_c_lock_fair_list_tables/"  #FILL THIS IN HERE
-fileCount = 0;
-filename = "performance.csv"
-with open(os.path.join(path, filename), 'r') as file:
-    reader = csv.reader(file)
-    for row in reader:
-        applications = int(row[0])
-        #print(row)
-        #print(row[0])
-        if (applications != 2):
-            throughput = []
-            #print(applications)
-            for i in range(applications):
-                x_val = []
-                y_val = []
-                ratio_max = 0
-                ratio_min = 0
-                #print(row[i+1])
-                values = row[i + 1].split('],')
-#                for i in values:
-                val = values[0].split(',')
-                #print(val)
-                for j in val:
-                    res = j.replace("]", "")
-                    res2 = res.replace("[", "")
-                    y_val.append(int(res2))
-                x_val = [i for i in range(len(val))]
-                #print(x_val)
-                #print(y_val)
-                if (applications == 4):
-                    v_colour = 'b'
-                    if (max(y_val) > i_max_4):
-                        i_max_4 = max(y_val)
-                    if (min(y_val) < i_min_4):
-                        i_min_4 = min(y_val)
-                elif (applications == 8):
-                    v_colour = 'r'
-                    if (max(y_val) > i_max_8):
-                        i_max_8 = max(y_val)
-                    if (min(y_val) < i_min_8):
-                        i_min_8 = min(y_val)
-                elif(applications == 10):
-                    v_colour = 'g'
-                    if (max(y_val) > i_max_10):
-                        i_max_10 = max(y_val)
-                        #print(i_max_10)
-                    if (min(y_val) < i_min_10):
-                        i_min_10 = min(y_val)
-                        #print(i_min_10)
-                count = len(x_val)
-                denom = 4 * applications
-                #ax.plot(x_val, y_val, color=v_colour, label=str(applications))
+# #ax.axhspan(max_4, min_4, facecolor='b', alpha=0.5)
+# #ax.axhspan(min_8, max_8, facecolor='r', alpha=0.5)
+# #ax.axhspan(min_10, max_10, facecolor='g', alpha=0.5)
+# colours = ['b', 'r', 'g']
+# count = 0
+# i_max_4 = 0
+# i_min_4 = 10000000000000
+# i_max_8 = 0
+# i_min_8 = 10000000000000
+# i_max_10 = 0
+# i_min_10 = 10000000000000
+# path = "./tables/ns_c_lock_fair_list_tables/"  #FILL THIS IN HERE
+# fileCount = 0;
+# filename = "performance.csv"
+# with open(os.path.join(path, filename), 'r') as file:
+#     reader = csv.reader(file)
+#     for row in reader:
+#         applications = int(row[0])
+#         #print(row)
+#         #print(row[0])
+#         if (applications != 2):
+#             throughput = []
+#             #print(applications)
+#             for i in range(applications):
+#                 x_val = []
+#                 y_val = []
+#                 ratio_max = 0
+#                 ratio_min = 0
+#                 #print(row[i+1])
+#                 values = row[i + 1].split('],')
+# #                for i in values:
+#                 val = values[0].split(',')
+#                 #print(val)
+#                 for j in val:
+#                     res = j.replace("]", "")
+#                     res2 = res.replace("[", "")
+#                     y_val.append(int(res2))
+#                 x_val = [i for i in range(len(val))]
+#                 #print(x_val)
+#                 #print(y_val)
+#                 if (applications == 4):
+#                     v_colour = 'b'
+#                     if (max(y_val) > i_max_4):
+#                         i_max_4 = max(y_val)
+#                     if (min(y_val) < i_min_4):
+#                         i_min_4 = min(y_val)
+#                 elif (applications == 8):
+#                     v_colour = 'r'
+#                     if (max(y_val) > i_max_8):
+#                         i_max_8 = max(y_val)
+#                     if (min(y_val) < i_min_8):
+#                         i_min_8 = min(y_val)
+#                 elif(applications == 10):
+#                     v_colour = 'g'
+#                     if (max(y_val) > i_max_10):
+#                         i_max_10 = max(y_val)
+#                         #print(i_max_10)
+#                     if (min(y_val) < i_min_10):
+#                         i_min_10 = min(y_val)
+#                         #print(i_min_10)
+#                 count = len(x_val)
+#                 denom = 4 * applications
+#                 #ax.plot(x_val, y_val, color=v_colour, label=str(applications))
 
-i_difference_4 = i_max_4 / i_min_4
-i_diff_8 = i_max_8 / i_min_8
-i_diff_10 = i_max_10 / i_min_10
-#print(i_max_8)
-#print(i_min_8)
-i_diff = [i_difference_4, i_diff_8, i_diff_10]
-i_max = [i_max_4, i_max_8, i_max_10]
-print(i_diff)
+# i_difference_4 = i_max_4 / i_min_4
+# i_diff_8 = i_max_8 / i_min_8
+# i_diff_10 = i_max_10 / i_min_10
+# #print(i_max_8)
+# #print(i_min_8)
+# i_diff = [i_difference_4, i_diff_8, i_diff_10]
+# i_max = [i_max_4, i_max_8, i_max_10]
+# print(i_diff)
 
 print([min_4, min_8, min_10])
 print([o_min_4, o_min_8, o_min_10])
-print([i_min_4, i_min_8, i_min_10])
+#print([i_min_4, i_min_8, i_min_10])
 
 ax.set_ylabel("Max-min throughput ratio", fontsize=15)
 ax.set_xlabel("Number of applications running", fontsize=15)
