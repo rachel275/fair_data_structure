@@ -7,7 +7,7 @@ import sys
 
 
 
-path = "./tables/default_fair_hash_tables/"  #FILL THIS IN HERE
+path = "./tables/ns_c_lock_fair_hash_tables/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     print(filename)
@@ -17,7 +17,7 @@ for filename in os.listdir(path):
         #print("reached here     ")
         for i in range(applications):
             ratio.append(int(filename.split('_')[i + 3]))
-        if applications == 4:
+        if applications == 8:
             duration = filename.split('_')[i + 5]
             i = -1
             reader = csv.reader(file)
@@ -59,6 +59,10 @@ for filename in os.listdir(path):
                 counter_two = 0
                 counter_three = 0
                 counter_four = 0
+                counter_five = 0
+                counter_six = 0
+                counter_seven = 0
+                counter_eight = 0
                 new_insert_id = []
                 new_find_id = []
 
@@ -88,11 +92,35 @@ for filename in os.listdir(path):
                     elif i == 3:
                         new_insert_id.append(i - (counter_four + 0.1))
                         counter_four = counter_four + 0.1
+                    elif i == 4:
+                        if counter_five == 0:
+                            new_insert_id.append(i - (counter_five + 0.05))
+                            counter_five= counter_five + 0.05
+                        else:
+                            new_insert_id.append(i - (counter_five + 0.1))
+                            counter_five = counter_five + 0.1
+                    elif i == 5:
+                        if counter_six == 0:
+                            new_insert_id.append(i - (counter_six+ 0.05))
+                            counter_six = counter_six + 0.05
+                        else:
+                            new_insert_id.append(i - (counter_six + 0.1))
+                            counter_six = counter_six + 0.1
+                    elif i == 6:
+                        new_insert_id.append(i - (counter_seven + 0.1))
+                        counter_seven = counter_seven + 0.1
+                    elif i == 7:
+                        new_insert_id.append(i - (counter_eight+ 0.1))
+                        counter_eight= counter_eight + 0.1
 
                 count_one = 0
                 count_two = 0
                 count_three = 0
                 count_four = 0
+                count_five = 0
+                count_six = 0
+                count_seven = 0
+                count_eight = 0
 
                 for i in genuine_id:
                     if i == 0:
@@ -115,9 +143,29 @@ for filename in os.listdir(path):
                     elif i == 3:
                         new_find_id.append(i + (count_four + 0.1))
                         count_four = count_four + 0.1
+                    elif i == 4:
+                        if count_one == 0:
+                            new_find_id.append(i + (count_five + 0.05))
+                            count_five = count_five + 0.05
+                        else:
+                            new_find_id.append(i + (count_five + 0.1))
+                            count_five = count_five + 0.1
+                    elif i == 5:
+                        if count_two == 0:
+                            new_find_id.append(i + (count_six + 0.05))
+                            count_six = count_six + 0.05
+                        else:
+                            new_find_id.append(i + (count_six + 0.1))
+                            count_six= count_six+ 0.1
+                    elif i == 6:
+                        new_find_id.append(i + (count_seven + 0.1))
+                        count_seven = count_seven + 0.1
+                    elif i == 7:
+                        new_find_id.append(i + (count_eight + 0.1))
+                        count_eight = count_eight + 0.1
 
 
-                fig, ax = plt.subplots()
+                fig, ax = plt.subplots(figsize=(14,6))
 
                 #twin1 = ax.twinx()
                 #twin2 = ax.twinx()
@@ -158,9 +206,9 @@ for filename in os.listdir(path):
                 handles, labels = ax.get_legend_handles_labels()
 
                 # reverse the order
-                ax.set(ylabel="Time (ms)",  yscale = "log", ylim=[1, 10**6])
-
-
+                ax.set(yscale = "log", ylim=[1, 10**6])
+                ax.set_ylabel("Lock Hold Time (ms)", fontsize=13)
+                ax.set_xlabel("Applications", fontsize=13)
                 # if (applications == 2):
                 plt.xticks([]) 
                 #     //other_labels = ["Application 1", "Application 2", ""]
@@ -187,7 +235,7 @@ for filename in os.listdir(path):
                 ratio_string = ""
                 for i in ratio:
                     ratio_string = ratio_string + str(i) + "_"
-                figName = "./graphs/default_fair_hash_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
+                figName = "./graphs/ns_c_lock_fair_hash_graphs/applications" + str(applications) + "_ratio_" + ratio_string + "_duration_" + str(duration) + "_total_time.png"
                 plt.savefig(figName)          
                 plt.close()
 

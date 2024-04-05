@@ -19,7 +19,7 @@ def write_to_table(applications, ratio, duration, type):
     print(ratio_string)
     f = open("./tables/" + type + "_hash_tables/applications_" + str(applications) + "_ratio_" + ratio_string + "duration_" + str(duration) + ".csv", 'a+', newline="")
     writer = csv.writer(f)
-    header = ["Type of thread", "Thread Id","Number of Operations", "LHT Time", "Lock Opportunity"]
+    header = ["Type of thread", "Thread Id","Number of Operations", "LHT Time"]#, "Lock Opportunity"]
     writer.writerow(header)
     writer.writerows(data)
     f.close()
@@ -76,7 +76,7 @@ for dir in os.listdir(rootdir):
                         thread_id = int(text[0].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
                         no_ops = int(text[1].split(':')[-1]) #int(find_info(text, 1).lstrip().rstrip())
                         total_time = float(text[2].split(':')[-1]) #find_info(text, 1).lstrip().rstrip()
-                        lock_opp= float(text[3].split(':')[-1])
+                        #lock_opp= float(text[3].split(':')[-1])
 
 
 
@@ -86,7 +86,7 @@ for dir in os.listdir(rootdir):
 
                         #lock_opportunity = float(text[0].split(' ')[1])
 
-                        data.append([thread_type, thread_id, no_ops, total_time, lock_opp])
+                        data.append([thread_type, thread_id, no_ops, total_time])#, lock_opp])
                     text_line = file.readline()
                 
             sort_data()

@@ -76,7 +76,6 @@ default_fair_index = []
 ns_c_fair_index = []
 
 dbl_rratio = [0, 0.01, 0.02 , 1, 1.01, 1.02, 2, 2.01, 2.02, 3, 3.01, 3.02, 4, 4.01, 4.02, 5, 5.01, 5.02, 6, 6.01, 6.02, 7, 7.01, 7.02]
-no_hundreds = 0
 for dir in os.listdir(rootdir):
     type = dir.split('_hash_tables')[0]
     if type == "ns_c_fair" or type == "default_fair":
@@ -87,11 +86,13 @@ for dir in os.listdir(rootdir):
                 with open(os.path.join("./tables/" + dir, filename), 'r') as file:
                     applications = int(filename.split('_')[1]) 
                     ratio = []
+                    no_hundreds = 0
                     #print("reached here     ")
                     for i in range(applications):
-                        ratio.append(int(filename.split('_')[i + 3]))
-                        if ratio == 100:
-                            no_hundreds += 1
+                        new_rat = int(filename.split('_')[i + 3])
+                        ratio.append(new_rat)
+                        if new_rat == 100:
+                            no_hundreds = no_hundreds + 1
                     duration = filename.split('_')[i + 5]
                     i = -1
                     #print(applications)
@@ -136,7 +137,6 @@ for dir in os.listdir(rootdir):
 default_fair_index = []
 ns_c_fair_index = []
 dbl_rratio =[0, 0.01, 0.02 , 1, 1.01, 1.02, 2, 2.01, 2.02, 3, 3.01, 3.02, 4, 4.01, 4.02, 5, 5.01, 5.02, 6, 6.01, 6.02, 7, 7.01, 7.02]
-no_hundreds = 0
 for dir in os.listdir(rootdir):
     type = dir.split('_hash_tables')[0]
     if type == "ns_c_lock_fair":
@@ -147,17 +147,19 @@ for dir in os.listdir(rootdir):
                 with open(os.path.join("./tables/" + dir, filename), 'r') as file:
                     applications = int(filename.split('_')[1]) 
                     ratio = []
+                    no_hundreds = 0
                     #print("reached here     ")
                     for i in range(applications):
-                        ratio.append(int(filename.split('_')[i + 3]))
-                        if ratio == 100:
-                            no_hundreds += 1
+                        new_rat = int(filename.split('_')[i + 3])
+                        ratio.append(new_rat)
+                        if new_rat == 100:
+                            no_hundreds = no_hundreds + 1
                     duration = filename.split('_')[i + 5]
                     i = -1
                     #print(applications)
                     #print(ratio)
                     if(applications == 8 and no_hundreds == sarah):
-                        print(ratio)
+                        print(no_hundreds)
                         reader = csv.reader(file)
                         no_threads = []
                         thread_type = []
@@ -190,7 +192,7 @@ for dir in os.listdir(rootdir):
                                 new_n_ops.append(n_ops[i])
         print(new_n_ops)
         ax.plot(dbl_rratio, new_n_ops, label = str(type) + " linked list")
-ax.set_ylabel("Throughput of Application 1", fontsize=15)#,  yscale = "log")#, #ylim=[1, 10**6])
+ax.set_ylabel("Throughput of application 1", fontsize=15)#,  yscale = "log")#, #ylim=[1, 10**6])
 ax.set_xlabel("Number of high insert applications", fontsize=15)
 
 ax.set_xticks([0, 1, 2, 3, 4, 5, 6, 7])
@@ -201,7 +203,7 @@ handles, labels = ax.get_legend_handles_labels()
 
 by_label = dict(zip(labels, handles))
 
-ax.legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(0.2, 0.5),
+ax.legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(0.2, 0.7),
             fancybox=True, shadow=True, fontsize=15)
 #plt.title("Total lock hold per thread")
 plt.tight_layout()

@@ -7,61 +7,59 @@ import sys
 
 fig, axs = plt.subplots(3, figsize=(16, 12))
 
-path = "./tables/default_fair_list_tables/"  #FILL THIS IN HERE
+path = "./tables/dynamic/"  #FILL THIS IN HERE
 fileCount = 0;
 for filename in os.listdir(path):
     #print(filename)
     with open(os.path.join(path, filename), 'r') as file:
-        if (filename == "new_dynamic_applications.csv"):
-            applications = 8
-
+            type = filename.split('_list')[0]
+            print(type)
             count = -1
             colours = ['r', 'g', 'b', 'k', 'r', 'g', 'b', 'k']
-            ratio = [25, 50, 75, 100, 25, 50, 75, 100]
+            ratio = [1, 2, 3, 2, 3, 2, 1]
             reader = csv.reader(file)
             i = -1
             for row in reader:
-                stage_1_throughput = []
-                stage_2 = []
-                stage_3 = []
-                app_thoughput = 0
+                app_thoughput = [0]
+                app_total_time = [0]
                 if i == -1:
                     i = 1
                 else:
-                    count = count + 1
-                    type = row[int(0)]
-                    apps = [[0, int(row[1]), int(row[5])], [0, int(row[2]), int(row[6])], [0, int(row[3]), int(row[7]), int(row[15])], [0, int(row[4]), int(row[8]), int(row[16])], [0, int(row[9])], [0, int(row[10])], [0, int(row[11])], [0, int(row[12])]]
-                    time_1 = [0, 32, 64, 86]
-                    time_2 = [32, 64]
-                    time_3 = [0, 32, 64]
+                    app_thoughput.append(int(row[1]))
+                    app_thoughput.append(int(row[1]))
+
+                    app_total_time.append(int(row[2]))
+                    app_total_time.append(int(row[2]))
+
+                    time_1 = [0, 16, 16, 32, 32, 48, 48, 64, 64, 80, 80, 96, 96, 112, 112, 138, 138]
                     
-                    for j in range(2):
-                        print(apps[j])
-                        axs[count].plot(time_3, apps[j], label = str(ratio[j]), color=colours[j])
-
-                    for j in [2, 3]:
-                        axs[count].plot(time_1, apps[j], label = str(ratio[j]), color=colours[j])
-
-                    for j in [4, 5, 6, 7]:
-                        axs[count].plot(time_2, apps[j], label = str(ratio[j]), color=colours[j])
+                    print(app_thoughput)
+                    axs[count].plot(time_1, app_thoughput, label = type)
 
 
-#ax.set_xticks([0, 25, 50, 75, 100])
-#x_label = ["100:0", "75:25", "50:50", "25:75", "0:100"]
-#ax.set_xticklabels(x_label, fontsize=13)
-                    #axs[count].set_ylim(0, 100000)
+
                     handles, labels = axs[count].get_legend_handles_labels()
 
-                    axs[count].axvline(x = 0, color = 'k', label = 'axvline - full height')
-                    axs[count].text(2, max(apps[0]), 'Four threads start',fontsize=13)
 
-                    axs[count].axvline(x = 32, color = 'k', label = 'axvline - full height')
-                    axs[count].text(32, max(apps[0]), 'Four more threads start', fontsize=13)
+                    axs[count].text(time_1[0], max(app_thoughput), 'User 1 begins',fontsize=13)
 
-                    axs[count].axvline(x = 64, color = 'k', label = 'axvline - full height')
-                    axs[count].text(64, max(apps[0]), 'Six threads stop', fontsize=13)
-        
+                    #axs[count].axvline(x = 32, color = 'k', label = 'axvline - full height')
+                    axs[count].text(time_1[2], max(app_thoughput), 'User 2 begins', fontsize=13)
+
+                    #axs[count].axvline(x = 64, color = 'k', label = 'axvline - full height')
+                    axs[count].text(time_1[4], max(app_thoughput), 'User 3 begins', fontsize=13)
+                    axs[count].text(time_1[6], max(app_thoughput), 'User 3 ends',fontsize=13)
+
+                    #axs[count].axvline(x = 32, color = 'k', label = 'axvline - full height')
+                    axs[count].text(time_1[8], max(app_thoughput), 'User 4 begins', fontsize=13)
+
+                    #axs[count].axvline(x = 64, color = 'k', label = 'axvline - full height')
+                    axs[count].text(time_1[10], max(app_thoughput), 'User 4 ends', fontsize=13)
+                    axs[count].text(time_1[12], max(app_thoughput), 'User 2 ends', fontsize=13)   
+                    axs[count].text(time_1[14], max(app_thoughput), 'User 1 ends', fontsize=13)     
                     by_label = dict(zip(labels, handles))
+
+                    count+= 1
 
                     axs[1].legend(by_label.values(), by_label.keys(), loc='upper center', bbox_to_anchor=(1.1, 0.7),
 title="Insert Ratio", fancybox=True, shadow=True, fontsize=10)
