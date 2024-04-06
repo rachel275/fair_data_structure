@@ -141,8 +141,9 @@ void fairlock_acquire(fairlock_t *lock) {
 	//printf("cuur_slice: %ull\n", (curr_slice / (CYCLE_PER_US)));
         // If owner of current slice, try to reenter at the beginning of the queue
         if (curr_slice == info->slice && (now = rdtsc()) < curr_slice) {
+	    ull start = curr_slice - now;
 	    qnode_t *succ = readvol(lock->qnext);
-            if (NULL == succ) {
+	    if (NULL == succ) {
                 if (__sync_bool_compare_and_swap(&lock->qtail, NULL, flqnode(lock)))
                     goto reenter;
                 spin_then_yield(SPIN_LIMIT, (now = rdtsc()) < curr_slice && NULL == (succ = readvol(lock->qnext)));

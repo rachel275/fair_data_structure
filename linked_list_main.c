@@ -109,9 +109,11 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
            // info->stat.banned_time,
            // info->banned_until-info->stat.start,
             //info->start_ticks-info->stat.start);
-#endif		  
+#endif
+/**    
 #if defined(FAIRLOCK) && defined(DEBUG) && defined(NSCLOCK)
     struct head_node_t *thread_node = list.head;    
+    pthread_spin_lock(&list.mutexes);
     flthread_info_t *info;
     while(thread_node != NULL){
          if(thread_node->thread_id == task->app_id){
@@ -119,6 +121,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
 	 }
 	 thread_node = thread_node->th_next;
     }
+    pthread_spin_unlock(&list.mutexes);
     printf("  LHT: %llu \n",
           // "  own_slice_wait %llu\n"
            //"  lock opportunity %llu\n"
@@ -140,7 +143,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
            // info->banned_until-info->stat.start,
             //info->start_ticks-info->stat.start);
 #endif
-
+**/
 
 }
 
@@ -291,8 +294,8 @@ int main(int argc, char **argv)
         pthread_join(delete_tasks[p].thread, NULL);
     }
 
-    printf("\nSpin_Lock_Opp: %10.3f \n ",
-       (float)/* (test_duration * 1000) -*/ (total_time / (CYCLE_PER_US * 1000)));
+//    printf("\nSpin_Lock_Opp: %10.3f \n ",
+//       (float)/* (test_duration * 1000) -*/ (total_time / (CYCLE_PER_US * 1000)));
 
 
 

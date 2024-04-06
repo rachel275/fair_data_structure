@@ -29,15 +29,15 @@ mutex:
 	gcc main_hashtable.c -o hash_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG
 	gcc main_hashtable.c -o ns_c_hash_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSC
 	gcc main_hashtable.c -o ns_c_hash_lock_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSCLOCK	
-	#gcc linked_list_main.c -o list_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG
-	#gcc linked_list_main.c -o list_spin_main ${FLAGS} -DSPIN 
-	#gcc linked_list_main.c -o ns_c_list_spin_main ${FLAGS} -DSPIN -DNSC
-	#gcc linked_list_main.c -o ns_c_list_fair_main ${FLAGS} -DFAIRLOCK -DNSC -DDEBUG
+	gcc linked_list_main.c -o list_fair_main ${FLAGS} -DFAIRLOCK -DDEBUG
+	gcc linked_list_main.c -o list_spin_main ${FLAGS} -DSPIN 
+	gcc linked_list_main.c -o ns_c_list_spin_main ${FLAGS} -DSPIN -DNSC
+	gcc linked_list_main.c -o ns_c_list_fair_main ${FLAGS} -DFAIRLOCK -DNSC -DDEBUG
 	#gcc linked_list_main.c -o ns_c_list_lock_spin_main ${FLAGS} -DSPIN -DNSCLOCK
-	#gcc linked_list_main.c -o ns_c_list_lock_fair_main ${FLAGS} -DFAIRLOCK -DNSCLOCK -DDEBUG
-	#gcc dynamic_linked_list_main.c -o dynamic_list_main ${FLAGS} -DFAIRLOCK -DDEBUG
-	#gcc dynamic_linked_list_main.c -o dynamic_ns_c_list_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSC
-	#gcc dynamic_linked_list_main.c -o dynamic_ns_c_lock_list_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSCLOCK
+	gcc linked_list_main.c -o ns_c_list_lock_fair_main ${FLAGS} -DFAIRLOCK -DNSCLOCK -DDEBUG
+	gcc dynamic_linked_list_main.c -o dynamic_list_main ${FLAGS} -DFAIRLOCK -DDEBUG
+	gcc dynamic_linked_list_main.c -o dynamic_ns_c_list_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSC
+	gcc dynamic_linked_list_main.c -o dynamic_ns_c_lock_list_main ${FLAGS} -DFAIRLOCK -DDEBUG -DNSCLOCK
 
 # spin:
 # 	gcc main.c -o main ${FLAGS} -DSPIN

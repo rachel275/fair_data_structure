@@ -47,7 +47,7 @@ typedef struct list_stat {
 
 void List_Init(list_t *list){
     list->head = NULL;
-    pthread_spin_init(list->mutexes, 0);
+    pthread_spin_init(&list->mutexes, 0);
 }
 
 void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
@@ -60,13 +60,13 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
     struct head_node_t *n = list->head;
 
 //should this bit be inside the lock
-    pthread_spin_lock(list->mutexes);
+    pthread_spin_lock(&list->mutexes);
     start = rdtsc();
     while(n != NULL){
         if (n->thread_id == pid) {
             /*found thread's list, add entry*/
 	    end = rdtsc();
-	    pthread_spin_unlock(list->mutexes);
+	    pthread_spin_unlock(&list->mutexes);
 	    duration += end - start;
             lock_acquire(&n->mutexes);
     	    start = rdtsc();
@@ -102,7 +102,7 @@ void list_insert(list_t *list, int k, void * data, list_stat_t* stat, int pid){
 	list->head = th_node;
 	lock_init(&th_node->mutexes);
 	end = rdtsc();
-	pthread_spin_unlock(list->mutexes);
+	pthread_spin_unlock(&list->mutexes);
 	duration += end - start;
 	lock_acquire(&th_node->mutexes);
     	start = rdtsc();
@@ -133,13 +133,13 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
     unsigned int duration = 0;
     struct head_node_t *thread_node = list->head;
 	    
-    pthread_spin_lock(list->mutexes);
+    pthread_spin_lock(&list->mutexes);
     start = rdtsc(); 
 
     while(thread_node != NULL){
             if(thread_node->thread_id == pid){
 		end = rdtsc();
-		pthread_spin_unlock(list->mutexes);
+		pthread_spin_unlock(&list->mutexes);
 		duration += end - start;
 		lock_acquire(&thread_node->mutexes);
     		start = rdtsc();
@@ -169,7 +169,7 @@ Node *list_find(list_t *list, int k, list_stat_t* stat, int pid){
             thread_node = thread_node->th_next;	    
     }
     end = rdtsc(); 
-    pthread_spin_unlock(list->mutexes);
+    pthread_spin_unlock(&list->mutexes);
     duration += end - start;
     if(duration > stat->wc_cs_time){stat->wc_cs_time = duration;}
     stat->cs_time = duration;
