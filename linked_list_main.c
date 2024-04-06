@@ -21,7 +21,7 @@
 #include "linked_list.h"
 #endif
 
-#define THREADS_PER_APP  2
+#define THREADS_PER_APP  4
 
 typedef struct {
     volatile int *stop;
@@ -29,8 +29,6 @@ typedef struct {
     int priority;
     int app_id;
     int ncpu;
-    int reset;
-    int time;
     list_stat_t stat;
 } task_t __attribute__ ((aligned (64)));
 
@@ -71,14 +69,14 @@ unsigned int test_insert_ratio = 0;
 unsigned int test_find_ratio = 0;
 unsigned int key_space = 0;
 unsigned int napplications = 0;
-unsigned int nratio[100] = {50, 50, 50, 50};//, 25, 50, 75, 100};
+unsigned int nratio[100];
 
 pthread_attr_t attr;
 
 
 
 /********************************* Main Functions *******************************************/
-void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/){
+void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
     printf("%s "
 	    "app id: %02d / "
         "number of operations: %i / "
@@ -89,7 +87,6 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/){
         (int)task->stat.n_ops,
 	    task->stat.tot_cs_time / (float) (CYCLE_PER_US * 1000),
 	    task->stat.wc_cs_time / (float) (CYCLE_PER_US * 1000));
-/**
 #if defined(FAIRLOCK) && defined(DEBUG) && defined(NSC)
     flthread_info_t *info = pthread_getspecific(list.mutexes.flthread_info_key);
     printf("  LHT: %llu	\n",
@@ -112,19 +109,18 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/){
            // info->stat.banned_time,
            // info->banned_until-info->stat.start,
             //info->start_ticks-info->stat.start);
-#endif
-
+#endif		  
 #if defined(FAIRLOCK) && defined(DEBUG) && defined(NSCLOCK)
-    struct head_node_t *thread_node = list.head;   
-    flthread_info_t *info = pthread_getspecific(thread_node->mutexes.flthread_info_key);
+    struct head_node_t *thread_node = list.head;    
+    flthread_info_t *info;
     while(thread_node != NULL){
          if(thread_node->thread_id == task->app_id){
 	      info = pthread_getspecific(thread_node->mutexes.flthread_info_key);
 	 }
 	 thread_node = thread_node->th_next;
-   }
+    }
     printf("  LHT: %llu \n",
-           //"  own_slice_wait %llu\n"
+          // "  own_slice_wait %llu\n"
            //"  lock opportunity %llu\n"
            //"  runnable_wait %10.3f\n"
            //"  total slice 1 %10.3f\n"
@@ -133,7 +129,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/){
             //"  banned(actual) %llu\n"
             //"  banned %llu\n"
             //"  elapse %llu\n",
-            // task->stat.n_ops - info->stat.reenter,
+           // task->stat.n_ops - info->stat.reenter,
             //info->stat.own_slice_wait,
             //info->stat.prev_slice_wait,
             //(float)info->stat.runnable_wait / CYCLE_PER_US,
@@ -142,23 +138,20 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/){
             //info->stat.reenter,
            // info->stat.banned_time,
            // info->banned_until-info->stat.start,
-            //info->start_ticks-info->stat.start
+            //info->start_ticks-info->stat.start);
 #endif
-**/
+
+
 }
 
 void *insertfunc(void *vargp)
 {
     task_t *task = (task_t *) vargp;
     setup_worker(task);
-    int entry = task->app_id; 
+    int entry = task->app_id;
+ 
   // /*loop continuously*/
     while(!*task->stop){
-	if(task->reset == 1){
-		print_summary("insert", task);
-		task->stat.n_ops = 0;
-		task->reset = 0;
-	} 
       /*add to the linked list*/
         entry = ((fast_rand() % key_space * 10)  + task->app_id);
         list_insert(&list, entry, &entry+entry, &task->stat, task->app_id);
@@ -176,15 +169,8 @@ void *findfunc(void *vargp)
 
     // /*loop continuously*/
     while(!*task->stop){
-	 if(task->reset == 1){
-                print_summary("find", task);
-                task->stat.n_ops = 0;
-		task->reset = 0;
-
-        }
     //  /*add to the linked list*/
         entry = (((1000000 - fast_rand()) % key_space * 10) + task->app_id);
-//	printf("ins ent: %llu   ", entry); 
         list_find(&list, entry, &task->stat, task->app_id);
     }
     print_summary("find", task);
@@ -218,18 +204,14 @@ int main(int argc, char **argv)
 	printf("usage: %s <napplications> <ratio1> <ratio2> <...> <duration> \n", argv[0]);
 	return 1;
     }
-    napplications = 4;
-   // nratio = [50, 50, 50, 50];//, 0, 50, 75, 100];
+
     for (int i = 0; i < napplications; i++){
-       // nratio[i] = atoi(argv[i+2]);
+        nratio[i] = atoi(argv[i+2]);
         test_insert_ratio += ((nratio[i] * THREADS_PER_APP) / 100);
         test_find_ratio += (((100 - nratio[i]) * THREADS_PER_APP) / 100);
     }
 
     test_duration = atoi(argv[napplications + 2]);       //the time the test shall run for
-    int stop_four __attribute__((aligned (64))) = 0;
-    int stop_three __attribute__((aligned (64))) = 0;
-    int stop_two __attribute__((aligned (64))) = 0;
     int stop __attribute__((aligned (64))) = 0;
     int ncpu = 0;
     task_t *insert_tasks = malloc(sizeof(task_t) * (test_insert_ratio));
@@ -263,10 +245,7 @@ int main(int argc, char **argv)
         }
     } 
 
-  /*now that we've orgainsed the threads we need to  */
-    int part_one_i_ratio = 1;
-    int part_one_f_ratio = 1;
-    for (int k = 0; k < part_one_i_ratio; k++){
+    for (int k = 0; k < test_insert_ratio; k++){
         rc = pthread_create(&insert_tasks[k].thread, NULL, insertfunc, &insert_tasks[k]);
         if (rc){
             printf("Error:unable to create insert thread, %d\n", rc);
@@ -275,7 +254,7 @@ int main(int argc, char **argv)
     }
 
 
-    for (int k = 0; k < part_one_f_ratio; k++){
+    for (int k = 0; k < test_find_ratio; k++){
         rc = pthread_create(&find_tasks[k].thread, NULL, findfunc, &find_tasks[k]);
 	if (rc){
             printf("Error:unable to create find thread, %d\n", rc);
@@ -284,172 +263,18 @@ int main(int argc, char **argv)
     }
 
 
-    //for (int k = 0; k < test_delete_ratio; k++){
-    //    rc = pthread_create(&delete_tasks[k].thread, NULL, deletefunc, &d
-
-    sleep(16); 
-
-    for (int k = 0; k < part_one_i_ratio; k++){
-          insert_tasks[k].reset = 1;
-    }
-
-
-    for (int k = 0; k < part_one_f_ratio; k++){
-           find_tasks[k].reset= 1;
-    }
-
-    int part_two_i_ratio = 2;
-    int part_two_f_ratio = 2;
-    for (int k = part_one_i_ratio; k < part_two_i_ratio; k++){
-	insert_tasks[k].stop = &stop_two;
-        rc = pthread_create(&insert_tasks[k].thread, NULL, insertfunc, &insert_tasks[k]);
+    for (int k = 0; k < test_delete_ratio; k++){
+        rc = pthread_create(&delete_tasks[k].thread, NULL, deletefunc, &delete_tasks[k]);
         if (rc){
-            printf("Error:unable to create insert thread, %d\n", rc);
+            printf("Error:unable to create delete thread, %d\n", rc);
             exit(-1);
         }
     }
 
+    sleep(test_duration); 
 
-    for (int k = part_one_f_ratio; k < part_two_f_ratio; k++){
-	find_tasks[k].stop = &stop_two;
-        rc = pthread_create(&find_tasks[k].thread, NULL, findfunc, &find_tasks[k]);
-        if (rc){
-            printf("Error:unable to create find thread, %d\n", rc);
-            exit(-1);
-        }
-    }
-
-    sleep(16);
-    for (int k = 0; k < part_two_i_ratio; k++){
-          insert_tasks[k].reset = 1;
-    }
-
-
-    for (int k = 0; k < part_two_f_ratio; k++){
-           find_tasks[k].reset= 1;
-    }
-
-    int part_three_i_ratio = 3;
-    int part_three_f_ratio = 3;
-    for (int k = part_two_i_ratio; k < part_three_i_ratio; k++){
-        insert_tasks[k].stop = &stop_three;
-        rc = pthread_create(&insert_tasks[k].thread, NULL, insertfunc, &insert_tasks[k]);
-        if (rc){
-            printf("Error:unable to create insert thread, %d\n", rc);
-            exit(-1);
-        }
-    }
-
-
-    for (int k = part_two_f_ratio; k < part_three_f_ratio; k++){
-        find_tasks[k].stop = &stop_three;
-        rc = pthread_create(&find_tasks[k].thread, NULL, findfunc, &find_tasks[k]);
-        if (rc){
-            printf("Error:unable to create find thread, %d\n", rc);
-            exit(-1);
-        }
-    }
-
-    sleep(16);
-
-
-    //stop_two = 1;
-  
-   for (int k = 0; k < part_three_i_ratio; k++){
-          insert_tasks[k].reset = 1;
-    }
-
-
-    for (int k = 0; k < part_three_f_ratio; k++){
-         find_tasks[k].reset= 1;
-    }
-
-	
-    stop_three = 1;
-
-    sleep(16);
-
-    for (int k = 0; k < part_two_i_ratio; k++){
-           insert_tasks[k].reset = 1;
-    }
-
-
-    for (int k = 0; k < part_two_f_ratio; k++){
-           find_tasks[k].reset= 1;
-    }
-
-
-    int part_four_i_ratio = 4;
-    int part_four_f_ratio = 4;
-    for (int k = part_three_i_ratio; k < part_four_i_ratio; k++){
-        insert_tasks[k].stop = &stop_four;
-        rc = pthread_create(&insert_tasks[k].thread, NULL, insertfunc, &insert_tasks[k]);
-        if (rc){
-            printf("Error:unable to create insert thread, %d\n", rc);
-            exit(-1);
-        }
-    }
-
-
-    for (int k = part_three_f_ratio; k < part_four_f_ratio; k++){
-        find_tasks[k].stop = &stop_four;
-        rc = pthread_create(&find_tasks[k].thread, NULL, findfunc, &find_tasks[k]);
-        if (rc){
-            printf("Error:unable to create find thread, %d\n", rc);
-            exit(-1);
-        }
-    }
-
-    sleep(16);
-
-    for (int k = 0; k < part_four_i_ratio; k++){
-           if (insert_tasks[k].stop != 1){
-	    	insert_tasks[k].reset = 1;
-	   }
-    }
-
-
-    for (int k = 0; k < part_four_f_ratio; k++){
-           if (find_tasks[k].stop != 1){
-	    	find_tasks[k].reset= 1;
-	   }
-    }
-
-    stop_four = 1;
-    sleep(16);
-
-        for (int k = 0; k < part_four_i_ratio; k++){
-           if (insert_tasks[k].stop != 1){
-                insert_tasks[k].reset = 1;
-           }
-    }
-
-
-    for (int k = 0; k < part_four_f_ratio; k++){
-           if (find_tasks[k].stop != 1){
-                find_tasks[k].reset= 1;
-           }
-    }
-	
-
-    stop_two = 1;
-    sleep(16);
     stop = 1;
-    //    for (int k = 0; k < part_four_i_ratio; k++){
-    //       if (insert_tasks[k].stop != 1){
-    //            insert_tasks[k].reset = 1;
-    //       }
-    //}
-
-
-    //for (int k = 0; k < part_four_f_ratio; k++){
-    //       if (find_tasks[k].stop != 1){
-    //            find_tasks[k].reset= 1;
-    //       }
-    //}
-
-    //stop = 1;
-
+	
     unsigned long long total_time = 0;
     for (int p = 0; p < (test_insert_ratio); p++){
          total_time += insert_tasks[p].stat.tot_cs_time;
@@ -465,6 +290,10 @@ int main(int argc, char **argv)
     for (int p = 0; p < (test_delete_ratio); p++){
         pthread_join(delete_tasks[p].thread, NULL);
     }
+
+    printf("\nSpin_Lock_Opp: %10.3f \n ",
+       (float)/* (test_duration * 1000) -*/ (total_time / (CYCLE_PER_US * 1000)));
+
 
 
     return 0;

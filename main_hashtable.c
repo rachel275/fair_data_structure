@@ -109,7 +109,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
      //       -1.00);
 
     } else {
-    	printf("LHO_b_%i: %10.3f / ",
+    	printf("LHO_b_%li: %10.3f / ",
         	    bucket_idx,
             	info->stat.total_time / (float)(CYCLE_PER_US * 1000));
 	}
@@ -133,7 +133,7 @@ void print_summary(char * type, task_t *task/*, ull tot_time, char *buffer*/) {
     //        -1.00);
 
     } else {
-        printf("LHO_b_%i: %10.3f / ",
+        printf("LHO_b_%li: %10.3f / ",
                     bucket_idx,
                 info->stat.total_time / (float)(CYCLE_PER_US * 1000));
      }
@@ -216,7 +216,6 @@ int main(int argc, char **argv)
 
     test_duration = atoi(argv[napplications + 3]);       //the time the test shall run for
     int stop __attribute__((aligned (64))) = 0;
-    int ncpu = 0;
     task_t *insert_tasks = malloc(sizeof(task_t) * (test_insert_ratio));
     task_t *find_tasks = malloc(sizeof(task_t) * (test_find_ratio));
     task_t *delete_tasks = malloc(sizeof(task_t) * (test_delete_ratio));
